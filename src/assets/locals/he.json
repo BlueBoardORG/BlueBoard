@@ -61,6 +61,7 @@
     "UPDATE_ASSIGNED_USER": "שינה את האחראי על הכרטיס",
     "UsersList.title": "משתמשים:",
     "UsersList.add_user_tip": "הוסף משתמש",
-    "UserAdder.search_place_holder": "חפש משתמש..."
+    "UserAdder.search_place_holder": "חפש משתמש...",
+    "Board.add_new_card": "הוסף כרטיס חדש"
 
 }

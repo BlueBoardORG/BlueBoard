@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import Textarea from "react-textarea-autosize";
 import shortid from "shortid";
 import ClickOutside from "../ClickOutside/ClickOutside";
+import { withTranslation } from "react-i18next";
 import "./CardAdder.scss";
 
 class CardAdder extends Component {
@@ -53,6 +54,8 @@ class CardAdder extends Component {
 
   render() {
     const { newText, isOpen } = this.state;
+    const { t } = this.props;
+
     return isOpen ? (
       <ClickOutside handleClickOutside={this.toggleCardComposer}>
         <form
@@ -67,7 +70,7 @@ class CardAdder extends Component {
             onKeyDown={this.handleKeyDown}
             value={newText}
             className="card-adder-textarea"
-            placeholder="Add a new card..."
+            placeholder={t("Board.add_new_card")}
             spellCheck={false}
             onBlur={this.toggleCardComposer}
           />
@@ -81,4 +84,4 @@ class CardAdder extends Component {
   }
 }
 
-export default connect()(CardAdder);
+export default connect()(withTranslation()(CardAdder));
