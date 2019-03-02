@@ -65,8 +65,7 @@ class ListTitle extends Component {
   };
 
   openTitleEditor = () => {
-    const { isAbleToEdit } = this.props;
-    if (isAbleToEdit) {
+    if (this.props.isAbleToEdit) {
       this.setState({ isOpen: true });
     }
   };

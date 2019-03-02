@@ -34,8 +34,7 @@ class Card extends Component {
   }
 
   toggleCardEditor = () => {
-    const { isAbleToEdit } = this.props;
-    if (isAbleToEdit) {
+    if (this.props.isAbleToEdit) {
       this.setState({ isModalOpen: !this.state.isModalOpen });
     }
   };

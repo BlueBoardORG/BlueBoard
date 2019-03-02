@@ -147,7 +147,7 @@ class Board extends Component {
       backgroundAttachment: "fixed"
     };
     const userData = board.users.find(u => u.id === user._id) || {};
-    const isAbleToEdit = CAN_EDIT_ROLES.includes(userData.role); // TODO change 
+    const isAbleToEdit = CAN_EDIT_ROLES.includes(userData.role);
 
     return (
       <>
@@ -199,7 +199,7 @@ class Board extends Component {
 const mapStateToProps = (state, ownProps) => {
   const { board } = ownProps;
   const { user, boardUsersData } = state;
-  
+
   return {
     lists: board.lists.map(listId => state.listsById[listId]),
     boardTitle: board.title,
