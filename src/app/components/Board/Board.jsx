@@ -10,7 +10,7 @@ import Header from "../Header/Header";
 import BoardHeader from "../BoardHeader/BoardHeader";
 import { loadBoardUsersData } from "../../actions/boardActions";
 import { withTranslation } from "react-i18next";
-import { BASE_BOARD_BG_URL } from "../../../constants";
+import { BASE_BOARD_BG_URL, CAN_EDIT_ROLES } from "../../../constants";
 import "./Board.scss";
 import BoardMenu from "../BoardHeader/BoardMenu";
 
@@ -140,21 +140,23 @@ class Board extends Component {
   };
 
   render = () => {
-    const { lists, boardTitle, boardId, boardColor, t } = this.props;
+    const { lists, boardTitle, boardId, boardColor, t, user, board } = this.props;
     const imageUrl = `url(${BASE_BOARD_BG_URL})`;
-    const wrapperStyle = { backgroundImage: imageUrl, backgroundAttachment: "fixed" };
+    const wrapperStyle = {
+      backgroundImage: imageUrl,
+      backgroundAttachment: "fixed"
+    };
+    const userData = board.users.find(u => u.id === user._id) || {};
+    const isAbleToEdit = CAN_EDIT_ROLES.includes(userData.role);
 
     return (
       <>
-        <div
-          className={classnames("board", boardColor)}
-          style={wrapperStyle}
-        >
+        <div className={classnames("board", boardColor)} style={wrapperStyle}>
           <Title>
             {boardTitle} | {t("project_name")}
           </Title>
           <Header />
-          <BoardHeader />
+          <BoardHeader isAbleToEdit={isAbleToEdit}/>
           {/* eslint-disable jsx-a11y/no-static-element-interactions */}
           <div
             className="lists-wrapper"
@@ -176,17 +178,18 @@ class Board extends Component {
                         boardId={boardId}
                         index={lists.length - 1 - index}
                         key={list._id}
+                        isAbleToEdit={isAbleToEdit}
                       />
                     ))}
                     {provided.placeholder}
-                    <ListAdder boardId={boardId} />
+                    {isAbleToEdit && <ListAdder boardId={boardId} />}
                   </div>
                 )}
               </Droppable>
             </DragDropContext>
             <BoardMenu />
           </div>
-          <div className="board-underlay" style={wrapperStyle}/>
+          <div className="board-underlay" style={wrapperStyle} />
         </div>
       </>
     );
@@ -195,12 +198,16 @@ class Board extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   const { board } = ownProps;
+  const { user, boardUsersData } = state;
+
   return {
     lists: board.lists.map(listId => state.listsById[listId]),
     boardTitle: board.title,
     boardColor: board.color,
     boardId: board._id,
-    boardUsers: board.users
+    boardUsers: board.users,
+    user,
+    boardUsersData
   };
 };
 

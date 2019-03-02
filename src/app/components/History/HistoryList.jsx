@@ -21,7 +21,8 @@ class HistoryList extends Component {
     }).then(res => {
       if (res.status === 200) {
         res.json().then(history => {
-          this.setState({ history });
+          // reverse history to get the last action first
+          this.setState({ history: history.reverse() });
         });
       }
     });

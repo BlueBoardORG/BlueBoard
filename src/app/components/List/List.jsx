@@ -12,15 +12,17 @@ class List extends Component {
   static propTypes = {
     boardId: PropTypes.string.isRequired,
     index: PropTypes.number.isRequired,
-    list: PropTypes.shape({ _id: PropTypes.string.isRequired }).isRequired
+    list: PropTypes.shape({ _id: PropTypes.string.isRequired }).isRequired,
+    isAbleToEdit: PropTypes.bool.isRequired
   };
 
   render = () => {
-    const { list, boardId, index } = this.props;
+    const { list, boardId, index, isAbleToEdit } = this.props;
     return (
       <Draggable
         draggableId={list._id}
         index={index}
+        isDragDisabled={!isAbleToEdit}
         disableInteractiveElementBlocking
       >
         {(provided, snapshot) => (
@@ -41,12 +43,13 @@ class List extends Component {
                   listId={list._id}
                   cards={list.cards}
                   boardId={boardId}
+                  isAbleToEdit={isAbleToEdit}
                 />
                 <div className="cards-wrapper">
-                  <Cards listId={list._id} />
+                  <Cards listId={list._id} isAbleToEdit={isAbleToEdit}/>
                 </div>
               </div>
-              <CardAdder listId={list._id} />
+              {isAbleToEdit && <CardAdder listId={list._id} />}
             </div>
             {provided.placeholder}
           </>

@@ -7,16 +7,17 @@ import Card from "../Card/Card";
 class Cards extends Component {
   static propTypes = {
     listId: PropTypes.string.isRequired,
-    cards: PropTypes.arrayOf(PropTypes.string).isRequired
+    cards: PropTypes.arrayOf(PropTypes.string).isRequired,
+    isAbleToEdit: PropTypes.bool.isRequired
   };
   
 
   render() {
-    const { listId, cards } = this.props;
+    const { listId, cards, isAbleToEdit } = this.props;
     const filteredCardsById = this.props.filteredCardsById;
 
     return (
-      <Droppable droppableId={listId}>
+      <Droppable droppableId={listId} isDropDisabled={!isAbleToEdit}>
         {(provided, { isDraggingOver }) => (
           <>
             <div className="cards" ref={provided.innerRef}>
@@ -27,6 +28,7 @@ class Cards extends Component {
                   cardId={cardId}
                   index={index}
                   listId={listId}
+                  isAbleToEdit={isAbleToEdit}
                 /> : null
               ))}
               {provided.placeholder}

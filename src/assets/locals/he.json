@@ -40,7 +40,9 @@
     "Notifications.CHANGE_USER_ROLE":"שונו הרשאותיך בלוח זה",
     "Menu": "תפריט",
     "History": "היסטוריה",
+    "CHANGE_LIST_TITLE": "שינה כותרת רשימה",
     "ADD_LIST": "הוסיף רשימה",
+    "ADD_LABEL": "הוסיף תגית",
     "ADD_USER": "הוסיף משתמש",
     "CHANGE_USER_ROLE": "שינה הרשאות למשתמש",
     "REMOVE_USER": "מחק משתמש",
@@ -62,6 +64,12 @@
     "UsersList.title": "משתמשים:",
     "UsersList.add_user_tip": "הוסף משתמש",
     "UserAdder.search_place_holder": "חפש משתמש...",
-    "Board.add_new_card": "הוסף כרטיס חדש"
-
+    "Board.add_new_card": "הוסף כרטיס חדש",
+    "UserAvatar.role.admin": "מנהל",
+    "UserAvatar.role.read-write": "עורך",
+    "UserAvatar.role.read": "צפייה בלבד",
+    "UserAvatar.menu.title": "בחר אפשרות",
+    "UserAvatar.menu.kick": "הוצא מהלוח",
+    "UserPicker.label.select_user": "בחר/י משתמש:",
+    "UserPicker.label.select_role": "בחר/י הרשאה:"
 }

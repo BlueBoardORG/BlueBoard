@@ -8,7 +8,8 @@ class BoardTitle extends Component {
   static propTypes = {
     boardTitle: PropTypes.string.isRequired,
     boardId: PropTypes.string.isRequired,
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
+    isAbleToEdit: PropTypes.bool.isRequired
   };
 
   constructor(props) {
@@ -20,7 +21,9 @@ class BoardTitle extends Component {
   }
 
   handleClick = () => {
-    this.setState({ isOpen: true });
+    if (this.props.isAbleToEdit) {
+      this.setState({ isOpen: true });
+    }
   };
 
   handleChange = event => {

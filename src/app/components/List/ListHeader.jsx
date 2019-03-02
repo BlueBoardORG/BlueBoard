@@ -13,8 +13,9 @@ class ListTitle extends Component {
     listId: PropTypes.string.isRequired,
     boardId: PropTypes.string.isRequired,
     cards: PropTypes.arrayOf(PropTypes.string).isRequired,
-    dragHandleProps: PropTypes.object.isRequired,
-    dispatch: PropTypes.func.isRequired
+    dragHandleProps: PropTypes.object,
+    dispatch: PropTypes.func.isRequired,
+    isAbleToEdit: PropTypes.bool.isRequired
   };
 
   constructor(props) {
@@ -64,7 +65,9 @@ class ListTitle extends Component {
   };
 
   openTitleEditor = () => {
-    this.setState({ isOpen: true });
+    if (this.props.isAbleToEdit) {
+      this.setState({ isOpen: true });
+    }
   };
 
   handleButtonKeyDown = event => {
@@ -76,7 +79,7 @@ class ListTitle extends Component {
 
   render() {
     const { isOpen, newTitle } = this.state;
-    const { dragHandleProps, listTitle, t } = this.props;
+    const { dragHandleProps, listTitle, t, isAbleToEdit } = this.props;
     return (
       <div className="list-header">
         {isOpen ? (
@@ -90,6 +93,7 @@ class ListTitle extends Component {
               className="list-title-textarea"
               onBlur={this.handleSubmit}
               spellCheck={false}
+              disabled={!isAbleToEdit}
             />
           </div>
         ) : (
@@ -100,22 +104,27 @@ class ListTitle extends Component {
             onClick={this.openTitleEditor}
             onKeyDown={event => {
               this.handleButtonKeyDown(event);
-              dragHandleProps.onKeyDown(event);
+              dragHandleProps && dragHandleProps.onKeyDown(event);
             }}
             className="list-title-button"
           >
             {listTitle}
           </div>
         )}
-        <Wrapper className="delete-list-wrapper" onSelection={this.deleteList}>
-          <Button className="delete-list-button">
-            <FaTrash />
-          </Button>
-          <Menu className="delete-list-menu">
-            <div className="delete-list-header">{t("are_you_sure")}</div>
-            <MenuItem className="delete-list-confirm">{t('Delete')}</MenuItem>
-          </Menu>
-        </Wrapper>
+        {isAbleToEdit && (
+          <Wrapper
+            className="delete-list-wrapper"
+            onSelection={this.deleteList}
+          >
+            <Button className="delete-list-button">
+              <FaTrash />
+            </Button>
+            <Menu className="delete-list-menu">
+              <div className="delete-list-header">{t("are_you_sure")}</div>
+              <MenuItem className="delete-list-confirm">{t("Delete")}</MenuItem>
+            </Menu>
+          </Wrapper>
+        )}
       </div>
     );
   }
