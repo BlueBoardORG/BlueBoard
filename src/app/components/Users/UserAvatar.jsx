@@ -4,12 +4,21 @@ import { withTranslation } from "react-i18next";
 import ReactTooltip from "react-tooltip";
 import { Button, Wrapper, Menu, MenuItem } from "react-aria-menubutton";
 import { loadBoardUsersData } from "../../actions/boardActions";
+import { ADMIN_ROLE } from "../../../constants";
 import "./UsersList.scss";
 
 const COLORS = ["red", "orange", "green", "blue", "purple", "black"];
 
 class UserAvatar extends Component {
-  handleSelection = () => {
+  handleSelection = action => {
+    const { t } = this.props;
+    if (action === t("UserAvatar.menu.kick")) {
+      return this.deleteUser();
+    }
+    return;
+  };
+
+  deleteUser = () => {
     const { dispatch, user, currentBoardId, boardUsers } = this.props;
 
     dispatch({
@@ -27,7 +36,7 @@ class UserAvatar extends Component {
   };
 
   render() {
-    const { user, t, isCurrentUserAdmin, currentUser } = this.props;
+    const { user, t, isCurrentUserAdmin, currentUser, boardUsers } = this.props;
 
     const words = user.name.split(" ");
     const randomStyle = {
@@ -35,10 +44,16 @@ class UserAvatar extends Component {
     };
     const deleteButton = (
       <div>
-        <div className="board-leave-header">{t("are_you_sure")}</div>
-        <MenuItem className="board-leave-confirm">{t("Delete")}</MenuItem>
+        <div className="board-leave-header">{t("UserAvatar.menu.title")}</div>
+        <MenuItem className="board-leave-confirm">{t("UserAvatar.menu.kick")}</MenuItem>
       </div>
     );
+    let avatarToolTip = user.name;
+    const userRole = (
+      boardUsers.find(currUser => currUser.id === user._id) || {}
+    ).role;
+    // Adding the user's role to the tooltip
+    avatarToolTip += " (" + t("UserAvatar.role." + userRole) + ")";
 
     return (
       <div>
@@ -47,7 +62,7 @@ class UserAvatar extends Component {
           onSelection={this.handleSelection}
         >
           <Button>
-            <span className="dot" style={randomStyle} data-tip={user.name}>
+            <span className="dot" style={randomStyle} data-tip={avatarToolTip}>
               {words[0][0]}
               {words.length > 1 && words[words.length - 1][0]}
             </span>

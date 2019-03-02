@@ -6,15 +6,15 @@ import BoardLeave from "./BoardLeave";
 
 import "./BoardHeader.scss";
 
-const BoardHeader = () => (
+const BoardHeader = ({ isAbleToEdit }) => (
   <div className="board-header">
-    <BoardTitle />
+    <BoardTitle isAbleToEdit={isAbleToEdit} />
     <div className="board-header-right">
-      <div className="vertical-line" />
-      <ColorPicker />
-      <div className="vertical-line" />
-      <BoardDeleter />
-      <div className="vertical-line" />
+      {isAbleToEdit && <div className="vertical-line" />}
+      {isAbleToEdit && <ColorPicker />}
+      {isAbleToEdit && <div className="vertical-line" />}
+      {isAbleToEdit && <BoardDeleter />}
+      {isAbleToEdit && <div className="vertical-line" />}
       <BoardLeave />
     </div>
   </div>

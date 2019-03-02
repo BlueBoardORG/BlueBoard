@@ -7,6 +7,7 @@ export const READ_ROLE = "read";
 export const SOCKETLOCATION = "localhost:8200/";
 
 export const DEFAULT_ROLE = READ_WRITE_ROLE;
+export const CAN_EDIT_ROLES = [ADMIN_ROLE, READ_WRITE_ROLE];
 
 export const PUBLIC_USER_PROPERTIES = ["_id", "name"];
 

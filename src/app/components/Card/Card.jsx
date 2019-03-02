@@ -22,7 +22,8 @@ class Card extends Component {
     index: PropTypes.number.isRequired,
     dispatch: PropTypes.func.isRequired,
     assignedToMe: PropTypes.bool,
-    assignedUserName: PropTypes.string
+    assignedUserName: PropTypes.string,
+    isAbleToEdit: PropTypes.bool.isRequired
   };
 
   constructor() {
@@ -33,7 +34,10 @@ class Card extends Component {
   }
 
   toggleCardEditor = () => {
-    this.setState({ isModalOpen: !this.state.isModalOpen });
+    const { isAbleToEdit } = this.props;
+    if (isAbleToEdit) {
+      this.setState({ isModalOpen: !this.state.isModalOpen });
+    }
   };
 
   handleClick = event => {
@@ -82,13 +86,25 @@ class Card extends Component {
   };
 
   render() {
-    const { card, index, listId, isDraggingOver, assignedToMe, assignedUserName } = this.props;
+    const {
+      card,
+      index,
+      listId,
+      isDraggingOver,
+      assignedToMe,
+      assignedUserName,
+      isAbleToEdit
+    } = this.props;
     const { isModalOpen } = this.state;
     const checkboxes = findCheckboxes(card.text);
 
     return (
       <>
-        <Draggable draggableId={card._id} index={index}>
+        <Draggable
+          draggableId={card._id}
+          index={index}
+          isDragDisabled={!isAbleToEdit}
+        >
           {(provided, snapshot) => (
             <>
               {/* eslint-disable */}
@@ -103,11 +119,11 @@ class Card extends Component {
                 {...provided.draggableProps}
                 {...provided.dragHandleProps}
                 onClick={event => {
-                  provided.dragHandleProps.onClick(event);
+                  provided.dragHandleProps && provided.dragHandleProps.onClick(event);
                   this.handleClick(event);
                 }}
                 onKeyDown={event => {
-                  provided.dragHandleProps.onKeyDown(event);
+                  provided.dragHandleProps && provided.dragHandleProps.onKeyDown(event);
                   this.handleKeyDown(event);
                 }}
                 style={{
@@ -121,8 +137,17 @@ class Card extends Component {
                   }}
                 />
                 {/* eslint-enable */}
-                {(card.date || checkboxes.total > 0 || assignedUserName || card.labels) && (
-                  <CardBadges date={card.date} checkboxes={checkboxes} assignedUserName={assignedUserName} assignedToMe={assignedToMe} labels={card.labels} />
+                {(card.date ||
+                  checkboxes.total > 0 ||
+                  assignedUserName ||
+                  card.labels) && (
+                  <CardBadges
+                    date={card.date}
+                    checkboxes={checkboxes}
+                    assignedUserName={assignedUserName}
+                    assignedToMe={assignedToMe}
+                    labels={card.labels}
+                  />
                 )}
               </div>
               {/* Remove placeholder when not dragging over to reduce snapping */}
@@ -153,7 +178,7 @@ const mapStateToProps = (state, ownProps) => {
     card,
     assignedUserName: assignedUser.name,
     assignedToMe: assignedUser._id === state.user._id
-  }
+  };
 };
 
 export default connect(mapStateToProps)(Card);
