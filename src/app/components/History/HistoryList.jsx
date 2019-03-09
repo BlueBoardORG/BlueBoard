@@ -31,6 +31,7 @@ class HistoryList extends Component {
 
   render() {
     const { history } = this.state;
+    console.log(history);
     const { t } = this.props;
     const {boardUsersData} = this.props;
     return (
