@@ -21,10 +21,11 @@ class Home extends Component {
       }).isRequired
     ).isRequired,
     listsById: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired
+    history: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired
   };
   render = () => {
-    const { boards, listsById, history, t } = this.props;
+    const { boards, listsById, history, t, user} = this.props;
     const imageUrl = `url(${BASE_BOARD_BG_URL_SMALL})`;
     return (
       <>
@@ -34,13 +35,13 @@ class Home extends Component {
         <Header />
         <div className="home">
           <div className="main-content">
-            <h1>{t("Home.boards")}</h1>
+            <h1>{t("Home.myboards")}</h1>
             <div className="boards">
-              {boards.map(board => (
+              {boards.filter(board=> board.users[0].id === user._id).map(board => (
                 <Link
                   key={board._id}
                   className={classnames("board-link", board.color)}
-                  style={{backgroundImage: imageUrl}}
+                  style={{backgroundImage: imageUrl, backgroundPosition: 'center'}}
                   to={`/b/${board._id}/${slugify(board.title, {
                     lower: true
                   })}`}
@@ -65,15 +66,47 @@ class Home extends Component {
               <BoardAdder history={history} />
             </div>
           </div>
+          <div className="main-content">
+          <h1>{t("Home.sharedboards")}</h1>
+            <div className="boards">
+              {boards.filter(board=> board.users[0].id !== user._id).map(board => (
+                <Link
+                  key={board._id}
+                  className={classnames("board-link", board.color)}
+                  style={{backgroundImage: imageUrl, backgroundPosition: 'center'}}
+                  to={`/b/${board._id}/${slugify(board.title, {
+                    lower: true
+                  })}`}
+                >
+                  <div className="board-link-title">{board.title}</div>
+                  <div className="mini-board">
+                    {board.lists.map(listId => (
+                      <div
+                        key={listId}
+                        className="mini-list"
+                        style={{
+                          height: `${Math.min(
+                            (listsById[listId].cards.length + 1) * 18,
+                            100
+                          )}%`
+                        }}
+                      />
+                    ))}
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
       </>
     );
   };
 }
 
-const mapStateToProps = ({ boardsById, listsById }) => ({
+const mapStateToProps = ({ boardsById, listsById,user }) => ({
   boards: Object.keys(boardsById).map(key => boardsById[key]),
-  listsById
+  listsById,
+  user
 });
 
 export default connect(mapStateToProps)(withTranslation()(Home));
