@@ -55,6 +55,7 @@
     "CHANGE_BOARD_TITLE": "שינה את שם הלוח",
     "CHANGE_BOARD_COLOR": "שינה את צבע הלוח",
     "DELETE_BOARD": "מחק לוח",
+    "DELETE_LABEL": "מחק תגית",
     "CHANGE_CARD_TEXT": "שינה את הטקסט של הכרטיס",
     "CHANGE_CARD_DATE": "שינה את התאריך של הכרטיס",
     "CHANGE_CARD_COLOR": "שינה את הצבע של הכרטיס",
