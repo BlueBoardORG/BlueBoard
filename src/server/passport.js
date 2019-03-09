@@ -43,7 +43,7 @@ const configurePassport = db => {
       });
     }
   ));
-  let {saml: samlConfig, profileExtractor} = authConfig();
+  const {saml: samlConfig, profileExtractor} = authConfig();
   passport.use(new SamlStrategy(
     samlConfig,
     (profile, done)=>{
@@ -51,6 +51,7 @@ const configurePassport = db => {
         id: profile[profileExtractor.id],
         firstName: profile[profileExtractor.firstName],
         lastName: profile[profileExtractor.lastName],
+	displayName: profile[profileExtractor.displayName],
         mail: profile[profileExtractor.mail],
       };
       users.findOne({ _id: profile.id }).then(user => {
@@ -59,8 +60,9 @@ const configurePassport = db => {
         } else {
           const newUser = {
             _id: profile.id,
-            name: profile.firstName + " " + profile.lastName,
+            name: profile.lastName + " " + profile.firstName,
             mail: profile.mail,
+		display: profile.displayName,
             imageUrl: null
           };
           users.insertOne(newUser).then(() => {

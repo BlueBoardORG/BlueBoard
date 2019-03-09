@@ -125,7 +125,7 @@ const api = db => {
         if (users) {
           const serializedUsers = users.map(user => ({
             value: user._id,
-            label: user.name
+            label: user.display
           }));
           res.status(200).json(serializedUsers);
         } else {

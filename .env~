@@ -1,0 +1,5 @@
+MONGODB_URL=mongodb+srv://admin:kanban123@cluster0-tk8aq.mongodb.net/
+MONGODB_NAME=kanban
+
+# Has to be port 1337
+ROOT_URL=http://127.0.0.1:1337

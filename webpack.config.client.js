@@ -1,4 +1,5 @@
 const path = require("path");
+const {DefinePlugin} = require("webpack");
 const CopyPlugin = require("copy-webpack-plugin");
 const ManifestPlugin = require("webpack-manifest-plugin");
 const CleanPlugin = require("clean-webpack-plugin");
@@ -6,6 +7,13 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 const UglifyPlugin = require("uglifyjs-webpack-plugin");
 const autoprefixer = require("autoprefixer");
+const env = require("dotenv").config().parsed;
+
+// reduce it to a nice object, the same as before
+const envKeys = Object.keys(env).reduce((prev, next) => {
+  prev[`process.env.${next}`] = JSON.stringify(env[next]);
+  return prev;
+}, {});
 
 module.exports = {
   name: "client",
@@ -90,7 +98,8 @@ module.exports = {
           drop_console: true
         }
       }
-    })
+    }),
+    new DefinePlugin(envKeys)
   ],
   resolve: {
     extensions: [".js", ".jsx"]

@@ -35,7 +35,7 @@ class Notification extends React.Component {
       if (response) {
         if (response.status === 200) {
           response.json().then(jsonData => {
-            this.setState({ notifications: jsonData });
+            this.setState({ notifications: jsonData.reverse() });
           });
         }
       }
@@ -44,7 +44,7 @@ class Notification extends React.Component {
   addNewNotification(newNotification) {
     let currentNotifications = this.state.notifications;
     this.setState({
-      notifications: [...currentNotifications, newNotification]
+      notifications: [newNotification,...currentNotifications]
     });
   }
 
