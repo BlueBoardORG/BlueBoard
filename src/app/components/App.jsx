@@ -15,7 +15,6 @@ const App = ({ user, isGuest, dispatch }) => {
   // In order to attach listener only on first loading off App.
   if(!socket.hasListeners("change")){
     socket.on("change", ({action, payload}) => {
-      console.log({action, payload});
       dispatch({
         type: action,
         payload,
