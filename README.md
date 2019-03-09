@@ -27,7 +27,7 @@ A server-rendered React app inspired by [Trello](https://trello.com/home).
 
 ### Development
 
-Setting up the full app with your own mongoDB instance and auth credentials for Twitter and Google sign-in requires significant effort. Use the simplified set up if you don't want to bother with that.
+Setting up the full app with your own mongoDB instance  requires significant effort.
 
 #### Full setup
 
@@ -56,16 +56,32 @@ npm start
 it should be used with the same .env file as described below.
 
 #### Environment Variables
-You need to add your own mongoDB url as well as auth credentials for the Google and Twitter sign in. You need to create a file with the name `.env` in the root directory with the following variables:
+You need to add your own mongoDB url as well as other things for adfs and the likes. You need to create a file with the name `.env` in the root directory with the following variables:
 
 ```
 MONGODB_URL
 MONGODB_NAME
-TWITTER_API_KEY
-TWITTER_API_SECRET
-GOOGLE_CLIENT_ID
-GOOGLE_CLIENT_SECRET
+# important - can be any value
 SESSION_SECRET
+
+# for ADFS only:
+SAML_ENTRY_POINT
+SAML_ISSUER
+SAML_CALLBACK_URL
+# for ADFS claims:
+PROFILE_EXTRACTOR_ID
+PROFILE_EXTRACTOR_FIRST_NAME
+PROFILE_EXTRACTOR_LAST_NAME
+PROFILE_EXTRACTOR_MAIL
+PROFILE_EXTRACTOR_DISPLAY_NAME
+
+# socket IO server url (remember - no http://)
+REACT_APP_SOCKETLOCATION
+
+# metadata file location:
+METADATA_FILE
+
+
 
 # Has to be port 1337
 ROOT_URL=http://127.0.0.1:1337

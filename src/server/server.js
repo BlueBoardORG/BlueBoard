@@ -32,8 +32,7 @@ MongoClient.connect(process.env.MONGODB_URL).then(client => {
     res.send("alive");
   })
   app.get("/metadata.xml", (req,res,next)=>{
-    //res.sendFile(path.join(__dirname, "../assets/metadata.xml"));
-    res.sendFile("/usr/src/app/src/assets/metadata.xml");
+    res.sendFile((process.env.METADATA_FILE || "/usr/src/app/src/assets/metadata.xml"));
   })
   app.use(helmet());
   app.use(logger("tiny"));
