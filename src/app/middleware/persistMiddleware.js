@@ -14,7 +14,7 @@ const persistMiddleware = store => next => action => {
   } = store.getState();
 
   // Nothing is persisted for guest users
-  if (user) {
+  if (user && !action.dontPersist) {
     if (action.type === "DELETE_BOARD") {
       fetch("/api/board", {
         method: "DELETE",

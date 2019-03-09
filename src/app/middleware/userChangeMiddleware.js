@@ -2,7 +2,7 @@ const userChangeMiddleware = store => next => action => {
   next(action);
   const { user, currentBoardId: boardId, boardsById } = store.getState();
 
-  if (user) {
+  if (user && !action.dontPersist) {
     if (
       [
         "UPDATE_ASSIGNED_USER",

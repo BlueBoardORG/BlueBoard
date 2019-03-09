@@ -48,7 +48,7 @@ const api = db => {
   });
 
   router.post("/history", (req, res) => {
-    let { body: historyObj } = req;
+    const { body: historyObj } = req;
     history
       .insert(historyObj)
       .then(result => {
@@ -60,17 +60,17 @@ const api = db => {
   });
 
   router.post("/history/getByBoardId", (req, res) => {
-    let { id } = req.body;
+    const { id } = req.body;
     history
-      .find({ boardId: id }, "-_id")
+      .find({ boardId: id }, "-_id -payload")
       .toArray()
       .then(histories => {
-        res.json(histories);
+        res.json(histories.map(hist=> ({...hist, payload: undefined})));
       });
   });
 
   router.post("/notifications", (req, res) => {
-    let { body: notification } = req;
+    const { body: notification } = req;
     notifications
       .insert(notification)
       .then(result => {
