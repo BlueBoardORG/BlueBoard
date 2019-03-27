@@ -38,8 +38,8 @@ MongoClient.connect(process.env.MONGODB_URL).then(client => {
   app.use(logger("tiny"));
   app.use(compression());
   app.use(favicon("dist/public/favicons/favicon.ico"));
-  app.use(express.json());
-  app.use(express.urlencoded({ extended: true }));
+  app.use(express.json({limit:"100mb"}));
+  app.use(express.urlencoded({ extended: true, limit:"100mb" }));
   // aggressive cache static assets (1 year)
   // app.use("/static", express.static("dist/public", { maxAge: "1y" }));
   app.use(
