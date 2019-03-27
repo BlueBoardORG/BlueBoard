@@ -1,4 +1,4 @@
-import { ADMIN_ROLE } from '../../constants';
+import { ADMIN_ROLE , BOARD_BG_URLS} from '../../constants';
 
 const boardsById = (state = {}, action) => {
   switch (action.type) {
@@ -79,7 +79,8 @@ const boardsById = (state = {}, action) => {
           title: boardTitle,
           lists: [],
           users: [{id: userId, role: ADMIN_ROLE}],
-          color: "blue"
+          color: "blue",
+          backgroundImage: BOARD_BG_URLS[0]
         }
       };
     }
