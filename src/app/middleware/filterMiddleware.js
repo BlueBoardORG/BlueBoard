@@ -8,7 +8,7 @@ const filterMiddleware = store => next => action => {
 
     if (user) {
         if (action.type.includes("CARD")) {
-            let matchingCardsById = {};
+             const matchingCardsById = {};
 
             Object.keys(cardsById).forEach(cardId => {
               if ((cardsById[cardId].text || '').toLowerCase().includes(currFilter.toLowerCase())) {

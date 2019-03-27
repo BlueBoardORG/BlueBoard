@@ -4,13 +4,13 @@ import { connect } from "react-redux";
 import { Title } from "react-head";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import classnames from "classnames";
+import { withTranslation } from "react-i18next";
 import List from "../List/List";
 import ListAdder from "../ListAdder/ListAdder";
 import Header from "../Header/Header";
 import BoardHeader from "../BoardHeader/BoardHeader";
 import { loadBoardUsersData } from "../../actions/boardActions";
-import { withTranslation } from "react-i18next";
-import { BASE_BOARD_BG_URL, CAN_EDIT_ROLES } from "../../../constants";
+import { CAN_EDIT_ROLES } from "../../../constants";
 import "./Board.scss";
 import BoardMenu from "../BoardHeader/BoardMenu";
 

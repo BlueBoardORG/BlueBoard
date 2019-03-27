@@ -12,7 +12,7 @@ const appendAttributes = list =>
 // Generate the initial showcase board that every user and guest gets when they first log in
 const createWelcomeBoard = userId => {
   const list1 = [
-    { text: "### An open source application inspired by Trello" },
+    { text: "### Board Card" },
     {
       text: `amazing board example`,
       color: "#6df"
@@ -87,10 +87,11 @@ Since you are not signed in, your changes will not persist after you leave the w
     _id: shortid.generate(),
     title: "Tutorial board",
     color: "blue",
+    backgroundImage: "/static/images/backgroundImage.b6ba8b.jpg",
     lists: [
       {
         _id: shortid.generate(),
-        title: "Welcome to React Kanban!",
+        title: "Welcome to AmanBoard!",
         cards: appendAttributes(list1)
       },
       {
