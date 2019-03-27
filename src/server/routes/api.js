@@ -24,11 +24,7 @@ const api = db => {
     boards
       .replaceOne(
         {
-          _id: board._id,
-          $or: [
-            { users: { id: req.user._id, role: ADMIN_ROLE } },
-            { users: { id: req.user._id, role: READ_WRITE_ROLE } }
-          ]
+          _id: board._id
         },
         board,
         { upsert: true }
