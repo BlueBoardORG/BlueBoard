@@ -1,4 +1,4 @@
-import { ADMIN_ROLE } from '../../constants';
+import { ADMIN_ROLE , BOARD_BG_URLS} from '../../constants';
 
 const boardsById = (state = {}, action) => {
   switch (action.type) {
@@ -79,7 +79,8 @@ const boardsById = (state = {}, action) => {
           title: boardTitle,
           lists: [],
           users: [{id: userId, role: ADMIN_ROLE}],
-          color: "blue"
+          color: "blue",
+          backgroundImage: BOARD_BG_URLS[0]
         }
       };
     }
@@ -102,6 +103,16 @@ const boardsById = (state = {}, action) => {
           color
         }
       };
+    }
+    case "CHANGE_BOARD_IMAGE": {
+      const { boardId, backgroundImage } = action.payload;
+      return {
+        ...state,
+        [boardId]: {
+          ...state[boardId],
+          backgroundImage
+        }
+      }
     }
     case "DELETE_BOARD": {
       const { boardId } = action.payload;

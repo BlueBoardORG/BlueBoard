@@ -22,6 +22,7 @@ class Board extends Component {
     boardId: PropTypes.string.isRequired,
     boardTitle: PropTypes.string.isRequired,
     boardColor: PropTypes.string.isRequired,
+    boardImageBackground: PropTypes.string,
     dispatch: PropTypes.func.isRequired,
     boardUsers: PropTypes.array
   };
@@ -140,11 +141,13 @@ class Board extends Component {
   };
 
   render = () => {
-    const { lists, boardTitle, boardId, boardColor, t, user, board } = this.props;
-    const imageUrl = `url(${BASE_BOARD_BG_URL})`;
+    const { lists, boardTitle, boardId, boardColor, t, user, board, boardImageBackground } = this.props;
+    const imageUrl = `url(${boardImageBackground})`;
     const wrapperStyle = {
       backgroundImage: imageUrl,
-      backgroundAttachment: "fixed"
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      backgroundSize: "cover"
     };
     const userData = board.users.find(u => u.id === user._id) || {};
     const isAbleToEdit = CAN_EDIT_ROLES.includes(userData.role);
@@ -206,6 +209,7 @@ const mapStateToProps = (state, ownProps) => {
     boardColor: board.color,
     boardId: board._id,
     boardUsers: board.users,
+    boardImageBackground: board.backgroundImage,
     user,
     boardUsersData
   };
