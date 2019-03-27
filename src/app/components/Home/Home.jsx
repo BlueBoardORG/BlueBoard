@@ -9,7 +9,6 @@ import classnames from "classnames";
 import Header from "../Header/Header";
 import BoardAdder from "./BoardAdder";
 import "./Home.scss";
-import { BASE_BOARD_BG_URL_SMALL } from "../../../constants";
 
 class Home extends Component {
   static propTypes = {
@@ -26,7 +25,6 @@ class Home extends Component {
   };
   render = () => {
     const { boards, listsById, history, t, user} = this.props;
-    const imageUrl = `url(${BASE_BOARD_BG_URL_SMALL})`;
     return (
       <>
         <Title>
@@ -41,7 +39,7 @@ class Home extends Component {
                 <Link
                   key={board._id}
                   className={classnames("board-link", board.color)}
-                  style={{backgroundImage: imageUrl, backgroundPosition: 'center'}}
+                  style={{backgroundImage: `url(${board.backgroundImage})`, backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundSize: "cover"}}
                   to={`/b/${board._id}/${slugify(board.title, {
                     lower: true
                   })}`}
@@ -73,7 +71,7 @@ class Home extends Component {
                 <Link
                   key={board._id}
                   className={classnames("board-link", board.color)}
-                  style={{backgroundImage: imageUrl, backgroundPosition: 'center'}}
+                  style={{backgroundImage: `url(${board.backgroundImage})`, backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundSize: "cover"}}
                   to={`/b/${board._id}/${slugify(board.title, {
                     lower: true
                   })}`}

@@ -5,47 +5,48 @@ import { withRouter } from "react-router-dom";
 import { Button, Wrapper, Menu, MenuItem } from "react-aria-menubutton";
 import classnames from "classnames";
 import FaCheck from "react-icons/lib/fa/check";
-import colorIcon from "../../../assets/images/color-icon.png";
+import imageIcon from "../../../assets/images/image-icon.png";
 import "./ColorPicker.scss";
 import { withTranslation } from "react-i18next";
+import { BOARD_BG_URLS } from "../../../constants";
 
 class ImagePicker extends Component {
   static propTypes = {
     boardId: PropTypes.string.isRequired,
-    boardColor: PropTypes.string.isRequired,
+    backgroundImage: PropTypes.string,
     dispatch: PropTypes.func.isRequired
   };
 
-  handleSelection = color => {
-    const { dispatch, boardId, boardColor } = this.props;
+  handleSelection = image => {
+    const { dispatch, boardId, backgroundImage } = this.props;
     // Dispatch update only if selected color is not the same as current board color.
-    if (color !== boardColor) {
-      dispatch({ type: "CHANGE_BOARD_COLOR", payload: { boardId, color } });
+    if (image !== backgroundImage) {
+      dispatch({ type: "CHANGE_BOARD_IMAGE", payload: { boardId, backgroundImage: image} });
     }
   };
 
   render() {
-    const { boardColor,t } = this.props;
-    const colors = ["blue", "green", "red", "pink"];
+    const { backgroundImage,t } = this.props;
     return (
       <Wrapper
         className="color-picker-wrapper"
         onSelection={this.handleSelection}
       >
         <Button className="color-picker">
-          <img src={colorIcon} alt="colorwheel" className="modal-icon" />
+          <img src={imageIcon} alt="colorwheel" className="modal-icon" style={{width: "16px"}}/>
           <div className="board-header-right-text">
-            &nbsp;{t('Color')} &nbsp;&#9662;
+            &nbsp;{t('Image')} &nbsp;&#9662;
           </div>
         </Button>
         <Menu className="color-picker-menu">
-          {colors.map(color => (
+          {BOARD_BG_URLS.map(image => (
             <MenuItem
-              value={color}
-              className={classnames("color-picker-item", color)}
-              key={color}
+              value={image}
+              className={classnames("color-picker-item", image)}
+              key={image}
+              style={{backgroundImage: `url(${image})`,backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundSize: "cover"}}
             >
-              {color === boardColor && <FaCheck />}
+              {image === backgroundImage && <FaCheck />}
             </MenuItem>
           ))}
         </Menu>
@@ -57,7 +58,7 @@ class ImagePicker extends Component {
 const mapStateToProps = (state, ownProps) => {
   const { boardId } = ownProps.match.params;
   return {
-    boardColor: state.boardsById[boardId].color,
+    backgroundImage: state.boardsById[boardId].backgroundImage,
     boardId
   };
 };

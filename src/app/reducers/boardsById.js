@@ -103,6 +103,16 @@ const boardsById = (state = {}, action) => {
         }
       };
     }
+    case "CHANGE_BOARD_IMAGE": {
+      const { boardId, backgroundImage } = action.payload;
+      return {
+        ...state,
+        [boardId]: {
+          ...state[boardId],
+          backgroundImage
+        }
+      }
+    }
     case "DELETE_BOARD": {
       const { boardId } = action.payload;
       const { [boardId]: deletedBoard, ...restOfBoards } = state;
