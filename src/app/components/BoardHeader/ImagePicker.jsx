@@ -5,9 +5,9 @@ import { withRouter } from "react-router-dom";
 import { Button, Wrapper, Menu, MenuItem } from "react-aria-menubutton";
 import classnames from "classnames";
 import FaCheck from "react-icons/lib/fa/check";
+import { withTranslation } from "react-i18next";
 import imageIcon from "../../../assets/images/image-icon.png";
 import "./ColorPicker.scss";
-import { withTranslation } from "react-i18next";
 import { BOARD_BG_URLS } from "../../../constants";
 
 class ImagePicker extends Component {

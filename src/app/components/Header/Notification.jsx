@@ -11,8 +11,9 @@ import {
   Pill
 } from "evergreen-ui";
 import { withRouter } from "react-router-dom";
-import socket from "../../socketIOHandler";
 import { withTranslation } from "react-i18next";
+import socket from "../../socketIOHandler";
+
 
 class Notification extends React.Component {
   constructor(props) {
@@ -26,7 +27,7 @@ class Notification extends React.Component {
     });
   }
   fetchNotificationsFromDB() {
-    fetch("/api//notifications/getByUserId", {
+    fetch("/api/notifications/getByUserId", {
       method: "POST",
       body: JSON.stringify({ id: this.props.userId }),
       headers: { "Content-Type": "application/json" },

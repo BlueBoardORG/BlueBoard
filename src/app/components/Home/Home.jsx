@@ -8,6 +8,7 @@ import slugify from "slugify";
 import classnames from "classnames";
 import Header from "../Header/Header";
 import BoardAdder from "./BoardAdder";
+import { BOARD_BG_URLS } from "../../../constants";
 import "./Home.scss";
 
 class Home extends Component {
@@ -21,8 +22,18 @@ class Home extends Component {
     ).isRequired,
     listsById: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
-    user: PropTypes.object.isRequired
+    user: PropTypes.object.isRequired,
+    dispatch: PropTypes.func.isRequired
   };
+  componentDidMount = () => {
+    const { boards, dispatch } = this.props;
+    boards.forEach(board=>{
+      const boardImageBackground = board.backgroundImage;
+      if(!boardImageBackground){
+        dispatch({ type: "CHANGE_BOARD_IMAGE", payload: { boardId:board._id, backgroundImage: BOARD_BG_URLS[0]} });
+      }
+    })
+  }
   render = () => {
     const { boards, listsById, history, t, user} = this.props;
     return (
