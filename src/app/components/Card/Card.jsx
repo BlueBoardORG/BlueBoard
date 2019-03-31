@@ -92,6 +92,7 @@ class Card extends Component {
       isDraggingOver,
       assignedToMe,
       assignedUserName,
+      assignedUserId,
       isAbleToEdit
     } = this.props;
     const { isModalOpen } = this.state;
@@ -144,6 +145,7 @@ class Card extends Component {
                     date={card.date}
                     checkboxes={checkboxes}
                     assignedUserName={assignedUserName}
+                    assignedUserId={assignedUserId}
                     assignedToMe={assignedToMe}
                     labels={card.labels}
                   />
@@ -162,6 +164,7 @@ class Card extends Component {
           isShowCommentForm
           toggleCardEditor={this.toggleCardEditor}
           assignedUserName={assignedUserName}
+          assignedUserId={assignedUserId}
           assignedToMe={assignedToMe}
         />
       </>
@@ -176,6 +179,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     card,
     assignedUserName: assignedUser.name,
+    assignedUserId: assignedUser._id,
     assignedToMe: assignedUser._id === state.user._id
   };
 };

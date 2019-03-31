@@ -35,12 +35,28 @@ class UserAvatar extends Component {
     loadBoardUsersData(dispatch, Array.from(newUserIds));
   };
 
+  hashCode = (str) => { // java String#hashCode
+    var hash = 0;
+    for (var i = 0; i < str.length; i++) {
+       hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    return hash;
+  } 
+
+  intToRGB = (i) => {
+      var c = (i & 0x00FFFFFF)
+          .toString(16)
+          .toUpperCase();
+
+      return "00000".substring(0, 6 - c.length) + c;
+  }
+
   render() {
     const { user, t, isCurrentUserAdmin, currentUser, boardUsers } = this.props;
 
     const words = user.name.split(" ");
     const randomStyle = {
-      background: COLORS[Math.floor(Math.random() * COLORS.length)]
+      background: "#" + this.intToRGB(this.hashCode(user._id))
     };
     const deleteButton = (
       <div>

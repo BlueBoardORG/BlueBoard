@@ -20,6 +20,7 @@ class CardBadges extends Component {
     }).isRequired,
     assignedToMe: PropTypes.bool,
     assignedUserName: PropTypes.string,
+    assignedUserId: PropTypes.string,
     labels: PropTypes.array
   };
 
@@ -79,8 +80,24 @@ class CardBadges extends Component {
     );
   };
 
+  hashCode = (str) => { // java String#hashCode
+    var hash = 0;
+    for (var i = 0; i < str.length; i++) {
+       hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    return hash;
+  } 
+
+  intToRGB = (i) => {
+      var c = (i & 0x00FFFFFF)
+          .toString(16)
+          .toUpperCase();
+
+      return "00000".substring(0, 6 - c.length) + c;
+  }
+
   renderAssigned = () => {
-    const { assignedToMe, assignedUserName } = this.props;
+    const {assignedUserName , assignedUserId} = this.props;
 
     if (!assignedUserName) {
       return null;
@@ -89,7 +106,7 @@ class CardBadges extends Component {
     return (
       <div
         className="badge"
-        style={{ background: assignedToMe ? "green" : "#444" }}
+        style={{ background: "#" + this.intToRGB(this.hashCode(assignedUserId)) }}
       >
         <FaUser className="badge-icon" />
         &nbsp;
