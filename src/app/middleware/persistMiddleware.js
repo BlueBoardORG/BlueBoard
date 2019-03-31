@@ -57,8 +57,6 @@ const persistMiddleware = store => next => action => {
 
       const boardData = denormalize(boardId, board, entities);
 
-      console.log(boardData);
-
       // TODO: Provide warning message to user when put request doesn't work for whatever reason
       fetch("/api/board", {
         method: "PUT",
