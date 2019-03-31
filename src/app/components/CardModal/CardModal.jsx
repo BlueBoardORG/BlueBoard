@@ -100,7 +100,8 @@ class CardModal extends Component {
       listId,
       isOpen,
       assignedToMe,
-      assignedUserName
+      assignedUserName,
+      assignedUserId
     } = this.props;
     if (!cardElement) {
       return null;
@@ -209,6 +210,7 @@ class CardModal extends Component {
                 date={card.date}
                 checkboxes={checkboxes}
                 assignedUserName={assignedUserName}
+                assignedUserId={assignedUserId}
                 assignedToMe={assignedToMe}
                 labels={card.labels}
               />
