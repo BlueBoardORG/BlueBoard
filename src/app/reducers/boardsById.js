@@ -14,11 +14,18 @@ const boardsById = (state = {}, action) => {
     }
     case "ADD_USER": {
       const {boardId, userToAdd} = action.payload;
+      const users = state[boardId].users.filter(user => user.id === userToAdd.id);
+      let newUsers;
+      if(users.length === 0){
+        newUsers = [...state[boardId].users, userToAdd];
+      }else{
+        newUsers = [...state[boardId].users];
+      }
       return {
         ...state,
         [boardId] : {
           ...state[boardId],
-          users: [...state[boardId]["users"], userToAdd]
+          users: newUsers
         }
       }
     }
