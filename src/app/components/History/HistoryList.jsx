@@ -28,10 +28,9 @@ class HistoryList extends Component {
       }
     });
 
-    socket.on("historyItem", ({action, boardId, userId}) => {
-      console.log("yas");
-      this.setState({history: [{action,boardId,userId}, ...this.state.history]})
-      console.log(this.state);
+    socket.on("historyItem", ({action, boardId: changedBoardId, userId}) => {
+      if(boardId === changedBoardId)
+        this.setState({history: [{action,changedBoardId,userId}, ...this.state.history]}) 
     })
   }
 
