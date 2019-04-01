@@ -4,6 +4,7 @@ import { withTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import "./HistoryList.scss";
+import socket from '../../socketIOHandler';
 
 class HistoryList extends Component {
   static propTypes = {};
@@ -26,6 +27,12 @@ class HistoryList extends Component {
         });
       }
     });
+
+    socket.on("historyItem", ({action, boardId, userId}) => {
+      console.log("yas");
+      this.setState({history: [{action,boardId,userId}, ...this.state.history]})
+      console.log(this.state);
+    })
   }
 
 
