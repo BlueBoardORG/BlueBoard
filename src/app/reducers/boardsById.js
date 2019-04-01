@@ -79,6 +79,7 @@ const boardsById = (state = {}, action) => {
     }
     case "ADD_BOARD": {
       const { boardTitle, boardId, userId } = action.payload;
+      const image = BOARD_BG_URLS[Math.floor(Math.random()*BOARD_BG_URLS.length)];
       return {
         ...state,
         [boardId]: {
@@ -87,7 +88,7 @@ const boardsById = (state = {}, action) => {
           lists: [],
           users: [{id: userId, role: ADMIN_ROLE}],
           color: "blue",
-          backgroundImage: BOARD_BG_URLS[0]
+          backgroundImage: image
         }
       };
     }
