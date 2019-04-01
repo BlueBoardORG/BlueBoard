@@ -1,5 +1,9 @@
 import shortid from "shortid";
 import { ADMIN_ROLE } from '../constants';
+import {BOARD_BG_URLS} from '../constants';
+
+
+const image = BOARD_BG_URLS[Math.floor(Math.random()*BOARD_BG_URLS.length)];
 
 // Give every card in a list an _id and the color white UNLESS those properties already exist
 const appendAttributes = list =>
@@ -87,7 +91,7 @@ Since you are not signed in, your changes will not persist after you leave the w
     _id: shortid.generate(),
     title: "Tutorial board",
     color: "blue",
-    backgroundImage: "/static/images/backgroundImage.b6ba8b.jpg",
+    backgroundImage: image,
     lists: [
       {
         _id: shortid.generate(),

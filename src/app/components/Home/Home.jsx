@@ -30,7 +30,9 @@ class Home extends Component {
     boards.forEach(board=>{
       const boardImageBackground = board.backgroundImage;
       if(!boardImageBackground){
-        dispatch({ type: "CHANGE_BOARD_IMAGE", payload: { boardId:board._id, backgroundImage: BOARD_BG_URLS[0]} });
+        const image = BOARD_BG_URLS[Math.floor(Math.random()*BOARD_BG_URLS.length)];
+        console.log(image);
+        dispatch({ type: "CHANGE_BOARD_IMAGE", payload: { boardId:board._id, backgroundImage: image} });
       }
     })
   }
