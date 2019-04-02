@@ -18,8 +18,9 @@ const api = db => {
   // This solution sends more data than necessary, but cuts down on code and
   // effectively prevents the db and client from ever getting out of sync
   router.put("/board", (req, res) => {
-    let board = req.body;
-    board = { ...board, changed_by: req.user._id };
+    let {boardData: board} = req.body;
+    const {socketId} = req.body;
+    board = { ...board, changed_by: req.user._id, last_socket: socketId };
     // Update the board only if the user's role in the board is admin/read-write
     boards
       .replaceOne(

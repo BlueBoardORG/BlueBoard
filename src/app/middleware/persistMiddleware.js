@@ -1,4 +1,5 @@
 import { denormalize, schema } from "normalizr";
+import socket from '../socketIOHandler';
 
 // Persist the board to the database after almost every action.
 const persistMiddleware = store => next => action => {
@@ -60,7 +61,7 @@ const persistMiddleware = store => next => action => {
       // TODO: Provide warning message to user when put request doesn't work for whatever reason
       fetch("/api/board", {
         method: "PUT",
-        body: JSON.stringify(boardData),
+        body: JSON.stringify({boardData, socketId: socket.id}),
         headers: { "Content-Type": "application/json" },
         credentials: "include"
       });

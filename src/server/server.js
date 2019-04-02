@@ -76,5 +76,4 @@ MongoClient.connect(process.env.MONGODB_URL).then(client => {
   const server = http.createServer(app);
   server.listen(port, () => console.log(`Server listening on port ${port}`));
   
-
 });

@@ -31,7 +31,6 @@ class Home extends Component {
       const boardImageBackground = board.backgroundImage;
       if(!boardImageBackground){
         const image = BOARD_BG_URLS[Math.floor(Math.random()*BOARD_BG_URLS.length)];
-        console.log(image);
         dispatch({ type: "CHANGE_BOARD_IMAGE", payload: { boardId:board._id, backgroundImage: image} });
       }
     })
