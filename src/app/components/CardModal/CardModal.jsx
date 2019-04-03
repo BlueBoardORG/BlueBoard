@@ -13,6 +13,8 @@ import "./CardModal.scss";
 
 const keyMap = {
   BOLD_TEXT: "ctrl+b",
+  ITALIC_TEXT: "ctrl+i",
+  UNDERLINE_TEXT: "ctrl+u",
 };
 
 class CardModal extends Component {
@@ -109,6 +111,19 @@ class CardModal extends Component {
     }
   }
 
+  italicText = (event) => { 
+    let textarea = event.target;
+    if ('selectionStart' in textarea) {
+            // check whether some text is selected in the textarea
+        if (textarea.selectionStart != textarea.selectionEnd) {
+            var newText = textarea.value.substring (0, textarea.selectionStart) + 
+                "*" + textarea.value.substring  (textarea.selectionStart, textarea.selectionEnd) + "*" +
+                textarea.value.substring (textarea.selectionEnd);
+            this.setState({ newText: newText })
+        }
+    }
+  }
+
   render() {
     const { newText, isColorPickerOpen, isTextareaFocused } = this.state;
     const {
@@ -178,7 +193,9 @@ class CardModal extends Component {
     }
 
     const handlers = {
-      BOLD_TEXT: this.boldText
+      BOLD_TEXT: this.boldText,
+      ITALIC_TEXT: this.italicText,
+      UNDERLINE_TEXT: this.underlineText,
     };
 
     return (
