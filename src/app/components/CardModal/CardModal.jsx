@@ -101,7 +101,7 @@ class CardModal extends Component {
   boldText = (event) => { 
     let textarea = event.target;
     if ('selectionStart' in textarea) {
-            // check whether some text is selected in the textarea
+        // check whether some text is selected in the textarea
         if (textarea.selectionStart != textarea.selectionEnd) {
             var newText = textarea.value.substring (0, textarea.selectionStart) + 
                 "**" + textarea.value.substring  (textarea.selectionStart, textarea.selectionEnd) + "**" +
@@ -114,12 +114,22 @@ class CardModal extends Component {
   italicText = (event) => { 
     let textarea = event.target;
     if ('selectionStart' in textarea) {
-            // check whether some text is selected in the textarea
+        // check whether some text is selected in the textarea
         if (textarea.selectionStart != textarea.selectionEnd) {
             var newText = textarea.value.substring (0, textarea.selectionStart) + 
                 "*" + textarea.value.substring  (textarea.selectionStart, textarea.selectionEnd) + "*" +
                 textarea.value.substring (textarea.selectionEnd);
             this.setState({ newText: newText })
+        }
+    }
+  }
+
+  underlineText = (event) => { 
+    let textarea = event.target;
+    if ('selectionStart' in textarea) {
+        // check whether some text is selected in the textarea
+        if (textarea.selectionStart != textarea.selectionEnd) {
+            // need to check if markdown exists
         }
     }
   }
