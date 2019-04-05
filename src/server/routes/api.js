@@ -19,8 +19,7 @@ const api = db => {
   // effectively prevents the db and client from ever getting out of sync
   router.put("/board", (req, res) => {
     let {boardData: board} = req.body;
-    const {socketId} = req.body;
-    board = { ...board, changed_by: req.user._id, last_socket: socketId };
+    board = { ...board, changed_by: req.user._id };
     // Update the board only if the user's role in the board is admin/read-write
     boards
       .replaceOne(
