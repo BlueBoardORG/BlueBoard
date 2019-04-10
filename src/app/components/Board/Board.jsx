@@ -5,6 +5,7 @@ import { Title } from "react-head";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import classnames from "classnames";
 import { withTranslation } from "react-i18next";
+import Modal from "react-modal";
 import List from "../List/List";
 import ListAdder from "../ListAdder/ListAdder";
 import Header from "../Header/Header";
@@ -141,7 +142,7 @@ class Board extends Component {
   };
 
   render = () => {
-    const { lists, boardTitle, boardId, boardColor, t, user, board, boardImageBackground } = this.props;
+    const { lists, boardTitle, boardId, boardColor, t, user, board, boardImageBackground, socketConnected } = this.props;
     const imageUrl = `url(${boardImageBackground})`;
     const wrapperStyle = {
       backgroundImage: imageUrl,
@@ -150,7 +151,20 @@ class Board extends Component {
       backgroundSize: "cover"
     };
     const userData = board.users.find(u => u.id === user._id) || {};
-    const isAbleToEdit = CAN_EDIT_ROLES.includes(userData.role);
+    const isAbleToEdit = CAN_EDIT_ROLES.includes(userData.role) && socketConnected;
+    
+    const customStyles = {
+      content : {
+        top                   : '50%',
+        left                  : '50%',
+        right                 : 'auto',
+        bottom                : 'auto',
+        marginRight           : '-50%',
+        transform             : 'translate(-50%, -50%)',
+        width                 : '25%',
+        height                : '25%'
+      }
+    };
 
     return (
       <>
@@ -159,6 +173,13 @@ class Board extends Component {
             {boardTitle} | {t("project_name")}
           </Title>
           <Header />
+          <Modal
+            isOpen={!socketConnected}
+            contentLabel="Waiting for connection"
+            style={customStyles}
+          >
+            <h1 style={{textAlign: "center", alignContent:"center", float:"none", margin:"auto"}}> {t("connection.wait")} </h1>
+          </Modal>
           <BoardHeader isAbleToEdit={isAbleToEdit}/>
           {/* eslint-disable jsx-a11y/no-static-element-interactions */}
           <div
@@ -201,7 +222,7 @@ class Board extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   const { board } = ownProps;
-  const { user, boardUsersData } = state;
+  const { user, boardUsersData, socketConnected } = state;
 
   return {
     lists: board.lists.map(listId => state.listsById[listId]),
@@ -211,7 +232,8 @@ const mapStateToProps = (state, ownProps) => {
     boardUsers: board.users,
     boardImageBackground: board.backgroundImage,
     user,
-    boardUsersData
+    boardUsersData, 
+    socketConnected
   };
 };
 

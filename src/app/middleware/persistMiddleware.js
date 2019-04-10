@@ -29,7 +29,8 @@ const persistMiddleware = store => next => action => {
         "SET_CURRENT_CARD",
         "UPDATE_FILTER",
         "CHANGE_CARD_FILTER",
-        "LOAD_BOARD_USERS_DATA"
+        "LOAD_BOARD_USERS_DATA",
+        "TOGGLE_SOCKET_CONNECTION"
       ].includes(action.type)
     ) {
       // Transform the flattened board state structure into the tree-shaped structure that the db uses.

@@ -10,6 +10,7 @@ import currentBoardId from "./currentBoardId";
 import currentCardId from "./currentCardId";
 import commentsById from "./commentsById";
 import boardUsersData from "./boardUsersData";
+import socketConnected from "./socketConnected";
 
 export default combineReducers({
   cardsById,
@@ -22,5 +23,6 @@ export default combineReducers({
   currentCardId,
   commentsById,
   currFilter,
-  boardUsersData
+  boardUsersData,
+  socketConnected
 });

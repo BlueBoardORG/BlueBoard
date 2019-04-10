@@ -75,5 +75,6 @@
     "UserAvatar.menu.title": "בחר אפשרות",
     "UserAvatar.menu.kick": "הוצא מהלוח",
     "UserPicker.label.select_user": "בחר/י משתמש:",
-    "UserPicker.label.select_role": "בחר/י הרשאה:"
+    "UserPicker.label.select_role": "בחר/י הרשאה:",
+    "connection.wait": "ממתין לחיבור..."
 }
