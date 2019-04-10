@@ -73,7 +73,8 @@ class Home extends Component {
                   </div>
                 </Link>
               ))}
-              <BoardAdder history={history} />
+              {this.props.socketConnected ? (<BoardAdder history={history} />) : ""}
+              
             </div>
           </div>
           <div className="main-content">
@@ -113,10 +114,11 @@ class Home extends Component {
   };
 }
 
-const mapStateToProps = ({ boardsById, listsById,user }) => ({
+const mapStateToProps = ({ boardsById, listsById,user, socketConnected }) => ({
   boards: Object.keys(boardsById).map(key => boardsById[key]),
   listsById,
-  user
+  user,
+  socketConnected
 });
 
 export default connect(mapStateToProps)(withTranslation()(Home));
