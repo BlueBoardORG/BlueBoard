@@ -22,6 +22,33 @@ const App = ({ user, isGuest, dispatch }) => {
       })
     })
   }
+
+  const interval = setInterval(()=>{
+    if(socket.connected){
+      dispatch({
+        type: "TOGGLE_SOCKET_CONNECTION",
+        payload: true,
+        dontPersist: true
+      })
+      clearInterval(interval);
+    }
+  },10);
+
+  if(!socket.hasListeners("reconnect")){
+    socket.on("reconnect", () => {
+      window.location.reload();
+    })
+  }
+
+  if(!socket.hasListeners("disconnect")){
+    socket.on("disconnect", () => {
+      dispatch({
+        type: "TOGGLE_SOCKET_CONNECTION",
+        payload: false,
+        dontPersist: true
+      })
+    })
+  }
  
   // Serve different pages depending on if user is logged in or not
   if (user || isGuest) {
