@@ -8,7 +8,14 @@ import CardBadges from "../CardBadges/CardBadges";
 import CardOptions from "./CardOptions";
 import Comments from "./Comments/Comments";
 import { findCheckboxes } from "../utils";
+import { HotKeys } from "react-hotkeys";
 import "./CardModal.scss";
+
+const keyMap = {
+  BOLD_TEXT: "ctrl+b",
+  ITALIC_TEXT: "ctrl+i",
+  UNDERLINE_TEXT: "ctrl+u",
+};
 
 class CardModal extends Component {
   static propTypes = {
@@ -91,6 +98,42 @@ class CardModal extends Component {
     this.setState({ areCommentsOpen: !this.state.areCommentsOpen });
   };
 
+  boldText = (event) => { 
+    let textarea = event.target;
+    if ('selectionStart' in textarea) {
+        // check whether some text is selected in the textarea
+        if (textarea.selectionStart != textarea.selectionEnd) {
+            var newText = textarea.value.substring (0, textarea.selectionStart) + 
+                "**" + textarea.value.substring  (textarea.selectionStart, textarea.selectionEnd) + "**" +
+                textarea.value.substring (textarea.selectionEnd);
+            this.setState({ newText: newText })
+        }
+    }
+  }
+
+  italicText = (event) => { 
+    let textarea = event.target;
+    if ('selectionStart' in textarea) {
+        // check whether some text is selected in the textarea
+        if (textarea.selectionStart != textarea.selectionEnd) {
+            var newText = textarea.value.substring (0, textarea.selectionStart) + 
+                "*" + textarea.value.substring  (textarea.selectionStart, textarea.selectionEnd) + "*" +
+                textarea.value.substring (textarea.selectionEnd);
+            this.setState({ newText: newText })
+        }
+    }
+  }
+
+  underlineText = (event) => { 
+    let textarea = event.target;
+    if ('selectionStart' in textarea) {
+        // check whether some text is selected in the textarea
+        if (textarea.selectionStart != textarea.selectionEnd) {
+            // need to check if markdown exists
+        }
+    }
+  }
+
   render() {
     const { newText, isColorPickerOpen, isTextareaFocused } = this.state;
     const {
@@ -159,6 +202,12 @@ class CardModal extends Component {
       background: 'rgba(0, 0, 0, 0.6)'
     }
 
+    const handlers = {
+      BOLD_TEXT: this.boldText,
+      ITALIC_TEXT: this.italicText,
+      UNDERLINE_TEXT: this.underlineText,
+    };
+
     return (
       <Modal
         closeTimeoutMS={150}
@@ -191,6 +240,7 @@ class CardModal extends Component {
                 : null
             }}
           >
+            <HotKeys handlers={handlers} keyMap={keyMap}>
             <Textarea
               autoFocus
               useCacheForDOMMeasurements
@@ -202,6 +252,7 @@ class CardModal extends Component {
               onFocus={() => this.setState({ isTextareaFocused: true })}
               onBlur={() => this.setState({ isTextareaFocused: false })}
             />
+            </HotKeys>
             {(card.date ||
               checkboxes.total > 0 ||
               assignedUserName ||
