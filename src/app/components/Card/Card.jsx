@@ -7,7 +7,6 @@ import CardModal from "../CardModal/CardModal";
 import CardBadges from "../CardBadges/CardBadges";
 import { findCheckboxes } from "../utils";
 import formatMarkdown from "./formatMarkdown";
-import { HotKeys } from "react-hotkeys";
 import "./Card.scss";
 
 class Card extends Component {

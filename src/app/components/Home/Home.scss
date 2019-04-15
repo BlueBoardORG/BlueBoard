@@ -61,7 +61,23 @@ $add-board-focus-bg: #ccc;
 .boards {
   display: inline-flex;
   flex-wrap: wrap;
+  direction: ltr;
+  overflow-y: auto;
+  flex-direction: row-reverse;
+  padding-right: 1.5%;
 }
+
+.boards::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  background: #ddd;
+}
+
+.boards::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background: #aaa;
+}
+
 
 .board-link {
   @include board-button;
@@ -70,6 +86,7 @@ $add-board-focus-bg: #ccc;
   color: white;
   overflow-wrap: break-word;
   text-decoration: none;
+  direction: rtl;
 
   &.green {
     background: $green;
@@ -126,6 +143,7 @@ $add-board-focus-bg: #ccc;
   border: 0;
   background: $add-board-bg;
   color: #444;
+  direction: rtl;
 }
 
 .add-board-button:hover,
@@ -144,6 +162,7 @@ $add-board-focus-bg: #ccc;
   background: $add-board-bg;
   color: #444;
   font-size: 16px;
+  direction: rtl;
 }
 
 .submit-board-button {
