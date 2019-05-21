@@ -168,7 +168,7 @@ class CardModal extends Component {
         overlayClassName="modal-underlay"
         className="modal"
         style={isThinDisplay ? mobileStyle : style}
-        includeDefaultStyles={false}
+        includeDefaultStyles={false} 
         onClick={this.handleRequestClose}
       >
         <CardOptions

@@ -20,25 +20,25 @@ class Cards extends Component {
       <Droppable droppableId={listId} isDropDisabled={!isAbleToEdit}>
         {(provided, { isDraggingOver }) => (
           <>
-            <div className="cards" ref={provided.innerRef}>
-              {cards.map((cardId, index) => (
-                filteredCardsById[cardId] ? <Card
-                  isDraggingOver={isDraggingOver}
-                  key={cardId}
-                  cardId={cardId}
-                  index={index}
-                  listId={listId}
-                  isAbleToEdit={isAbleToEdit}
-                /> : null
-              ))}
-              {provided.placeholder}
-              <div
-                style={{ float: "left", clear: "both" }}
-                ref={el => {
-                  this.listEnd = el;
-                }}
-              />
-            </div>
+              <div className="cards" ref={provided.innerRef}>
+                {cards.map((cardId, index) => (
+                  filteredCardsById[cardId] ? <Card
+                    isDraggingOver={isDraggingOver}
+                    key={cardId}
+                    cardId={cardId}
+                    index={index}
+                    listId={listId}
+                    isAbleToEdit={isAbleToEdit}
+                  /> : null
+                ))}
+                {provided.placeholder}
+                <div
+                  style={{ float: "left", clear: "both" }}
+                  ref={el => {
+                    this.listEnd = el;
+                  }}
+                />
+              </div>
           </>
         )}
       </Droppable>

@@ -130,18 +130,18 @@ class Card extends Component {
                   ...provided.draggableProps.style
                 }}
               >
-                <div
-                  className="card-title-html"
-                  dangerouslySetInnerHTML={{
-                    __html: formatMarkdown(card.text)
-                  }}
-                />
+                  <div
+                    className="card-title-html"
+                    dangerouslySetInnerHTML={{
+                      __html: formatMarkdown(card.text)
+                    }}
+                  />
                 {/* eslint-enable */}
                 {(card.date ||
                   checkboxes.total > 0 ||
                   assignedUserName ||
                   card.labels) && (
-                  <CardBadges
+                    <CardBadges
                     date={card.date}
                     checkboxes={checkboxes}
                     assignedUserName={assignedUserName}
@@ -156,17 +156,17 @@ class Card extends Component {
             </>
           )}
         </Draggable>
-        <CardModal
-          isOpen={isModalOpen}
-          cardElement={this.ref}
-          card={card}
-          listId={listId}
-          isShowCommentForm
-          toggleCardEditor={this.toggleCardEditor}
-          assignedUserName={assignedUserName}
-          assignedUserId={assignedUserId}
-          assignedToMe={assignedToMe}
-        />
+          <CardModal
+            isOpen={isModalOpen}
+            cardElement={this.ref}
+            card={card}
+            listId={listId}
+            isShowCommentForm
+            toggleCardEditor={this.toggleCardEditor}
+            assignedUserName={assignedUserName}
+            assignedUserId={assignedUserId}
+            assignedToMe={assignedToMe}
+          />
       </>
     );
   }
