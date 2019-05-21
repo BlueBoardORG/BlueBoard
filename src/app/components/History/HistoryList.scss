@@ -2,6 +2,7 @@
     height: 65vh;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
     #title {
         font-weight: 600;
         padding: 5px;

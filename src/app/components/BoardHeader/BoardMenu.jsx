@@ -55,10 +55,7 @@ class BoardMenu extends Component {
               }}
             />
             <div
-              style={{
-                padding: "5px",
-                overflowY: "scroll"
-              }}
+              style={{ padding: "5px" }}
             >
               {this.state.open ? (
                 <FaAngleLeft
