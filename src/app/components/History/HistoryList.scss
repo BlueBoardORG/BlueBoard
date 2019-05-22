@@ -2,6 +2,17 @@
     height: 65vh;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+        background: #ddd;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        border-radius: 3px;
+        background: #aaa;
+    }
     #title {
         font-weight: 600;
         padding: 5px;

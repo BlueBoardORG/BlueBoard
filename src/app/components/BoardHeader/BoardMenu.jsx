@@ -54,12 +54,7 @@ class BoardMenu extends Component {
                 width: "100%"
               }}
             />
-            <div
-              style={{
-                padding: "5px",
-                overflowY: "scroll"
-              }}
-            >
+            <div>
               {this.state.open ? (
                 <FaAngleLeft
                   className="hamburger-button"
