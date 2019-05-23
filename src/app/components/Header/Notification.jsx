@@ -146,10 +146,11 @@ class Notification extends React.Component {
                       <Table.Row
                         style={{ direction: "rtl" }}
                         key={notification._id}
-                        onSelect={() => this.goToBoard(notification)}
                         isSelectable
                       >
-                        <Table.TextCell>
+                        <Table.TextCell
+                          onClick={() => this.goToBoard(notification)}
+                        >
                           <Table.Cell>
                             {notification.wasSeen ? <FontAwesomeIcon icon={faEye} /> : null}
                           </Table.Cell>
@@ -157,6 +158,7 @@ class Notification extends React.Component {
 
                         <Table.TextCell
                           style={{ direction: "rtl" }}
+                          onClick={() => this.goToBoard(notification)}
                           flexBasis={240}
                           flexShrink={0}
                           flexGrow={0}
