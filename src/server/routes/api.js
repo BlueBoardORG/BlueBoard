@@ -67,8 +67,9 @@ const api = db => {
 
   router.post("/notifications", (req, res) => {
     const { body: notification } = req;
+    const notificationWithWasSeen = {...notification, 'wasSeen' : false};
     notifications
-      .insert(notification)
+      .insert(notificationWithWasSeen)
       .then(result => {
         res.status(200).send();
       })
@@ -76,6 +77,19 @@ const api = db => {
         res.status(500).send("Error");
       });
   });
+
+
+  router.post("/notifications/changeWasSeen", (req, res) => {
+    const { _id } = req.body;
+    notifications
+      .findOneAndUpdate(
+        { _id: new ObjectID(_id) },
+        { $set: {'wasSeen': true} })
+      .then(() => {
+        res.status(200).send();
+      })
+  })
+
 
   router.post("/notifications/getByUserId", (req, res) => {
     let { id } = req.body;
