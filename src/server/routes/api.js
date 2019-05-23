@@ -83,7 +83,7 @@ const api = db => {
     const { _id } = req.body;
     notifications
       .findOneAndUpdate(
-        { _id: new ObjectID(_id) },
+        { _id: ObjectID(_id) },
         { $set: {'wasSeen': true} })
       .then(() => {
         res.status(200).send();

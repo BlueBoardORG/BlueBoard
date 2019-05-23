@@ -65,9 +65,10 @@ class Notification extends React.Component {
   }
 
   wasSeenHandler(notification) {
+    const { _id } = notification;
     fetch("/api/notifications/changeWasSeen", {
       method: "POST",
-      body: JSON.stringify({ _id: notification._id }),
+      body: JSON.stringify({ _id }),
       headers: { "Content-Type": "application/json" },
       credentials: "include"
     }).then(response => {
@@ -103,7 +104,7 @@ class Notification extends React.Component {
     });
   }
 
-  getNumOfUnSeenNotifs = () => this.state.notifications.filter(item => item.wasSeen === false).length;
+  getNumOfUnSeenNotifs = () => this.state.notifications.filter(item => !item.wasSeen).length;
 
   render() {
     const styles = {
