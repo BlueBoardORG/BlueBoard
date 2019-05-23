@@ -13,7 +13,8 @@ import {
 import { withRouter } from "react-router-dom";
 import { withTranslation } from "react-i18next";
 import socket from "../../socketIOHandler";
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye } from '@fortawesome/free-solid-svg-icons';
 
 class Notification extends React.Component {
   constructor(props) {
@@ -26,6 +27,7 @@ class Notification extends React.Component {
       //add state for changing logo to updates
     });
   }
+
   fetchNotificationsFromDB() {
     fetch("/api/notifications/getByUserId", {
       method: "POST",
@@ -42,10 +44,11 @@ class Notification extends React.Component {
       }
     });
   }
+
   addNewNotification(newNotification) {
     let currentNotifications = this.state.notifications;
     this.setState({
-      notifications: [newNotification,...currentNotifications]
+      notifications: [newNotification, ...currentNotifications]
     });
   }
 
@@ -54,15 +57,34 @@ class Notification extends React.Component {
 
     const cardsById = this.props.cardsById;
   }
+
   goToBoard(notification) {
+    this.wasSeenHandler(notification);
     const { history } = this.props;
     history.push(`/b/${notification.boardId}`);
+  }
+
+  wasSeenHandler(notification) {
+    const { _id } = notification;
+    fetch("/api/notifications/changeWasSeen", {
+      method: "POST",
+      body: JSON.stringify({ _id }),
+      headers: { "Content-Type": "application/json" },
+      credentials: "include"
+    }).then(response => {
+      if (response) {
+        if (response.status === 200) {
+          this.fetchNotificationsFromDB();
+        }
+      }
+    });
   }
 
   notificationMessage(notification) {
     const { user, t } = this.props;
     return `${t("Notifications." + notification.action)} ${notification.title}`;
   }
+
   deleteHandler(notification) {
     const notificationsWithRemovedNotification = [
       ...this.state.notifications
@@ -81,6 +103,7 @@ class Notification extends React.Component {
       }
     });
   }
+
   render() {
     const styles = {
       container: {
@@ -101,6 +124,9 @@ class Notification extends React.Component {
         height: "25px"
       }
     };
+
+    let numOfUnSeenNotifs = this.state.notifications.filter(item => !item.wasSeen).length;
+
     return (
       <div style={styles.container}>
         <Popover
@@ -114,49 +140,57 @@ class Notification extends React.Component {
               >
                 {this.state.notifications
                   ? this.state.notifications.map(notification => {
-                      if (!notification) return;
+                    if (!notification) return;
 
-                      return (
-                        <Table.Row
-                          style={{ direction: "rtl" }}
-                          key={notification._id}
-                          isSelectable
+                    return (
+                      <Table.Row
+                        style={{ direction: "rtl" }}
+                        key={notification._id}
+                        isSelectable
+                      >
+                        <Table.TextCell
+                          onClick={() => this.goToBoard(notification)}
                         >
-                          <Table.TextCell
-                            style={{ direction: "rtl" }}
-                            onClick={() => this.goToBoard(notification)}
-                            flexBasis={340}
-                            flexShrink={0}
-                            flexGrow={0}
-                          >
-                            {this.notificationMessage(notification)}
-                          </Table.TextCell>
                           <Table.Cell>
-                            <Button
-                              onClick={() => this.deleteHandler(notification)}
-                              isActive={false}
-                              appearance="minimal"
-                            >
-                              <Icon
-                                appearance="minimal"
-                                height={40}
-                                icon="trash"
-                                color="danger"
-                              />
-                            </Button>
+                            {notification.wasSeen ? <FontAwesomeIcon icon={faEye} /> : null}
                           </Table.Cell>
-                        </Table.Row>
-                      );
-                    })
+                        </Table.TextCell>
+
+                        <Table.TextCell
+                          style={{ direction: "rtl" }}
+                          onClick={() => this.goToBoard(notification)}
+                          flexBasis={240}
+                          flexShrink={0}
+                          flexGrow={0}
+                        >
+                          {this.notificationMessage(notification)}
+                        </Table.TextCell>
+                        <Table.Cell>
+                          <Button
+                            onClick={() => this.deleteHandler(notification)}
+                            isActive={false}
+                            appearance="minimal"
+                          >
+                            <Icon
+                              appearance="minimal"
+                              height={40}
+                              icon="trash"
+                              color="danger"
+                            />
+                          </Button>
+                        </Table.Cell>
+                      </Table.Row>
+                    );
+                  })
                   : null}
               </Table.VirtualBody>
             </Table>
           }
         >
           <Button isActive={false} appearance="minimal" height={40}>
-            {this.state.notifications.length > 0 ? (
+            {numOfUnSeenNotifs > 0 ? (
               <Pill color="red" isSolid>
-                {this.state.notifications.length}
+                {numOfUnSeenNotifs}
               </Pill>
             ) : null}
             <Icon
@@ -178,6 +212,7 @@ const mapStateToProps = state => {
     boardsById: state.boardsById
   };
 };
+
 
 export default withRouter(
   connect(mapStateToProps)(withTranslation()(Notification))
