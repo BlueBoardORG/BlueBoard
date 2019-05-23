@@ -104,8 +104,6 @@ class Notification extends React.Component {
     });
   }
 
-  getNumOfUnSeenNotifs = () => this.state.notifications.filter(item => !item.wasSeen).length;
-
   render() {
     const styles = {
       container: {
@@ -126,6 +124,8 @@ class Notification extends React.Component {
         height: "25px"
       }
     };
+
+    let numOfUnSeenNotifs = this.state.notifications.filter(item => !item.wasSeen).length;
 
     return (
       <div style={styles.container}>
@@ -186,9 +186,9 @@ class Notification extends React.Component {
           }
         >
           <Button isActive={false} appearance="minimal" height={40}>
-            {this.getNumOfUnSeenNotifs() > 0 ? (
+            {numOfUnSeenNotifs > 0 ? (
               <Pill color="red" isSolid>
-                {this.getNumOfUnSeenNotifs()}
+                {numOfUnSeenNotifs}
               </Pill>
             ) : null}
             <Icon
