@@ -171,11 +171,9 @@ class Card extends Component {
     );
   }
 }
-
 const mapStateToProps = (state, ownProps) => {
   const card = state.cardsById[ownProps.cardId];
   const assignedUser = state.boardUsersData[card.assignedUserId] || {};
-
   return {
     card,
     assignedUserName: assignedUser.name,
@@ -183,5 +181,4 @@ const mapStateToProps = (state, ownProps) => {
     assignedToMe: assignedUser._id === state.user._id
   };
 };
-
 export default connect(mapStateToProps)(Card);
