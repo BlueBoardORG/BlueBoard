@@ -3,3 +3,4 @@ dist
 stats.json
 .env
 .idea
+npm-debug.log
