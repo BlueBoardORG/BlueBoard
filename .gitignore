@@ -1,5 +1,6 @@
-node_modules
+/node_modules
 dist
 stats.json
 .env
 .idea
+npm-debug.log
