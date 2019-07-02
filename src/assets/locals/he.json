@@ -76,5 +76,6 @@
     "UserAvatar.menu.kick": "הוצא מהלוח",
     "UserPicker.label.select_user": "בחר/י משתמש:",
     "UserPicker.label.select_role": "בחר/י הרשאה:",
-    "connection.wait": "ממתין לחיבור..."
+    "connection.wait": "ממתין לחיבור...",
+    "connection.wait.message": "ככל הנראה מדובר בבעיה בגסרת הכרום שבשימוש. \r\n יש להגדיר אפשרות לשימוש באלגוריתם sha1 או לחלופין לשנמך גרסת כרום."
 }
