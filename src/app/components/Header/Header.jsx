@@ -2,16 +2,17 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { withTranslation } from "react-i18next";
+import { withRouter } from "react-router";
 import LoginButton from "./LoginButton";
+import ArchiveButton from "./ArchiveButton";
 import kanbanLogo from "../../../assets/images/kanban-logo.svg";
 import SearchBar from "./SearchBar";
 import Notification from "./Notification";
 import "./Header.scss";
-import { withTranslation } from "react-i18next";
-import { withRouter } from "react-router";
 
 class Header extends Component {
-  static propTypes = { user: PropTypes.object };
+  static propTypes = { user: PropTypes.object, location: PropTypes.object };
 
   render = () => {
     const { user, location } = this.props;
@@ -29,14 +30,17 @@ class Header extends Component {
             &nbsp;AmanBoard 2.0
           </Link>
           <div className="header-search-bar">
-            {location.pathname != "/" ? <SearchBar /> : null}
+            {location.pathname !== "/" && location.pathname !== "/archive" ? <SearchBar /> : null}
+          </div>
+          <div className="header-archive-href">
+            <ArchiveButton/>
           </div>
           <div className="header-notification">
             <Notification />
           </div>
         </div>
         <div className="header-right-side">
-          {user ? <p> {user.name} </p> : <p> </p>}
+          {user ? <p> {user.name} </p> : <p/>}
           {loginBtn}
         </div>
       </header>

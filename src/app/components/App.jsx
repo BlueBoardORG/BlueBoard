@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Route, Redirect, Switch, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import Home from "./Home/Home";
+import Archive from "./Archive/Archive";
 import BoardContainer from "./Board/BoardContainer";
 import LandingPage from "./LandingPage/LandingPage";
 import "./App.scss";
@@ -57,6 +58,7 @@ const App = ({ user, isGuest, dispatch }) => {
     return (
       <Switch>
         <Route exact path="/" component={Home} />
+        <Route exact path="/archive" component={Archive} />
         <Route path="/b/:boardId" component={BoardContainer} />
         <Redirect to="/" />
       </Switch>

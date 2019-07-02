@@ -7,11 +7,10 @@ import { withTranslation } from "react-i18next";
 import slugify from "slugify";
 import classnames from "classnames";
 import Header from "../Header/Header";
-import BoardAdder from "./BoardAdder";
 import { BOARD_BG_URLS } from "../../../constants";
-import "./Home.scss";
+import "./Archive.scss";
 
-class Home extends Component {
+class Archive extends Component {
   static propTypes = {
     boards: PropTypes.arrayOf(
       PropTypes.shape({
@@ -35,7 +34,7 @@ class Home extends Component {
       }
     })
   }
-
+  
   getColor = color => {
     const colors = {
       "red": "rgba(80, 50, 50, 0.65)",
@@ -45,7 +44,7 @@ class Home extends Component {
     }
     return colors[color] || "rgba(255, 255, 255, 0.4)";
   }
-  
+
   render = () => {
     const { boards, listsById, history, t, user} = this.props;
     return (
@@ -54,7 +53,7 @@ class Home extends Component {
           {t("Home")} | {t("project_name")}
         </Title>
         <Header />
-        <div className="home">
+        <div className="archive">
           <div className="main-content">
             <h1>{t("Home.myboards")}</h1>
             <div className="boards">
@@ -79,50 +78,16 @@ class Home extends Component {
                           height: `${Math.min(
                             (listsById[listId].cards.length + 1) * 18,
                             100
-                          )}%`,
-                          backgroundColor: this.getColor(board.color)
+                          )
+                        }%`,
+                        backgroundColor: this.getColor(board.color)
                         }}
                       />
                     ))}
                   </div>
                 </Link>
               ))}
-              {this.props.socketConnected ? (<BoardAdder history={history} />) : ""}
               
-            </div>
-          </div>
-          <div className="main-content">
-          <h1>{t("Home.sharedboards")}</h1>
-            <div className="boards">
-              {boards.filter(board=> board.users[0].id !== user._id).map(board => (
-                <Link
-                  key={board._id}
-                  className={classnames("board-link", board.color)}
-                  style={{backgroundImage: `url(${board.backgroundImage})`, backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundSize: "cover"}}
-                  to={`/b/${board._id}/${slugify(board.title, {
-                    lower: true
-                  })}`}
-                >
-                  <div className="board-link-title" style={{backgroundColor: this.getColor(board.color), marginBottom: "5px"}}>
-                    {board.title}
-                  </div>
-                  <div className="mini-board">
-                    {board.lists.map(listId => (
-                      <div
-                        key={listId}
-                        className="mini-list"
-                        style={{
-                          height: `${Math.min(
-                            (listsById[listId].cards.length + 1) * 18,
-                            100
-                          )}%`,
-                          backgroundColor: this.getColor(board.color)
-                        }}
-                      />
-                    ))}
-                  </div>
-                </Link>
-              ))}
             </div>
           </div>
         </div>
@@ -138,4 +103,4 @@ const mapStateToProps = ({ boardsById, listsById,user, socketConnected }) => ({
   socketConnected
 });
 
-export default connect(mapStateToProps)(withTranslation()(Home));
+export default connect(mapStateToProps)(withTranslation()(Archive));

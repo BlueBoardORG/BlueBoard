@@ -43,6 +43,17 @@ header {
 .header-notification {
   margin-right: 10px;
 }
+
+.header-archive-href {
+  margin-right: 10px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-sizing: border-box;
+  height: 100%;
+  color: white;
+}
+
 .header-title {
   display: inline-flex;
   align-items: center;
