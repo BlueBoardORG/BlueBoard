@@ -179,6 +179,7 @@ class Board extends Component {
             style={customStyles}
           >
             <h1 style={{textAlign: "center", alignContent:"center", float:"none", margin:"auto"}}> {t("connection.wait")} </h1>
+            <p style={{textAlign: "center", alignContent:"center", float:"none", margin:"auto", paddingTop: "5vh"}}> {t("connection.wait.message")} </p>
           </Modal>
           <BoardHeader isAbleToEdit={isAbleToEdit}/>
           {/* eslint-disable jsx-a11y/no-static-element-interactions */}
