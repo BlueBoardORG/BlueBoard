@@ -1,6 +1,6 @@
 <!-- Description: A Trello-like application built with React and Redux. Take a look at the live website:  -->
 
-# React Kanban
+# Blue Board
 
 A server-rendered React app inspired by [Trello](https://trello.com/home).
 
@@ -32,9 +32,9 @@ Setting up the full app with your own mongoDB instance  requires significant eff
 #### Full setup
 
 ```shell
-git clone https://github.com/yogaboll/react-kanban.git
+git clone https://github.com/ShragaUser/BlueBoard.git
 
-cd react-kanban
+cd BlueBoard
 
 npm install
 ```
@@ -48,7 +48,7 @@ clone and run.
 
 ```
 git clone https://github.com/ShragaUser/kanbanSocketIOConnector.git
-cd SOCKETIOSERVICE
+cd kanbanSocketIOConnector
 npm install
 npm start
 ```
