@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { Button, Wrapper, Menu, MenuItem } from "react-aria-menubutton";
 import { withTranslation } from "react-i18next";
-import FaTrash from "react-icons/lib/fa/trash";
+import FaArchive from "react-icons/lib/fa/archive";
 import "./BoardArchiver.scss";
 
 class BoardArchiver extends Component {
@@ -38,7 +38,7 @@ class BoardArchiver extends Component {
       >
         <Button className="board-deleter-button">
           <div className="modal-icon">
-            <FaTrash />
+            <FaArchive />
           </div>
           <div className="board-header-right-text">
             &nbsp;{t("archiveBoard")}
@@ -56,7 +56,7 @@ class BoardArchiver extends Component {
       >
         <Button className="board-deleter-button">
           <div className="modal-icon">
-            <FaTrash />
+            <FaArchive />
           </div>
           <div className="board-header-right-text">
             &nbsp;{t("unArchiveBoard")}

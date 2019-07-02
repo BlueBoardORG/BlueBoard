@@ -17,9 +17,9 @@ const BoardHeader = ({ isAbleToEdit }) => (
       {isAbleToEdit && <div className="vertical-line" />}
       {isAbleToEdit && <ImagePicker />}
       {isAbleToEdit && <div className="vertical-line" />}
-      {isAbleToEdit && <BoardDeleter />}
-      {isAbleToEdit && <div className="vertical-line" />}
       {isAbleToEdit && <BoardArchiver />}
+      {isAbleToEdit && <div className="vertical-line" />}
+      {isAbleToEdit && <BoardDeleter />}
       {isAbleToEdit && <div className="vertical-line" />}
       <BoardLeave />
     </div>
