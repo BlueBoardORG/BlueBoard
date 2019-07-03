@@ -4,6 +4,7 @@ import ColorPicker from "./ColorPicker";
 import ImagePicker from "./ImagePicker";
 import BoardDeleter from "./BoardDeleter";
 import BoardLeave from "./BoardLeave";
+import BoardArchiver from "./BoardArchiver";
 
 import "./BoardHeader.scss";
 
@@ -15,6 +16,8 @@ const BoardHeader = ({ isAbleToEdit }) => (
       {isAbleToEdit && <ColorPicker />}
       {isAbleToEdit && <div className="vertical-line" />}
       {isAbleToEdit && <ImagePicker />}
+      {isAbleToEdit && <div className="vertical-line" />}
+      {isAbleToEdit && <BoardArchiver />}
       {isAbleToEdit && <div className="vertical-line" />}
       {isAbleToEdit && <BoardDeleter />}
       {isAbleToEdit && <div className="vertical-line" />}

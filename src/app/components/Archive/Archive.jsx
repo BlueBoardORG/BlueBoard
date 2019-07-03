@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Title } from "react-head";
 import { withTranslation } from "react-i18next";
-import Header from "../Header/Header";
 import BoardList from "../BoardList/BoardList";
+import Header from "../Header/Header";
 import { BOARD_BG_URLS } from "../../../constants";
-import "./Home.scss";
+import "./Archive.scss";
 
-class Home extends Component {
+class Archive extends Component {
   static propTypes = {
     boards: PropTypes.arrayOf(
       PropTypes.shape({
@@ -34,22 +34,17 @@ class Home extends Component {
 
   render = () => {
     const { boards, history, t, user} = this.props;
-    const myBoards = boards.filter(board=> board.users[0].id === user._id && !board.users[0].isArchived);
-    const mySharedBoards = boards.filter(board=> board.users[0].id !== user._id && !board.users.find(u=> u.id === user._id).isArchived);
+    const myArchivedBoards = boards.filter(board=> board.users.filter(boardUser=> boardUser.id === user._id && boardUser.isArchived).length > 0);
     return (
       <>
         <Title>
           {t("Home")} | {t("project_name")}
         </Title>
         <Header />
-        <div className="home">
+        <div className="archive">
           <div className="main-content">
-            <h1>{t("Home.myboards")}</h1>
-            <BoardList boards={myBoards} history={{history}} />
-          </div>
-          <div className="main-content">
-            <h1>{t("Home.sharedboards")}</h1>
-            <BoardList boards={mySharedBoards} shouldAllowAddingBoard={false} history={{history}}/>
+            <h1>{t("archive.boards")}</h1>
+            <BoardList boards={myArchivedBoards} shouldAllowAddingBoard={false} history={{history}}/>
           </div>
         </div>
       </>
@@ -57,11 +52,10 @@ class Home extends Component {
   };
 }
 
-const mapStateToProps = ({ boardsById, listsById,user, socketConnected }) => ({
+const mapStateToProps = ({ boardsById, listsById,user }) => ({
   boards: Object.keys(boardsById).map(key => boardsById[key]),
   listsById,
-  user,
-  socketConnected
+  user
 });
 
-export default connect(mapStateToProps)(withTranslation()(Home));
+export default connect(mapStateToProps)(withTranslation()(Archive));
