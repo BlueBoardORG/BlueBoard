@@ -77,6 +77,29 @@ const boardsById = (state = {}, action) => {
         }
       };
     }
+    case "ADD_LABEL_TO_BOARD":{
+      const {boardId,labelToAdd} = action.payload;
+      if(state[boardId].hasOwnProperty('labels')){
+        console.log("asd");
+        return {
+          ...state,
+          [boardId]: {
+            ...state[boardId],
+            labels: [...state[boardId].labels, labelToAdd]
+          }
+        };
+      }
+      else{
+        return {
+          ...state,
+          [boardId]: {
+            ...state[boardId],
+            labels: [labelToAdd]
+          }
+        };
+      }
+      
+    }
     case "ADD_BOARD": {
       const { boardTitle, boardId, userId } = action.payload;
       const image = BOARD_BG_URLS[Math.floor(Math.random()*BOARD_BG_URLS.length)];

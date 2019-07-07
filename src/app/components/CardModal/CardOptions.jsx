@@ -23,7 +23,8 @@ class CardOptions extends Component {
     isThinDisplay: PropTypes.bool.isRequired,
     boundingRect: PropTypes.object.isRequired,
     toggleColorPicker: PropTypes.func.isRequired,
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
+    boardId: PropTypes.string.isRequired
   };
 
   constructor() {
@@ -33,6 +34,7 @@ class CardOptions extends Component {
       isCheckOpen: false,
       isAssignOpen: false
     };
+    
   }
 
   deleteCard = () => {
@@ -58,6 +60,15 @@ class CardOptions extends Component {
         payload: { label, cardId: card._id }
       });
     }
+  };
+
+  addLabelToBoard = labelToAdd =>{
+    console.log(mapStateToProps);
+    const { dispatch, boardId } = this.props;
+    dispatch({
+      type: "ADD_LABEL_TO_BOARD",
+      payload: {boardId: boardId,labelToAdd}
+    });
   };
 
   handleKeyDown = event => {
@@ -165,16 +176,20 @@ class CardOptions extends Component {
             >
               {/* eslint-disable */}
               <div
+              
                 className="modal-color-picker"
                 onKeyDown={this.handleKeyDown}
               >
+              <button 
+              className="color-picker-color"
+              onClick={() => this.addLabelToBoard({title:"asd",color:"asd"})} >+</button>
+
                 {/* eslint-enable */}
                 {colorsWithLabels.map(colorLabel => {
                   const [label, color] = colorLabel;
                   const labels = this.props.card.labels || [];
                   const isLabelSelected = labels.includes(label);
                   const opacity = isLabelSelected ? 0.5 : 1;
-
                   return (
                     <button
                       key={color}
@@ -257,5 +272,14 @@ class CardOptions extends Component {
     );
   }
 }
+const mapStateToProps = (state, ownProps) => {
+  const boardLabels = state.boardsById[ownProps.boardId].label;
+  const cardLabels = state.cardsById[ownProps.cardId];
 
-export default connect()(withTranslation()(CardOptions));
+  return {
+    boardLabels,
+    cardLabels
+  };
+};
+
+export default connect(mapStateToProps)(withTranslation()(CardOptions));

@@ -26,7 +26,8 @@ class CardModal extends Component {
     toggleCardEditor: PropTypes.func.isRequired,
     dispatch: PropTypes.func.isRequired,
     assignedToMe: PropTypes.bool,
-    assignedUserName: PropTypes.string
+    assignedUserName: PropTypes.string,
+    boardId: PropTypes.string.isRequired
   };
 
   constructor(props) {
@@ -101,7 +102,8 @@ class CardModal extends Component {
       isOpen,
       assignedToMe,
       assignedUserName,
-      assignedUserId
+      assignedUserId,
+      boardId
     } = this.props;
     if (!cardElement) {
       return null;
@@ -179,6 +181,7 @@ class CardModal extends Component {
           isCardNearRightBorder={isCardNearRightBorder}
           isThinDisplay={isThinDisplay}
           toggleColorPicker={this.toggleColorPicker}
+          boardId={boardId}
         />
         <div id="main-container">
           <div

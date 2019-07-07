@@ -23,7 +23,8 @@ class Card extends Component {
     dispatch: PropTypes.func.isRequired,
     assignedToMe: PropTypes.bool,
     assignedUserName: PropTypes.string,
-    isAbleToEdit: PropTypes.bool.isRequired
+    isAbleToEdit: PropTypes.bool.isRequired,
+    boardId: PropTypes.string.isRequired
   };
 
   constructor() {
@@ -93,7 +94,8 @@ class Card extends Component {
       assignedToMe,
       assignedUserName,
       assignedUserId,
-      isAbleToEdit
+      isAbleToEdit,
+      boardId
     } = this.props;
     const { isModalOpen } = this.state;
     const checkboxes = findCheckboxes(card.text);
@@ -166,6 +168,7 @@ class Card extends Component {
             assignedUserName={assignedUserName}
             assignedUserId={assignedUserId}
             assignedToMe={assignedToMe}
+            boardId={boardId}
           />
       </>
     );
