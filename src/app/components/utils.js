@@ -14,3 +14,14 @@ export const colorsWithLabels = [
   ["help", "#ff9f1a"],
   ["critical", "#eb5a46"]
 ];
+
+
+export const transformUser = (profile) => {
+  return ({
+    _id: profile._id,
+    name: profile.name.lastName + " " + profile.name.firstName,
+    mail: profile.mail,
+    display: profile.displayName,
+    imageUrl: null
+  });
+}

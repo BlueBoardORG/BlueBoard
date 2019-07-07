@@ -6,6 +6,7 @@ import {
   PUBLIC_USER_PROPERTIES
 } from "../../constants";
 import { pick } from "../helper";
+import { transformUser } from "../../app/components/utils";
 
 const api = db => {
   const router = Router();
@@ -116,6 +117,8 @@ const api = db => {
   });
 
   router.post("/userId", (req, res) => {
+    console.log("dror");
+    console.log(req.body);
     const { userSearchField } = req.body;
     users.findOne({ name: userSearchField }).then(user => {
       if (user) res.status(200).json(user._id);
@@ -130,7 +133,6 @@ const api = db => {
 
     users
       .find({ name: { $regex: userSearchField, $options: "i" } })
-      .toArray()
       .then(users => {
         if (users) {
           const serializedUsers = users.map(user => ({
@@ -151,7 +153,7 @@ const api = db => {
 
     users
       .find({ _id: { $in: req.body.ids || [] } })
-      .toArray()
+      //.toArray()
       .then(users => {
         const serializedUsers = users.reduce((accumulator, currentUser) => {
           // Pick only public properties from the user's object
