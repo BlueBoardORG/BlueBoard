@@ -9,7 +9,6 @@
             "request": "launch",
             "name": "Launch Program",
             "program": "${workspaceFolder}/dist/server.js"
-            //"program": "/home/liad/Desktop/blueboard/BlueBoard/node_modules/passport-shraga/lib/passport-shraga/strategy.js"
         }
     ]
 }

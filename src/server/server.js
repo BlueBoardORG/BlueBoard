@@ -16,7 +16,6 @@ import auth from "./routes/auth";
 import fetchBoardData from "./fetchBoardData";
 import http from "http";
 import cookieParser from 'cookie-parser';
-//import path from "path";
 
 // Load environment variables from .env file
 dotenv.config();
@@ -64,13 +63,6 @@ MongoClient.connect(process.env.MONGODB_URL, { useNewUrlParser: true }).then(cli
   app.use("/api", api(db));
   app.use(fetchBoardData(db));
   //if(process.env.NODE_ENV==="production"){
-
-  app.use((req, res, next) => {
-    console.log("req.user: ")
-    console.log(req.user)
-    next();
-  })
-  
     app.use((req,res,next)=>{
       if(!req.user)
         res.redirect("/auth/shraga");
