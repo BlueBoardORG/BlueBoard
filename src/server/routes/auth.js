@@ -3,20 +3,20 @@ import passport from "passport";
 
 const router = Router();
 
-router.post("/local", passport.authenticate("local", { failureRedirect: '/login' }), (req, res) => {
+/*router.post("/local", passport.authenticate("local", { failureRedirect: '/login' }), (req, res) => {
   res.redirect("/");
-});
+});*/
 
-router.get("/saml", passport.authenticate("saml"), (req, res) => {
+router.get("/shraga", passport.authenticate("shraga"), (req, res) => {
   res.redirect("/");
 });
-router.post("/saml", passport.authenticate("saml"), (req, res) => {
+router.post("/shraga", passport.authenticate("shraga"), (req, res) => {
   res.redirect("/");
 });
 
 router.post(
-  "/saml/callback",
-  passport.authenticate("saml", { failureRedirect: "/login" }),
+  "/shraga/callback",
+  passport.authenticate("shraga", { failureRedirect: "/login" }),
   (req, res) => {
     res.redirect("/");
   }
