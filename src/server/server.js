@@ -64,6 +64,13 @@ MongoClient.connect(process.env.MONGODB_URL, { useNewUrlParser: true }).then(cli
   app.use("/api", api(db));
   app.use(fetchBoardData(db));
   //if(process.env.NODE_ENV==="production"){
+
+  app.use((req, res, next) => {
+    console.log("req.user: ")
+    console.log(req.user)
+    next();
+  })
+  
     app.use((req,res,next)=>{
       if(!req.user)
         res.redirect("/auth/shraga");

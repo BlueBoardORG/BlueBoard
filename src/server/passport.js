@@ -14,7 +14,7 @@ const configurePassport = db => {
     cb(null, user._id);
   });
   passport.deserializeUser((id, cb) => {
-    users.findOne({ _id: id }).then(user => {
+    users.findOne({ _id: '1' }).then(user => {
       cb(null, user);
     });
   });
@@ -41,27 +41,21 @@ const configurePassport = db => {
     }
   ));*/
   const config = { shragaURL: "http://localhost:3000", callbackURL: "http://localhost:1337/auth/shraga" };
-  //const config = authConfig();
+
   passport.use(new Strategy(config, (profile, done) => {
-    /*profile = {
-      id: profile[profileExtractor.id],
-      firstName: profile[profileExtractor.firstName],
-      lastName: profile[profileExtractor.lastName],
-      displayName: profile[profileExtractor.displayName],
-      mail: profile[profileExtractor.mail],
-    };*/
+    profile = {...profile};
     users.findOne({ _id: profile.id }).then(user => {
       if (user) {
         done(null, user);
       } else {
-        /*const newUser = {
+        const newUser = {
           _id: profile.id,
-          name: profile.lastName + " " + profile.firstName,
+          name: profile.name.lastName + " " + profile.name.firstName,
           mail: profile.mail,
           display: profile.displayName,
           imageUrl: null
-        };*/
-        const newUser = {...profile};
+        };
+
         users.insertOne(newUser).then(() => {
           boards
             .insertOne(createWelcomeBoard(profile.id))

@@ -10,11 +10,12 @@ const router = Router();
 router.get("/shraga", passport.authenticate("shraga"), (req, res) => {
   res.redirect("/");
 });
+
 router.post("/shraga", passport.authenticate("shraga"), (req, res) => {
   res.redirect("/");
 });
 
-router.post(
+/*router.post(
   "/shraga/callback",
   passport.authenticate("shraga", { failureRedirect: "/login" }),
   (req, res) => {
@@ -26,6 +27,6 @@ router.post(
 router.get("/signout", (req, res) => {
   req.logout();
   res.redirect("/");
-});
+});*/
 
 export default router;
