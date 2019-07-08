@@ -46,10 +46,10 @@ const configurePassport = db => {
   const config = { shragaURL: "http://localhost:3000", callbackURL: "http://localhost:1337/auth/shraga" };
 
   passport.use(new Strategy(config, (profile, done) => {
-    profile = {...profile};
+    profile = { ...profile };
     profile._id = profile.id;
     delete profile.id;
-    users.findOne({ _id: profile.id }).then(user => {
+    /*users.findOne({ _id: profile.id }).then(user => {
       if (user) {
         done(null, user);
       } else {
@@ -59,9 +59,21 @@ const configurePassport = db => {
             .then(() => done(null, transformUser(profile)));
         });
       }
-    });
-  }
-  ))
+    });*/
+    console.log("\n\nprofile\n\n");
+    console.log(profile);
+    console.log("\n\n");
+    users.replaceOne({ _id: profile._id }, profile, { upsert: true })
+      .then(result => {
+        const { matchedCount, modifiedCount } = result;
+        if (matchedCount && modifiedCount) {
+          console.log(`Successfully added a new review.`)
+        }
+        done(null, transformUser(profile));
+      });
+
+  }))
 };
+
 
 export default configurePassport;
