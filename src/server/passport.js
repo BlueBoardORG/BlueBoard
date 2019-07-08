@@ -1,7 +1,6 @@
 import passport from "passport";
 import dotenv from "dotenv";
 import { Strategy as LocalStrategy } from "passport-local";
-import authConfig from "./authConfig";
 import createWelcomeBoard from "./createWelcomeBoard";
 const { Strategy } = require("passport-shraga");
 import { transformUser } from "../app/components/utils";
@@ -49,20 +48,6 @@ const configurePassport = db => {
     profile = { ...profile };
     profile._id = profile.id;
     delete profile.id;
-    /*users.findOne({ _id: profile.id }).then(user => {
-      if (user) {
-        done(null, user);
-      } else {
-        users.insertOne(profile).then(() => {
-          boards
-            .insertOne(createWelcomeBoard(profile.id))
-            .then(() => done(null, transformUser(profile)));
-        });
-      }
-    });*/
-    console.log("\n\nprofile\n\n");
-    console.log(profile);
-    console.log("\n\n");
     users.replaceOne({ _id: profile._id }, profile, { upsert: true })
       .then(result => {
         const { matchedCount, modifiedCount } = result;
@@ -71,7 +56,6 @@ const configurePassport = db => {
         }
         done(null, transformUser(profile));
       });
-
   }))
 };
 
