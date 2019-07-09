@@ -26,11 +26,17 @@ const cardsById = (state = {}, action) => {
     case "DELETE_LABEL": {
       const { label, cardId } = action.payload;
       const cardLabels = state[cardId].labels || [];
+      let indexToRemove;
+      cardLabels.map((cardLabel,index) =>{
+        if(cardLabel.id === label.id){
+          indexToRemove= index;
+        }
+      })
       return {
         ...state,
         [cardId]: {
           ...state[cardId],
-          labels: cardLabels.filter(currLabel => currLabel !== label)
+          labels: cardLabels.splice(indexToRemove, 1)
         }
       };
     }

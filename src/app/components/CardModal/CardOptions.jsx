@@ -12,6 +12,7 @@ import ClickOutside from "../ClickOutside/ClickOutside";
 import UserPicker from "../UserPicker/UserPicker";
 import colorIcon from "../../../assets/images/color-icon.png";
 import "./CardOptions.scss";
+import shortid from "shortid";
 import { colorsWithLabels } from "../utils";
 
 class CardOptions extends Component {
@@ -24,7 +25,7 @@ class CardOptions extends Component {
     boundingRect: PropTypes.object.isRequired,
     toggleColorPicker: PropTypes.func.isRequired,
     dispatch: PropTypes.func.isRequired,
-    boardId: PropTypes.string.isRequired
+    boardId: PropTypes.string.isRequired,
   };
 
   constructor() {
@@ -34,9 +35,7 @@ class CardOptions extends Component {
       isCheckOpen: false,
       isAssignOpen: false
     };
-    
   }
-
   deleteCard = () => {
     const { dispatch, listId, card } = this.props;
     dispatch({
@@ -48,8 +47,14 @@ class CardOptions extends Component {
   addLabel = label => {
     const { dispatch, card } = this.props;
     const cardLabels = card.labels || [];
-
-    if (cardLabels.includes(label)) {
+    let isIncludes = false;
+    cardLabels.map((cardLabel) =>{
+      if(cardLabel.id === label.id)
+      {
+        isIncludes = true;
+      }
+    })
+    if (isIncludes) {
       dispatch({
         type: "DELETE_LABEL",
         payload: { label, cardId: card._id }
@@ -63,7 +68,6 @@ class CardOptions extends Component {
   };
 
   addLabelToBoard = labelToAdd =>{
-    console.log(mapStateToProps);
     const { dispatch, boardId } = this.props;
     dispatch({
       type: "ADD_LABEL_TO_BOARD",
@@ -176,34 +180,27 @@ class CardOptions extends Component {
             >
               {/* eslint-disable */}
               <div
-              
                 className="modal-color-picker"
                 onKeyDown={this.handleKeyDown}
               >
               <button 
               className="color-picker-color"
-              onClick={() => this.addLabelToBoard({title:"asd",color:"asd"})} >+</button>
+              onClick={() => this.addLabelToBoard({id:shortid.generate(),title:"תגית חדשה",color:"gray"})} >+</button>
 
                 {/* eslint-enable */}
-                {colorsWithLabels.map(colorLabel => {
-                  const [label, color] = colorLabel;
-                  const labels = this.props.card.labels || [];
-                  const isLabelSelected = labels.includes(label);
-                  const opacity = isLabelSelected ? 0.5 : 1;
-                  return (
-                    <button
-                      key={color}
-                      style={{
-                        background: color,
-                        fontSize: 10,
-                        opacity: opacity
-                      }}
-                      className="color-picker-color"
-                      onClick={() => this.addLabel(label)}
-                    >
-                      {t(`Labels.${label}`)}
-                    </button>
-                  );
+                {
+                  this.props.boardLabels.map((label,index) => {
+                  const labelName = label.title;
+                  const labelcolor = label.color;
+                  return(<button
+                    key={index}
+                    style={{
+                      background: labelcolor,
+                      fontSize: 10,
+                    }}
+                    className="color-picker-color"
+                    onClick={() => this.addLabel(label)}
+                  >{labelName}</button>);
                 })}
               </div>
             </ClickOutside>
@@ -273,12 +270,11 @@ class CardOptions extends Component {
   }
 }
 const mapStateToProps = (state, ownProps) => {
-  const boardLabels = state.boardsById[ownProps.boardId].label;
-  const cardLabels = state.cardsById[ownProps.cardId];
-
+  const boardLabel = state.boardsById[ownProps.boardId].labels;
+  const cardLabel = state.cardsById[ownProps.card._id].labels;
   return {
-    boardLabels,
-    cardLabels
+    boardLabels:boardLabel,
+    cardLabels:cardLabel
   };
 };
 

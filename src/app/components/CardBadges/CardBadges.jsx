@@ -116,22 +116,20 @@ class CardBadges extends Component {
   };
 
   renderLabels = () => {
-    const { labels, t } = this.props;
-    const colorsWithLabelsMap = new Map(colorsWithLabels);
-
+    const {labels} = this.props;
     if (!labels) {
       return null;
     }
 
-    return labels.map(label => (
+    return labels.map((label,index) => (
       <div
-        key={label}
+        key={index}
         className="badge"
-        style={{ background: colorsWithLabelsMap.get(label) }}
+        style={{ background: "gray" }}
       >
         <MdLabel className="badge-icon" />
         &nbsp;
-        {t(`Labels.${label}`)}
+        {label.title}
       </div>
     ));
   };

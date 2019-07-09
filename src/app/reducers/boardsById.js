@@ -8,7 +8,7 @@ const boardsById = (state = {}, action) => {
         ...state,
         [boardId]: {
           ...state[boardId],
-          lists: [...state[boardId].lists, listId]
+          lists: [...state[boardId].lists, listId],
         }
       };
     }
@@ -111,7 +111,8 @@ const boardsById = (state = {}, action) => {
           lists: [],
           users: [{id: userId, role: ADMIN_ROLE}],
           color: "blue",
-          backgroundImage: image
+          backgroundImage: image,
+          labels:[]
         }
       };
     }
