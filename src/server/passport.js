@@ -4,6 +4,7 @@ import { Strategy as LocalStrategy } from "passport-local";
 import createWelcomeBoard from "./createWelcomeBoard";
 const { Strategy } = require("passport-shraga");
 import { transformUser } from "../app/components/utils";
+import authConfig from "./authConfig";
 
 dotenv.config();
 
@@ -16,6 +17,9 @@ const configurePassport = db => {
   });
   passport.deserializeUser((id, cb) => {
     users.findOne({_id: id }).then(user => {
+      if(user.provider != "ADFS"){
+        cb(null, false);
+      }
       cb(null, transformUser(user));
     });
   });
@@ -42,7 +46,8 @@ const configurePassport = db => {
     }
   ));
 
-  const config = { shragaURL: "http://localhost:3000", callbackURL: "http://localhost:1337/auth/shraga" };
+  const config = authConfig();
+
 
   passport.use(new Strategy(config, (profile, done) => {
     profile = { ...profile };
