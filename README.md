@@ -4,7 +4,7 @@
 
 A server-rendered React app inspired by [Trello](https://trello.com/home).
 
-![react kanban example](https://github.com/yogaboll/react-kanban/blob/master/example.gif?raw=true)
+![react kanban example](https://github.com/ShragaUser/BlueBoard/edit/master/example.gif?raw=true)
 
 ### Features
 
