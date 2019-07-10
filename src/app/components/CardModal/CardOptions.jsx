@@ -13,6 +13,7 @@ import UserPicker from "../UserPicker/UserPicker";
 import colorIcon from "../../../assets/images/color-icon.png";
 import "./CardOptions.scss";
 import shortid from "shortid";
+import FaPencil from "react-icons/lib/fa/pencil";
 import { colorsWithLabels } from "../utils";
 
 class CardOptions extends Component {
@@ -33,7 +34,8 @@ class CardOptions extends Component {
     this.state = {
       isCalendarOpen: false,
       isCheckOpen: false,
-      isAssignOpen: false
+      isAssignOpen: false,
+      isEditOpen: false
     };
   }
   deleteCard = () => {
@@ -67,6 +69,14 @@ class CardOptions extends Component {
     }
   };
 
+  removeLabelFromBoard = labelToRemove =>{
+    const { dispatch, boardId } = this.props;
+    dispatch({
+      type: "REMOVE_LABEL_FROM_BOARD",
+      payload: {boardId: boardId,labelToRemove}
+    });
+  }
+
   addLabelToBoard = labelToAdd =>{
     const { dispatch, boardId } = this.props;
     dispatch({
@@ -91,6 +101,9 @@ class CardOptions extends Component {
   toggleCalendar = () => {
     this.setState({ isCalendarOpen: !this.state.isCalendarOpen });
   };
+  toggelEditMode =() =>{
+    this.setState({isEditOpen:!this.state.isEditOpen});
+  }
 
   toggleAssign = () => {
     this.setState({ isAssignOpen: !this.state.isAssignOpen });
@@ -127,7 +140,7 @@ class CardOptions extends Component {
       t
     } = this.props;
 
-    const { isCalendarOpen, isCheckOpen, isAssignOpen } = this.state;
+    const {isEditOpen, isCalendarOpen, isCheckOpen, isAssignOpen } = this.state;
 
     const calendarStyle = {
       content: {
@@ -186,6 +199,9 @@ class CardOptions extends Component {
               <button 
               className="color-picker-color"
               onClick={() => this.addLabelToBoard({id:shortid.generate(),title:"תגית חדשה",color:"gray"})} >+</button>
+              <button 
+              className="color-picker-color"
+              onClick={() => this.toggelEditMode } ><FaPencil/></button>
 
                 {/* eslint-enable */}
                 {

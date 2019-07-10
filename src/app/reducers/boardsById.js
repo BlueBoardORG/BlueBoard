@@ -77,10 +77,27 @@ const boardsById = (state = {}, action) => {
         }
       };
     }
+    case "REMOVE_LABEL_FROM_BOARD":{
+      const {boardId,labelToRemove} = action.payload;
+      let boardLabels = state[boardId].labels || [];
+      console.log(boardLabels);
+      boardLabels.map((label,index) =>{
+        if(label.id === labelToRemove.id){
+          boardLabels.splice(index, 1);
+        }
+      })
+      console.log(boardLabels);
+      return {
+        ...state,
+        [boardId]: {
+          ...state[boardId],
+          labels: boardLabels
+        }
+      };
+    }
     case "ADD_LABEL_TO_BOARD":{
       const {boardId,labelToAdd} = action.payload;
       if(state[boardId].hasOwnProperty('labels')){
-        console.log("asd");
         return {
           ...state,
           [boardId]: {
