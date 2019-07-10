@@ -6,7 +6,6 @@ import {
   PUBLIC_USER_PROPERTIES
 } from "../../constants";
 import { pick } from "../helper";
-import { transformUser } from "../../app/components/utils";
 
 const api = db => {
   const router = Router();
@@ -117,8 +116,6 @@ const api = db => {
   });
 
   router.post("/userId", (req, res) => {
-    console.log("dror");
-    console.log(req.body);
     const { userSearchField } = req.body;
     users.findOne({ name: userSearchField }).then(user => {
       if (user) res.status(200).json(user._id);

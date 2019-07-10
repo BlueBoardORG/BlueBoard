@@ -17,7 +17,7 @@ const configurePassport = db => {
   });
   passport.deserializeUser((id, cb) => {
     users.findOne({_id: id }).then(user => {
-      if(user.provider != "ADFS"){
+      if(!user.provider){
         cb(null, false);
       }
       cb(null, transformUser(user));
@@ -46,19 +46,15 @@ const configurePassport = db => {
     }
   ));
 
-  const config = authConfig();
+  const {shragaURL, callbackURL} = authConfig;
 
 
-  passport.use(new Strategy(config, (profile, done) => {
+  passport.use(new Strategy({shragaURL, callbackURL}, (profile, done) => {
     profile = { ...profile };
     profile._id = profile.id;
     delete profile.id;
     users.replaceOne({ _id: profile._id }, profile, { upsert: true })
-      .then(result => {
-        const { matchedCount, modifiedCount } = result;
-        if (matchedCount && modifiedCount) {
-          console.log(`Successfully added a new review.`)
-        }
+      .then(() => {
         done(null, transformUser(profile));
       });
   }))

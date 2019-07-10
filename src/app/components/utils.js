@@ -22,6 +22,6 @@ export const transformUser = (profile) => {
     name: profile.name.lastName + " " + profile.name.firstName,
     mail: profile.mail,
     display: profile.displayName,
-    imageUrl: null
+    imageUrl: profile.photo || null
   });
 }
