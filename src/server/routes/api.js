@@ -130,7 +130,6 @@ const api = db => {
 
     users
       .find({ name: { $regex: userSearchField, $options: "i" } })
-      .toArray()
       .then(users => {
         if (users) {
           const serializedUsers = users.map(user => ({
@@ -151,7 +150,7 @@ const api = db => {
 
     users
       .find({ _id: { $in: req.body.ids || [] } })
-      .toArray()
+      //.toArray()
       .then(users => {
         const serializedUsers = users.reduce((accumulator, currentUser) => {
           // Pick only public properties from the user's object
