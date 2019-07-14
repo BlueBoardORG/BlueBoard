@@ -10,6 +10,7 @@ import kanbanLogo from "../../../assets/images/kanban-logo.svg";
 import SearchBar from "./SearchBar";
 import Notification from "./Notification";
 import "./Header.scss";
+import Watch from "./Watch"; 
 
 class Header extends Component {
   static propTypes = { user: PropTypes.object, location: PropTypes.object };
@@ -37,6 +38,9 @@ class Header extends Component {
           </div>
           <div className="header-notification">
             <Notification />
+          </div>
+          <div className="header-watch">
+            <Watch />
           </div>
         </div>
         <div className="header-right-side">
