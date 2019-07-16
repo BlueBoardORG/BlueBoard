@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Modal from "react-modal";
 import PropTypes from "prop-types";
 
 
 
 class LabelEditor extends Component {
     static propTypes = {
-        isOpen: PropTypes.bool.isRequired,
         cardId: PropTypes.string.isRequired,
         boardId: PropTypes.string.isRequired,
         labelId: PropTypes.string,
@@ -18,26 +16,21 @@ class LabelEditor extends Component {
     }
 
     deleteLabel = () => {
-        const { dispatch, boardId ,labelId} = this.props;
+        const { dispatch, boardId, labelId } = this.props;
         dispatch({
             type: "REMOVE_LABEL_FROM_BOARD",
             payload: { boardId: boardId, labelToRemove: labelId }
         });
+        this.props.action();
     };
 
     render() {
-        const {
-            isOpen
-        } = this.props;
         return (
-            <div >
-                {isOpen
-                    ? <div><input></input>
-                        <input></input>
-                        <button className="color-picker-color"> אישור</button>
-                        <button onClick={this.deleteLabel} className="color-picker-color">מחק </button></div>
-                    : null
-                }
+            <div>
+                <input></input>
+                <input></input>
+                <button className="color-picker-color"> אישור</button>
+                <button onClick={this.deleteLabel} className="color-picker-color">מחק </button>
             </div>
         );
     }

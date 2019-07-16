@@ -31,6 +31,9 @@ class CardOptions extends Component {
 
   constructor() {
     super();
+
+    this.toggelEdit = this.toggelEdit.bind(this);
+
     this.state = {
       isCalendarOpen: false,
       isCheckOpen: false,
@@ -40,6 +43,9 @@ class CardOptions extends Component {
       isEditOpen: false
     };
   }
+
+
+
   deleteCard = () => {
     const { dispatch, listId, card } = this.props;
     dispatch({
@@ -109,7 +115,7 @@ class CardOptions extends Component {
   handleClickOutside = () => {
     const { toggleColorPicker } = this.props;
     toggleColorPicker();
-    this.setState({ isEditOpen: false})
+    this.setState({ isEditOpen: false })
     this.colorPickerButton.focus();
   };
 
@@ -118,6 +124,8 @@ class CardOptions extends Component {
   };
   toggelEditMode = () => {
     this.setState({ isEditToggle: !this.state.isEditToggle });
+    if(this.state.isEditOpen)
+      this.setState({ isEditOpen: !this.state.isEditOpen });
   }
   toggelEdit = () => {
     this.setState({ isEditOpen: !this.state.isEditOpen });
@@ -210,7 +218,7 @@ class CardOptions extends Component {
             <ClickOutside
               eventTypes="click"
               handleClickOutside={this.handleClickOutside}
-             
+
             >
               <div
                 className="modal-color-picker"
@@ -229,17 +237,24 @@ class CardOptions extends Component {
                     const labelName = label.title;
                     const labelcolor = label.color;
                     return (
-                    <button
-                      key={index}
-                      style={{
-                        background: labelcolor,
-                        fontSize: 10,
-                      }}
-                      className="color-picker-color"
-                      onClick={() => this.editModeCheack(label)}
-                    >{labelName}</button>);
+                      <button
+                        key={index}
+                        style={{
+                          background: labelcolor,
+                          fontSize: 10,
+                        }}
+                        className="color-picker-color"
+                        onClick={() => this.editModeCheack(label)}
+                      >{labelName}</button>);
                   })}
-                  <LabelEditor isOpen={isEditOpen} cardId={card._id} boardId={boardId} labelId={this.state.setLabelId}/>
+                <div >
+                  {isEditOpen
+                    ? <LabelEditor action={this.toggelEdit}  cardId={card._id} boardId={boardId} labelId={this.state.setLabelId} />
+                    : null
+                  }
+                </div>
+
+
               </div>
             </ClickOutside>
           )}
