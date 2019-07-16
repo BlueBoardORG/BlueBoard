@@ -14,7 +14,7 @@ import colorIcon from "../../../assets/images/color-icon.png";
 import "./CardOptions.scss";
 import shortid from "shortid";
 import FaPencil from "react-icons/lib/fa/pencil";
-import { colorsWithLabels } from "../utils";
+import LabelEditor from "./LabelEditor";
 
 class CardOptions extends Component {
   static propTypes = {
@@ -35,6 +35,8 @@ class CardOptions extends Component {
       isCalendarOpen: false,
       isCheckOpen: false,
       isAssignOpen: false,
+      isEditToggle: false,
+      setLabelId: null,
       isEditOpen: false
     };
   }
@@ -68,14 +70,17 @@ class CardOptions extends Component {
     }
   };
 
-  editModeCheack = label =>{
-    if(!this.state.isEditOpen){
+  editModeCheack = label => {
+    if (!this.state.isEditToggle) {
       this.addLabel(label)
     }
-    else{
-      console.log("edit is open");
+    else {
+      this.setState({ setLabelId: label.id });
+      console.log(this.state.setLabelId);
+      this.setState({ isEditOpen: !this.state.isEditOpen });
+      console.log(this.state.isEditOpen);
     }
-        
+
   }
 
   removeLabelFromBoard = labelToRemove => {
@@ -104,6 +109,7 @@ class CardOptions extends Component {
   handleClickOutside = () => {
     const { toggleColorPicker } = this.props;
     toggleColorPicker();
+    this.setState({ isEditOpen: false})
     this.colorPickerButton.focus();
   };
 
@@ -111,9 +117,12 @@ class CardOptions extends Component {
     this.setState({ isCalendarOpen: !this.state.isCalendarOpen });
   };
   toggelEditMode = () => {
-    this.setState({ isEditOpen: !this.state.isEditOpen });
-    console.log(this.state.isEditOpen);
+    this.setState({ isEditToggle: !this.state.isEditToggle });
   }
+  toggelEdit = () => {
+    this.setState({ isEditOpen: !this.state.isEditOpen });
+  }
+
 
   toggleAssign = () => {
     this.setState({ isAssignOpen: !this.state.isAssignOpen });
@@ -147,7 +156,8 @@ class CardOptions extends Component {
       card,
       isThinDisplay,
       boundingRect,
-      t
+      t,
+      boardId
     } = this.props;
 
     const { isEditOpen, isCalendarOpen, isCheckOpen, isAssignOpen } = this.state;
@@ -200,8 +210,8 @@ class CardOptions extends Component {
             <ClickOutside
               eventTypes="click"
               handleClickOutside={this.handleClickOutside}
+             
             >
-              {/* eslint-disable */}
               <div
                 className="modal-color-picker"
                 onKeyDown={this.handleKeyDown}
@@ -218,7 +228,8 @@ class CardOptions extends Component {
                   this.props.boardLabels.map((label, index) => {
                     const labelName = label.title;
                     const labelcolor = label.color;
-                    return (<button
+                    return (
+                    <button
                       key={index}
                       style={{
                         background: labelcolor,
@@ -228,9 +239,9 @@ class CardOptions extends Component {
                       onClick={() => this.editModeCheack(label)}
                     >{labelName}</button>);
                   })}
+                  <LabelEditor isOpen={isEditOpen} cardId={card._id} boardId={boardId} labelId={this.state.setLabelId}/>
               </div>
             </ClickOutside>
-
           )}
         </div>
         <div>
@@ -292,6 +303,8 @@ class CardOptions extends Component {
         >
           <UserPicker cardId={card._id} toggleAssign={this.toggleAssign} />
         </Modal>
+
+
       </div>
     );
   }

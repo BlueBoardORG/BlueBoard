@@ -80,13 +80,11 @@ const boardsById = (state = {}, action) => {
     case "REMOVE_LABEL_FROM_BOARD":{
       const {boardId,labelToRemove} = action.payload;
       let boardLabels = state[boardId].labels || [];
-      console.log(boardLabels);
       boardLabels.map((label,index) =>{
-        if(label.id === labelToRemove.id){
+        if(label.id === labelToRemove){
           boardLabels.splice(index, 1);
         }
       })
-      console.log(boardLabels);
       return {
         ...state,
         [boardId]: {
