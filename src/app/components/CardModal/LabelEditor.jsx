@@ -13,6 +13,16 @@ class LabelEditor extends Component {
     }
     constructor() {
         super();
+        this.state = {
+            title: null,
+            color: null
+        };
+    }
+    handleChangeTitle = (e) => {
+        this.setState({ title: e.target.value });
+    }
+    handleChangeColor = (e) => {
+        this.setState({ color: e.target.value });
     }
 
     deleteLabel = () => {
@@ -24,12 +34,22 @@ class LabelEditor extends Component {
         this.props.action();
     };
 
+    editLabel = () => {
+        const { title, color } = this.state;
+        const { dispatch, boardId, labelId } = this.props;
+        dispatch({
+            type: "Edit_LABEL",
+            payload: { boardId, editLabel: { id: labelId, title: title, color: color } }
+        });
+        this.props.action();
+    };
+
     render() {
         return (
             <div>
-                <input></input>
-                <input></input>
-                <button className="color-picker-color"> אישור</button>
+                <input onChange={this.handleChangeTitle}></input>
+                <input onChange={this.handleChangeColor} ></input>
+                <button onClick={this.editLabel} className="color-picker-color"> אישור</button>
                 <button onClick={this.deleteLabel} className="color-picker-color">מחק </button>
             </div>
         );

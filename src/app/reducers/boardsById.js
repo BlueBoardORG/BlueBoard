@@ -93,6 +93,22 @@ const boardsById = (state = {}, action) => {
         }
       };
     }
+    case "Edit_LABEL":{
+      const {boardId,editLabel} = action.payload;
+      let boardLabels = state[boardId].labels || [];
+      boardLabels.map((label,index) =>{
+        if(label.id === editLabel.id){
+          boardLabels.splice(index, 1);
+        }
+      })
+      return {
+        ...state,
+        [boardId]: {
+          ...state[boardId],
+          labels: [...state[boardId].labels, editLabel]
+        }
+      };
+    }
     case "ADD_LABEL_TO_BOARD":{
       const {boardId,labelToAdd} = action.payload;
       if(state[boardId].hasOwnProperty('labels')){

@@ -29,8 +29,22 @@ class CardBadges extends Component {
   constructor() {
     super();
   }
+/*
+  shouldComponentUpdate(nextProps){ 
+    if(this.props.labels.length != nextProps.labels.length){
+      console.log(true);
+      return true;
+    }
+      
 
-  
+    for(let i = 0;i<this.props.labels.length ;i++){
+      if(this.props.labels.length[i] != nextProps.labels.length[i]){
+      console.log(true);
+        return true;
+      }
+    }
+    return false;
+  }*/
 
   renderDueDate = () => {
     const { date } = this.props;
@@ -149,10 +163,9 @@ class CardBadges extends Component {
     }
 
     return labels.map((label, index) => (
-      <div>
+      <div key={label}>
         {this.getLabelById(label)
           ? <div
-            key={label}
             className="badge"
             style={{ background: this.getLabelById(label).color }}
           >
