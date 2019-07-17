@@ -144,6 +144,8 @@ class Card extends Component {
                   assignedUserName ||
                   card.labels) && (
                     <CardBadges
+                    cardId={card._id}
+                    boardId={boardId}
                     date={card.date}
                     checkboxes={checkboxes}
                     assignedUserName={assignedUserName}

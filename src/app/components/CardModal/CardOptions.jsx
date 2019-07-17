@@ -57,21 +57,17 @@ class CardOptions extends Component {
   addLabel = label => {
     const { dispatch, card } = this.props;
     const cardLabels = card.labels || [];
-    let isIncludes = false;
-    cardLabels.map((cardLabel) => {
-      if (cardLabel.id === label.id) {
-        isIncludes = true;
-      }
-    })
-    if (isIncludes) {
+
+    
+    if (cardLabels.includes(label.id)) {
       dispatch({
         type: "DELETE_LABEL",
-        payload: { label, cardId: card._id }
+        payload: { label: label.id, cardId: card._id }
       });
     } else {
       dispatch({
         type: "ADD_LABEL",
-        payload: { label, cardId: card._id }
+        payload: { label: label.id, cardId: card._id }
       });
     }
   };
@@ -82,9 +78,7 @@ class CardOptions extends Component {
     }
     else {
       this.setState({ setLabelId: label.id });
-      console.log(this.state.setLabelId);
       this.setState({ isEditOpen: !this.state.isEditOpen });
-      console.log(this.state.isEditOpen);
     }
 
   }

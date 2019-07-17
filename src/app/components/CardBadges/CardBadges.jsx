@@ -21,8 +21,16 @@ class CardBadges extends Component {
     assignedToMe: PropTypes.bool,
     assignedUserName: PropTypes.string,
     assignedUserId: PropTypes.string,
-    labels: PropTypes.array
+    labels: PropTypes.array,
+    boardId: PropTypes.string.isRequired,
+    cardId: PropTypes.string.isRequired,
+    dispatch: PropTypes.func.isRequired
   };
+  constructor() {
+    super();
+  }
+
+  
 
   renderDueDate = () => {
     const { date } = this.props;
@@ -83,21 +91,21 @@ class CardBadges extends Component {
   hashCode = (str) => { // java String#hashCode
     var hash = 0;
     for (var i = 0; i < str.length; i++) {
-       hash = str.charCodeAt(i) + ((hash << 5) - hash);
+      hash = str.charCodeAt(i) + ((hash << 5) - hash);
     }
     return hash;
-  } 
+  }
 
   intToRGB = (i) => {
-      var c = (i & 0x00FFFFFF)
-          .toString(16)
-          .toUpperCase();
+    var c = (i & 0x00FFFFFF)
+      .toString(16)
+      .toUpperCase();
 
-      return "00000".substring(0, 6 - c.length) + c;
+    return "00000".substring(0, 6 - c.length) + c;
   }
 
   renderAssigned = () => {
-    const {assignedUserName , assignedUserId} = this.props;
+    const { assignedUserName, assignedUserId } = this.props;
 
     if (!assignedUserName) {
       return null;
@@ -115,21 +123,45 @@ class CardBadges extends Component {
     );
   };
 
+  getLabelById = (labelId) => {
+    const { dispatch, cardId } = this.props;
+    let labelvalue;
+    this.props.boardLabels.map(label => {
+      if (labelId === label.id) {
+        labelvalue = label;
+      }
+    }, labelvalue);
+    if (labelvalue == undefined) {
+      dispatch({
+        type: "DELETE_LABEL",
+        payload: { label: labelId, cardId: cardId }
+      });
+      return null;
+    }
+    return labelvalue;
+
+  }
+
   renderLabels = () => {
-    const {labels} = this.props;
+    const { labels } = this.props;
     if (!labels) {
       return null;
     }
 
-    return labels.map((label,index) => (
-      <div
-        key={index}
-        className="badge"
-        style={{ background: "gray" }}
-      >
-        <MdLabel className="badge-icon" />
-        &nbsp;
-        {label.title}
+    return labels.map((label, index) => (
+      <div>
+        {this.getLabelById(label)
+          ? <div
+            key={label}
+            className="badge"
+            style={{ background: this.getLabelById(label).color }}
+          >
+            <MdLabel className="badge-icon" />
+            &nbsp;
+        {this.getLabelById(label).title}
+          </div>
+          : null
+        }
       </div>
     ));
   };
@@ -160,4 +192,11 @@ class CardBadges extends Component {
   }
 }
 
-export default connect()(withTranslation()(CardBadges));
+const mapStateToProps = (state, ownProps) => {
+  const boardLabel = state.boardsById[ownProps.boardId].labels;
+  return {
+    boardLabels: boardLabel
+  };
+};
+
+export default connect(mapStateToProps)(withTranslation()(CardBadges));

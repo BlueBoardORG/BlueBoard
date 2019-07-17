@@ -27,7 +27,7 @@ const cardsById = (state = {}, action) => {
       const { label, cardId } = action.payload;
       let cardLabels = state[cardId].labels || [];
       cardLabels.map((cardLabel,index) =>{
-        if(cardLabel.id === label.id){
+        if(cardLabel === label){
           cardLabels.splice(index, 1);
         }
       })
