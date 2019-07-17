@@ -48,7 +48,13 @@ class LabelEditor extends Component {
         return (
             <div>
                 <input onChange={this.handleChangeTitle}></input>
-                <input onChange={this.handleChangeColor} ></input>
+                <select onChange={this.handleChangeColor}>
+                    <option value="red">red</option>
+                    <option value="blue">blue</option>
+                    <option value="green">green</option>
+                    <option value="Orange">Orange</option>
+                    <option value="gray">gray</option>
+                </select>
                 <button onClick={this.editLabel} className="color-picker-color"> אישור</button>
                 <button onClick={this.deleteLabel} className="color-picker-color">מחק </button>
             </div>
