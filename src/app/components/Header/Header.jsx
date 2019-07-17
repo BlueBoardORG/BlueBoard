@@ -39,9 +39,6 @@ class Header extends Component {
           <div className="header-notification">
             <Notification />
           </div>
-          {/* <div className="header-watch">
-            <Watch />
-          </div> */}
         </div>
         <div className="header-right-side">
           {user ? <p> {user.name} </p> : <p/>}

@@ -36,6 +36,9 @@ const userChangeMiddleware = store => next => action => {
           postWithParams(userId, boardId, action.type, title);
           break;
         }
+        default: {
+          break;
+        }
       }
     }
   }

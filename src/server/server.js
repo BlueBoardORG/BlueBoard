@@ -62,14 +62,14 @@ MongoClient.connect(process.env.MONGODB_URL, { useNewUrlParser: true }).then(cli
   app.use("/auth", auth);
   app.use("/api", api(db));
   app.use(fetchBoardData(db));
-  if(process.env.NODE_ENV==="production"){
+  //if(process.env.NODE_ENV==="production"){
     app.use((req,res,next)=>{
       if(!req.user)
         res.redirect("/auth/shraga");
       else
         next();
     })
-  }
+  //}
   app.get("*", renderPage);
 
   const port = process.env.PORT || "1337";
