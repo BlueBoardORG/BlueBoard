@@ -80,7 +80,7 @@ const boardsById = (state = {}, action) => {
     case "REMOVE_LABEL_FROM_BOARD":{
       const {boardId,labelToRemove} = action.payload;
       const boardLabels = state[boardId].labels || [];
-      boardLabels.foreach((label,index) =>{
+      boardLabels.map((label,index) =>{
         if(label.id === labelToRemove){
           boardLabels.splice(index, 1);
         }
@@ -96,7 +96,7 @@ const boardsById = (state = {}, action) => {
     case "Edit_LABEL":{
       const {boardId,editedLabel} = action.payload;
       const boardLabels = state[boardId].labels || [];
-      boardLabels.foreach((label,index) =>{
+      boardLabels.map((label,index) =>{
         if(label.id === editedLabel.id){
           boardLabels.splice(index, 1);
         }

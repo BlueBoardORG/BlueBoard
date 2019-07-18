@@ -6,10 +6,11 @@ import PropTypes from "prop-types";
 
 class LabelEditor extends Component {
     static propTypes = {
-        cardId: PropTypes.string.isRequired,
+        action: PropTypes.func.isRequired,
         boardId: PropTypes.string.isRequired,
         labelId: PropTypes.string,
         dispatch: PropTypes.func.isRequired,
+        cards : PropTypes.object.isRequired,
     }
     constructor() {
         super();
@@ -31,6 +32,7 @@ class LabelEditor extends Component {
             type: "REMOVE_LABEL_FROM_BOARD",
             payload: {  boardId, labelToRemove: labelId }
         });
+        console.log(typeof(this.props.cards));//////////////////////////////////////
         this.props.action();
     };
 
@@ -61,12 +63,10 @@ class LabelEditor extends Component {
         );
     }
 }
-const mapStateToProps = (state, ownProps) => {
-    const boardLabel = state.boardsById[ownProps.boardId].labels;
-    const cardLabel = state.cardsById[ownProps.cardId].labels;
+const mapStateToProps = (state) => {
+    const cards = state.cardsById;
     return {
-        boardLabels: boardLabel,
-        cardLabels: cardLabel
+        cards
     };
 };
 

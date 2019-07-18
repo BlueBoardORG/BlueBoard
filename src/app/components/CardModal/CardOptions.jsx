@@ -83,13 +83,6 @@ class CardOptions extends Component {
 
   }
 
-  removeLabelFromBoard = labelToRemove => {
-    const { dispatch, boardId } = this.props;
-    dispatch({
-      type: "REMOVE_LABEL_FROM_BOARD",
-      payload: {  boardId, labelToRemove }
-    });
-  }
 
   addLabelToBoard = labelToAdd => {
     const { dispatch, boardId } = this.props;
