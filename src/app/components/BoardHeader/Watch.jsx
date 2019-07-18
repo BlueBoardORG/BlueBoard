@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { Button, Wrapper, Menu, MenuItem } from "react-aria-menubutton";
+import { withTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import FaEye from "react-icons/lib/fa/eye"
 import "./ColorPicker.scss";
-import { withTranslation } from "react-i18next";
+
 
 
 class Watch extends Component {
