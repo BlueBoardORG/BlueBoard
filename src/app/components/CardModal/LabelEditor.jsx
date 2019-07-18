@@ -29,7 +29,7 @@ class LabelEditor extends Component {
         const { dispatch, boardId, labelId } = this.props;
         dispatch({
             type: "REMOVE_LABEL_FROM_BOARD",
-            payload: { boardId: boardId, labelToRemove: labelId }
+            payload: {  boardId, labelToRemove: labelId }
         });
         this.props.action();
     };
@@ -39,7 +39,7 @@ class LabelEditor extends Component {
         const { dispatch, boardId, labelId } = this.props;
         dispatch({
             type: "Edit_LABEL",
-            payload: { boardId, editLabel: { id: labelId, title: title, color: color } }
+            payload: { boardId, editedLabel: { id: labelId,  title,  color } }
         });
         this.props.action();
     };

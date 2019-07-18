@@ -136,6 +136,13 @@ class CardBadges extends Component {
       </div>
     );
   };
+  onWheelLabels = e => {
+    const { currentTarget, deltaY } = e;
+    if (currentTarget.className === "scroll-wrapper") {
+      currentTarget.scrollTo(currentTarget.scrollLeft + deltaY, 0);
+      e.preventDefault();
+    }
+  };
 
   getLabelById = (labelId) => {
     const { dispatch, cardId } = this.props;
@@ -144,11 +151,11 @@ class CardBadges extends Component {
       if (labelId === label.id) {
         labelvalue = label;
       }
-    }, labelvalue);
-    if (labelvalue == undefined) {
+    });
+    if (labelvalue === undefined) {
       dispatch({
         type: "DELETE_LABEL",
-        payload: { label: labelId, cardId: cardId }
+        payload: { label: labelId,  cardId }
       });
       return null;
     }
@@ -162,7 +169,7 @@ class CardBadges extends Component {
       return null;
     }
 
-    return labels.map((label, index) => (
+    return labels.map((label) => (
       <div key={label}>
         {this.getLabelById(label)
           ? <div
@@ -179,13 +186,7 @@ class CardBadges extends Component {
     ));
   };
 
-  onWheelLabels = e => {
-    const { currentTarget, deltaY } = e;
-    if (currentTarget.className === "scroll-wrapper") {
-      currentTarget.scrollTo(currentTarget.scrollLeft + deltaY, 0);
-      e.preventDefault();
-    }
-  };
+ 
 
   render() {
     return (

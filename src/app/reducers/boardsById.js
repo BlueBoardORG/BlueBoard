@@ -79,8 +79,8 @@ const boardsById = (state = {}, action) => {
     }
     case "REMOVE_LABEL_FROM_BOARD":{
       const {boardId,labelToRemove} = action.payload;
-      let boardLabels = state[boardId].labels || [];
-      boardLabels.map((label,index) =>{
+      const boardLabels = state[boardId].labels || [];
+      boardLabels.foreach((label,index) =>{
         if(label.id === labelToRemove){
           boardLabels.splice(index, 1);
         }
@@ -94,10 +94,10 @@ const boardsById = (state = {}, action) => {
       };
     }
     case "Edit_LABEL":{
-      const {boardId,editLabel} = action.payload;
-      let boardLabels = state[boardId].labels || [];
-      boardLabels.map((label,index) =>{
-        if(label.id === editLabel.id){
+      const {boardId,editedLabel} = action.payload;
+      const boardLabels = state[boardId].labels || [];
+      boardLabels.foreach((label,index) =>{
+        if(label.id === editedLabel.id){
           boardLabels.splice(index, 1);
         }
       })
@@ -105,7 +105,7 @@ const boardsById = (state = {}, action) => {
         ...state,
         [boardId]: {
           ...state[boardId],
-          labels: [...state[boardId].labels, editLabel]
+          labels: [...state[boardId].labels, editedLabel]
         }
       };
     }
@@ -120,15 +120,14 @@ const boardsById = (state = {}, action) => {
           }
         };
       }
-      else{
-        return {
-          ...state,
-          [boardId]: {
-            ...state[boardId],
-            labels: [labelToAdd]
-          }
-        };
-      }
+      return {
+        ...state,
+        [boardId]: {
+          ...state[boardId],
+          labels: [labelToAdd]
+        }
+      };
+      
       
     }
     case "ADD_BOARD": {

@@ -25,7 +25,7 @@ const cardsById = (state = {}, action) => {
     }
     case "DELETE_LABEL": {
       const { label, cardId } = action.payload;
-      let cardLabels = state[cardId].labels || [];
+      const cardLabels = state[cardId].labels || [];
       cardLabels.map((cardLabel,index) =>{
         if(cardLabel === label){
           cardLabels.splice(index, 1);

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Modal from "react-modal";
+import shortid from "shortid";
+import FaPencil from "react-icons/lib/fa/pencil";
 import FaTrash from "react-icons/lib/fa/trash";
 import FaUserPlus from "react-icons/lib/fa/user-plus";
 import { FaCheckSquare } from "react-icons/lib/fa";
@@ -12,8 +14,6 @@ import ClickOutside from "../ClickOutside/ClickOutside";
 import UserPicker from "../UserPicker/UserPicker";
 import colorIcon from "../../../assets/images/color-icon.png";
 import "./CardOptions.scss";
-import shortid from "shortid";
-import FaPencil from "react-icons/lib/fa/pencil";
 import LabelEditor from "./LabelEditor";
 
 class CardOptions extends Component {
@@ -87,7 +87,7 @@ class CardOptions extends Component {
     const { dispatch, boardId } = this.props;
     dispatch({
       type: "REMOVE_LABEL_FROM_BOARD",
-      payload: { boardId: boardId, labelToRemove }
+      payload: {  boardId, labelToRemove }
     });
   }
 
@@ -95,7 +95,7 @@ class CardOptions extends Component {
     const { dispatch, boardId } = this.props;
     dispatch({
       type: "ADD_LABEL_TO_BOARD",
-      payload: { boardId: boardId, labelToAdd }
+      payload: { boardId, labelToAdd }
     });
   };
 
@@ -234,8 +234,9 @@ class CardOptions extends Component {
                       <button
                         key={index}
                         style={{
+                          color: "white",
                           background: labelcolor,
-                          fontSize: 10,
+                          fontSize: 12,
                         }}
                         className="color-picker-color"
                         onClick={() => this.editModeCheack(label)}
