@@ -10,17 +10,13 @@ const watchMiddleware = store => next => action => {
     /*console.log("middleware: user: ");
     console.log(user);
     console.log("boardId: ");
-    console.log(boardId);
-    console.log("middleware: watchMode: ");
-    console.log(watchMode);*/
-    console.log("state: ");
-    console.log(store.getState());
+    console.log(boardId);*/
 
-    /*const watchMode = store.getState().boardsById[boardId].users.find(boardUser=>boardUser.id === user._id).watch
-    console.log("watch Mode: ");
-    console.log(watchMode);*/
-    
-    //currentWatchMode: state.boardsById[boardId].users.find(boardUser=>boardUser.id === user._id).watch
+    let currentWatchMode = null;
+
+    if(store.getState().boardsById[boardId]){
+        currentWatchMode = store.getState().boardsById[boardId].users.find(boardUser=>boardUser.id === user._id).watch;
+    }
 
 
     /*if (user && !action.dontPersist) {
