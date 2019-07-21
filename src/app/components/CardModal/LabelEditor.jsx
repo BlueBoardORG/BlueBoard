@@ -32,7 +32,12 @@ class LabelEditor extends Component {
             type: "REMOVE_LABEL_FROM_BOARD",
             payload: {  boardId, labelToRemove: labelId }
         });
-        console.log(typeof(this.props.cards));//////////////////////////////////////
+        for (let card in this.props.cards) {
+            dispatch({
+                type: "DELETE_LABEL",
+                payload: { label:labelId, cardId: card }
+            });
+        }
         this.props.action();
     };
 
@@ -49,7 +54,7 @@ class LabelEditor extends Component {
     render() {
         return (
             <div>
-                <input onChange={this.handleChangeTitle}></input>
+                <input  onChange={this.handleChangeTitle}></input>
                 <select onChange={this.handleChangeColor}>
                     <option value="red">red</option>
                     <option value="blue">blue</option>
