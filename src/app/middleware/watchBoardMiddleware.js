@@ -64,4 +64,15 @@ const watchMiddleware = store => next => action => {
   }
 };
 
+
+function postWithParams(userId, boardId, action, title) {
+  fetch("/api/notifications", {
+    method: "POST",
+    body: JSON.stringify({ userId, boardId, action, title }),
+    headers: { "Content-Type": "application/json" },
+    credentials: "include"
+  });
+}
+
+
 export default watchMiddleware;
