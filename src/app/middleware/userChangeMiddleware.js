@@ -1,4 +1,4 @@
-const userChangeMiddleware = store => next => action => {
+/*const userChangeMiddleware = store => next => action => {
   next(action);
   const { user, currentBoardId: boardId, boardsById } = store.getState();
 
@@ -53,4 +53,4 @@ function postWithParams(userId, boardId, action, title) {
   });
 }
 
-export default userChangeMiddleware;
+export default userChangeMiddleware;*/

@@ -22,7 +22,7 @@ delete window.PRELOADED_STATE;
 const store = createStore(
   rootReducer,
   preloadedState,
-  composeWithDevTools(applyMiddleware(persistMiddleware,filterMiddleware,historyMiddleware,userChangeMiddleware, watchMiddleware))
+  composeWithDevTools(applyMiddleware(persistMiddleware,filterMiddleware,historyMiddleware, watchMiddleware))
 );
 
 ReactDOM.hydrate(
