@@ -8,6 +8,7 @@ import BoardContainer from "./Board/BoardContainer";
 import LandingPage from "./LandingPage/LandingPage";
 import "./App.scss";
 import socket from "../socketIOHandler";
+import NotFound from '../components/ErrorPages/NotFound/NotFound';
 
 // Adding I18n
 import './../../i18n';
@@ -51,7 +52,7 @@ const App = ({ user, isGuest, dispatch }) => {
     })
   }
  
-  // Serve different pages depending on if user is logged in or not
+  //Serve different pages depending on if user is logged in or not
   if (user || isGuest) {
     // when user is connected registers socket to user for updates
     socket.emit("userDetails", {user});
@@ -60,7 +61,8 @@ const App = ({ user, isGuest, dispatch }) => {
         <Route exact path="/" component={Home} />
         <Route exact path="/archive" component={Archive} />
         <Route path="/b/:boardId" component={BoardContainer} />
-        <Redirect to="/" />
+        <Route path="/404" component={NotFound} />
+        <Redirect to="/"/>     
       </Switch>
     );
   }
