@@ -1,3 +1,4 @@
+import {getUserIdFromAction} from "./getUserId";
 
 const watchMiddleware = store => next => action => {
   next(action);
@@ -57,42 +58,8 @@ const watchMiddleware = store => next => action => {
         }
         
         else if (currentWatchMode === "Not watching" && notWatchingFunctions.includes(action.type)) {
-          switch (action.type) {
-            case "UPDATE_ASSIGNED_USER": {
-              const { assignedUserId } = action.payload;
-              debugConsole(assignedUserId, currentWatchMode);
-              if(user.id === assignedUserId){
-                postWithParams(user.id, boardId, action.type, title);
-              }
-              break;
-            }
-            case "ADD_USER": {
-              const { userToAdd } = action.payload;
-              debugConsole(userToAdd, currentWatchMode);
-              if(user.id === userToAdd.id){
-                postWithParams(user.id, boardId, action.type, title);
-              }
-              break;
-            }
-            case "REMOVE_USER": {
-              const { userIdToRemove: userId } = action.payload;
-              debugConsole(userId, currentWatchMode);
-              if(user.id === userId){
-                postWithParams(user.id, boardId, action.type, title);
-              }
-              break;
-            }
-            case "CHANGE_USER_ROLE": {
-              const { userId } = action.payload;
-              debugConsole(userId, currentWatchMode);
-              if(user.id === userId){
-                postWithParams(user.id, boardId, action.type, title);
-              }
-              break;
-            }
-            default: {
-              break;
-            }
+          if(user.id === getUserIdFromAction(action)){
+            postWithParams(user.id, boardId, action.type, title);
           }
         }
       });
