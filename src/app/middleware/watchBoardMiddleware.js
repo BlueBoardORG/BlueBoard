@@ -1,13 +1,7 @@
-import socket from "../socketIOHandler";
 
 const watchMiddleware = store => next => action => {
   next(action);
-  const { currentBoardId: boardId, boardsById } = store.getState();
-
-
-  /*if(store.getState().boardsById[boardId]){
-        currentWatchMode = store.getState().boardsById[boardId].users.find(boardUser=>boardUser.id === user._id).watch;
-    }*/
+  const { currentBoardId: boardId, boardsById } = store.getState();   
 
   const notWatchingFunctions = [
     "UPDATE_ASSIGNED_USER",
@@ -16,41 +10,70 @@ const watchMiddleware = store => next => action => {
     "CHANGE_USER_ROLE"
   ];
 
+  function postWithParams(userId, boardId, action, title) {
+    fetch("/api/notifications", {
+      method: "POST",
+      body: JSON.stringify({ userId, boardId, action, title }),
+      headers: { "Content-Type": "application/json" },
+      credentials: "include"
+    });
+  }
+
+  function debugConsole(userId, currentWatchMode){
+    console.log("userId: ");
+    console.log(userId);
+    console.log("userWatch:");
+    console.log(currentWatchMode);
+  }
+
   if (!action.dontPersist) {
+    console.log("action");
+    console.log(action);
+
     if (boardsById[boardId]) {
       boardsById[boardId].users.forEach(user => {
+        console.log("user:");
+        console.log(user);
+
         const currentWatchMode = user.watch;
-        if ((currentWatchMode === "Not watching" && notWatchingFunctions.includes(action.type)) || currentWatchMode === "Watching") {
+        const { title } = boardsById[boardId];
+
+        if(currentWatchMode === "Watching"){
+          console.log("got into watching");
+          postWithParams(user.id, boardId, action.type, title);
+        }
+        
+        else if (currentWatchMode === "Not watching" && notWatchingFunctions.includes(action.type)) {
           switch (action.type) {
             case "UPDATE_ASSIGNED_USER": {
               const { assignedUserId } = action.payload;
-              const { title } = boardsById[boardId];
+              debugConsole(assignedUserId, currentWatchMode);
               if(user.id === assignedUserId){
-                postWithParams(assignedUserId, boardId, action.type, title);
+                postWithParams(user.id, boardId, action.type, title);
               }
               break;
             }
             case "ADD_USER": {
-              let { userToAdd } = action.payload;
-              const { title } = boardsById[boardId];
-              if(user.id === userToAdd){
-                postWithParams(userToAdd.id, boardId, action.type, title);
+              const { userToAdd } = action.payload;
+              debugConsole(userToAdd, currentWatchMode);
+              if(user.id === userToAdd.id){
+                postWithParams(user.id, boardId, action.type, title);
               }
               break;
             }
             case "REMOVE_USER": {
-              let { userIdToRemove: userId } = action.payload;
-              const { title } = boardsById[boardId];
+              const { userIdToRemove: userId } = action.payload;
+              debugConsole(userId, currentWatchMode);
               if(user.id === userId){
-                postWithParams(userId, boardId, action.type, title);
+                postWithParams(user.id, boardId, action.type, title);
               }
               break;
             }
             case "CHANGE_USER_ROLE": {
-              let { userId } = action.payload;
-              const { title } = boardsById[boardId];
+              const { userId } = action.payload;
+              debugConsole(userId, currentWatchMode);
               if(user.id === userId){
-                postWithParams(userId, boardId, action.type, title);
+                postWithParams(user.id, boardId, action.type, title);
               }
               break;
             }
@@ -63,16 +86,6 @@ const watchMiddleware = store => next => action => {
     }
   }
 };
-
-
-function postWithParams(userId, boardId, action, title) {
-  fetch("/api/notifications", {
-    method: "POST",
-    body: JSON.stringify({ userId, boardId, action, title }),
-    headers: { "Content-Type": "application/json" },
-    credentials: "include"
-  });
-}
 
 
 export default watchMiddleware;
