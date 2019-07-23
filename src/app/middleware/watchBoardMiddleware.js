@@ -10,6 +10,19 @@ const watchMiddleware = store => next => action => {
     "CHANGE_USER_ROLE"
   ];
 
+  const watchingFunctions = [
+    "TOGGLE_SOCKET_CONNECTION",
+    "MOVE_CARD",
+    "ENTER_AS_GUEST",
+    "UPDATE_FILTER",
+    "CHANGE_CARD_FILTER",
+    "SET_CURRENT_CARD",
+    "PUT_BOARD_ID_IN_REDUX",
+    "ADD_BOARD",
+    "LOAD_BOARD_USERS_DATA",
+    "CHANGE_USER_WATCH"
+  ];
+
   function postWithParams(userId, boardId, action, title) {
     fetch("/api/notifications", {
       method: "POST",
@@ -38,7 +51,7 @@ const watchMiddleware = store => next => action => {
         const currentWatchMode = user.watch;
         const { title } = boardsById[boardId];
 
-        if(currentWatchMode === "Watching"){
+        if(currentWatchMode === "Watching" && !watchingFunctions.includes(action.type)){
           console.log("got into watching");
           postWithParams(user.id, boardId, action.type, title);
         }
