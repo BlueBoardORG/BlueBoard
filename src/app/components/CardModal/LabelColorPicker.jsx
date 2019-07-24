@@ -6,27 +6,26 @@ import { Button, Wrapper, Menu, MenuItem } from "react-aria-menubutton";
 import classnames from "classnames";
 import FaCheck from "react-icons/lib/fa/check";
 import colorIcon from "../../../assets/images/color-icon.png";
-import "./ColorPicker.scss";
+import "./LabelColorPicker.scss";
 import { withTranslation } from "react-i18next";
 
-class ColorPicker extends Component {
+class LabelColorPicker extends Component {
   static propTypes = {
+    label: PropTypes.object.isRequired,
     boardId: PropTypes.string.isRequired,
-    boardColor: PropTypes.string.isRequired,
     dispatch: PropTypes.func.isRequired
-    
   };
 
   handleSelection = color => {
-    const { dispatch, boardId, boardColor } = this.props;
-    // Dispatch update only if selected color is not the same as current board color.
-    if (color !== boardColor) {
-      dispatch({ type: "CHANGE_BOARD_COLOR", payload: { boardId, color } });
+    const { dispatch, boardId, label } = this.props;
+    if (color !== label.color) {
+      dispatch({  type: "Edit_LABEL", payload: { boardId, editedLabel: { id: label.id,  title: null,  color }}} );
     }
   };
 
+
   render() {
-    const { boardColor,t } = this.props;
+    const { label,t } = this.props;
     const colors = ["blue", "green", "red", "pink"];
     return (
       <Wrapper
@@ -46,7 +45,7 @@ class ColorPicker extends Component {
               className={classnames("color-picker-item", color)}
               key={color}
             >
-              {color === boardColor && <FaCheck />}
+              {color === label.color && <FaCheck />}
             </MenuItem>
           ))}
         </Menu>
@@ -58,9 +57,8 @@ class ColorPicker extends Component {
 const mapStateToProps = (state, ownProps) => {
   const { boardId } = ownProps.match.params;
   return {
-    boardColor: state.boardsById[boardId].color,
     boardId
   };
 };
 
-export default withRouter(connect(mapStateToProps)(withTranslation()(ColorPicker)));
+export default withRouter(connect(mapStateToProps)(withTranslation()(LabelColorPicker)));

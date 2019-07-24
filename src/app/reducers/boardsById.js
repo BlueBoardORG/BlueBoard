@@ -98,9 +98,16 @@ const boardsById = (state = {}, action) => {
       const boardLabels = state[boardId].labels || [];
       boardLabels.map((label,index) =>{
         if(label.id === editedLabel.id){
+          if(!editedLabel.color){
+            editedLabel.color=label.color;
+          }
+          if(!editedLabel.title){
+            editedLabel.title=label.title;
+          }
           boardLabels.splice(index, 1);
         }
       })
+
       return {
         ...state,
         [boardId]: {

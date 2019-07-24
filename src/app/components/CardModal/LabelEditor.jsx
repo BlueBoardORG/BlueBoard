@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import "./LabelEditor.scss"
+import LabelColorPicker from "./LabelColorPicker";
 
 
 
@@ -8,7 +10,7 @@ class LabelEditor extends Component {
     static propTypes = {
         action: PropTypes.func.isRequired,
         boardId: PropTypes.string.isRequired,
-        labelId: PropTypes.string,
+        label: PropTypes.object.isRequired,
         dispatch: PropTypes.func.isRequired,
         cards : PropTypes.object.isRequired,
     }
@@ -22,49 +24,50 @@ class LabelEditor extends Component {
     handleChangeTitle = (e) => {
         this.setState({ title: e.target.value });
     }
-    handleChangeColor = (e) => {
-        this.setState({ color: e.target.value });
-    }
 
     deleteLabel = () => {
-        const { dispatch, boardId, labelId } = this.props;
+        const { dispatch, boardId, label } = this.props;
         dispatch({
             type: "REMOVE_LABEL_FROM_BOARD",
-            payload: {  boardId, labelToRemove: labelId }
+            payload: {  boardId, labelToRemove: label.id }
         });
         for (let card in this.props.cards) {
+           
+            if(this.props.cards[card].labels.includes(label.id)){
             dispatch({
                 type: "DELETE_LABEL",
-                payload: { label:labelId, cardId: card }
+                payload: { label:label.id, cardId: card }
             });
+        }
         }
         this.props.action();
     };
 
     editLabel = () => {
-        const { title, color } = this.state;
-        const { dispatch, boardId, labelId } = this.props;
+        const { title } = this.state;
+        const { dispatch, boardId, label } = this.props;
         dispatch({
             type: "Edit_LABEL",
-            payload: { boardId, editedLabel: { id: labelId,  title,  color } }
+            payload: { boardId, editedLabel: { id: label.id,  title:title,  color:null } }
         });
         this.props.action();
     };
 
     render() {
+        const {
+            label
+          } = this.props;
         return (
-            <div>
+            <div className="editor">
                 <input  onChange={this.handleChangeTitle}></input>
-                <select onChange={this.handleChangeColor}>
-                    <option value="red">red</option>
-                    <option value="blue">blue</option>
-                    <option value="green">green</option>
-                    <option value="Orange">Orange</option>
-                    <option value="gray">gray</option>
-                </select>
-                <button onClick={this.editLabel} className="color-picker-color"> אישור</button>
-                <button onClick={this.deleteLabel} className="color-picker-color">מחק </button>
+                <LabelColorPicker label={label} />
+                <div style={{flexdirection : "column"}}>
+                    <button  onClick={this.editLabel} className="edit-button-ok"> אישור</button>
+                    <button onClick={this.deleteLabel} className="edit-button-delete">מחק </button>
+                </div>
             </div>
+
+
         );
     }
 }

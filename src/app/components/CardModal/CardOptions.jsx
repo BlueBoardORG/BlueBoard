@@ -39,7 +39,7 @@ class CardOptions extends Component {
       isCheckOpen: false,
       isAssignOpen: false,
       isEditToggle: false,
-      setLabelId: null,
+      setLabel: null,
       isEditOpen: false
     };
   }
@@ -77,7 +77,7 @@ class CardOptions extends Component {
       this.addLabel(label)
     }
     else {
-      this.setState({ setLabelId: label.id });
+      this.setState({ setLabel: label });
       this.setState({ isEditOpen: !this.state.isEditOpen });
     }
 
@@ -207,9 +207,10 @@ class CardOptions extends Component {
               handleClickOutside={this.handleClickOutside}
 
             >
+              <div onKeyDown={this.handleKeyDown}>
               <div
                 className="modal-color-picker"
-                onKeyDown={this.handleKeyDown}
+                
               >
                 <button
                   className="color-picker-color"
@@ -235,15 +236,15 @@ class CardOptions extends Component {
                         onClick={() => this.editModeCheack(label)}
                       >{labelName}</button>);
                   })}
-                <div >
+                
+              </div>
+              <div>
                   {isEditOpen
-                    ? <LabelEditor action={this.toggelEdit}  cardId={card._id} boardId={boardId} labelId={this.state.setLabelId} />
+                    ? <LabelEditor  action={this.toggelEdit}  cardId={card._id} boardId={boardId} label={this.state.setLabel} />
                     : null
                   }
                 </div>
-
-
-              </div>
+            </div>
             </ClickOutside>
           )}
         </div>
