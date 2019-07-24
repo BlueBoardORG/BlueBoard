@@ -156,7 +156,7 @@ class CardOptions extends Component {
       boardId
     } = this.props;
 
-    const { isEditOpen, isCalendarOpen, isCheckOpen, isAssignOpen } = this.state;
+    const { isEditOpen, isCalendarOpen, isCheckOpen, isAssignOpen,isEditToggle } = this.state;
 
     const calendarStyle = {
       content: {
@@ -211,14 +211,17 @@ class CardOptions extends Component {
               <div onKeyDown={this.handleKeyDown}>
               <div
                 className="modal-color-picker"
-                
               >
                 <button
                   className="color-picker-color"
                   onClick={() => this.addLabelToBoard({ id: shortid.generate(), title: "תגית חדשה", color: "gray" })} >+</button>
                 <button
                   className="color-picker-color"
-                  onClick={() => this.toggelEditMode()} ><FaPencil /></button>
+                  onClick={() => this.toggelEditMode()}
+                  style={isEditToggle?{
+                    boxshadow:"3px 3px 6px green",
+                    border: "2px green solid"
+                  }:null} ><FaPencil /></button>
 
                 {/* eslint-enable */}
                 {
@@ -233,7 +236,7 @@ class CardOptions extends Component {
                           background: labelcolor,
                           fontSize: 12,
                         }}
-                        className="color-picker-color"
+                        className={isEditToggle ? "color-picker-color-animation" : "color-picker-color"}
                         onClick={() => this.editModeCheack(label)}
                       >{labelName}</button>);
                   })}
