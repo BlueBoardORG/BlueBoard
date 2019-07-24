@@ -17,8 +17,7 @@ class LabelEditor extends Component {
     constructor() {
         super();
         this.state = {
-            title: null,
-            color: null
+            title: null
         };
     }
     handleChangeTitle = (e) => {
@@ -48,18 +47,17 @@ class LabelEditor extends Component {
         const { dispatch, boardId, label } = this.props;
         dispatch({
             type: "Edit_LABEL",
-            payload: { boardId, editedLabel: { id: label.id,  title:title,  color:null } }
+            payload: { boardId, editedLabel: { id: label.id,  title,  color:null } }
         });
         this.props.action();
     };
-
     render() {
-        const {
-            label
-          } = this.props;
+        const {label} = this.props;
+        const {title}=this.state;
         return (
+            
             <div className="editor">
-                <input  onChange={this.handleChangeTitle}></input>
+                <input className="titel-textarea"  onChange={this.handleChangeTitle} value={(title!==null) ? title : label.title } />
                 <LabelColorPicker label={label} />
                 <div style={{flexdirection : "column"}}>
                     <button  onClick={this.editLabel} className="edit-button-ok"> אישור</button>

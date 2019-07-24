@@ -41,3 +41,16 @@
     background : red;
     float : left;
   }
+
+  .titel-textarea {
+    flex-grow: 1;
+    box-sizing: border-box;
+    width: 100%;
+    color: inherit;
+    background: inherit;
+    font-family: inherit;
+    line-height: inherit;
+    resize: none;
+    overflow: hidden;
+    outline: none;
+  }

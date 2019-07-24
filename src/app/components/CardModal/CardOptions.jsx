@@ -103,6 +103,7 @@ class CardOptions extends Component {
     const { toggleColorPicker } = this.props;
     toggleColorPicker();
     this.setState({ isEditOpen: false })
+    this.setState({ isEditToggle: false })
     this.colorPickerButton.focus();
   };
 

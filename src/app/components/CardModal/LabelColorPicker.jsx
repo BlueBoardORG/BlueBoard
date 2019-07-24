@@ -19,13 +19,13 @@ class LabelColorPicker extends Component {
   handleSelection = color => {
     const { dispatch, boardId, label } = this.props;
     if (color !== label.color) {
-      dispatch({  type: "Edit_LABEL", payload: { boardId, editedLabel: { id: label.id,  title: null,  color }}} );
+      dispatch({  type: "Edit_LABEL", payload: { boardId, editedLabel: { id: label.id,  title: null,  color }}});
     }
   };
 
 
   render() {
-    const { label,t } = this.props;
+    const {label,t} = this.props;
     const colors = ["blue", "green", "red", "pink"];
     return (
       <Wrapper
@@ -34,7 +34,7 @@ class LabelColorPicker extends Component {
       >
         <Button className="color-picker">
           <img src={colorIcon} alt="colorwheel" className="modal-icon" />
-          <div className="board-header-right-text">
+          <div style={{color:"black"}} className="board-header-right-text">
             &nbsp;{t('Color')} &nbsp;&#9662;
           </div>
         </Button>
@@ -45,7 +45,7 @@ class LabelColorPicker extends Component {
               className={classnames("color-picker-item", color)}
               key={color}
             >
-              {color === label.color && <FaCheck />}
+              {color ===  label.color && <FaCheck/>}
             </MenuItem>
           ))}
         </Menu>

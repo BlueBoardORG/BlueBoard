@@ -1,3 +1,4 @@
+
 .color-picker-wrapper {
     position: relative;
     font-size: 16px;
@@ -9,7 +10,7 @@
     align-items: center;
     padding: 8px 10px 8px 10px;
     border-radius: 3px;
-    color: white;
+    color: black;
     transition: background 0.1s;
     cursor: pointer;
   }
@@ -31,7 +32,7 @@
     padding: 3px;
     border-radius: 3px;
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.6);
-    color: white;
+    color: black;
     background: rgba(255, 255, 255, 0.9);
   }
   
