@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { withTranslation } from "react-i18next";
 import "./BoardNotFound.scss";
 
 class BoardNotFound extends Component {
     render() {
+        const { t } = this.props;
         return (<div>
             <div className="main">
                 <div>
@@ -271,7 +273,7 @@ class BoardNotFound extends Component {
                                         404
                                     </text>
                                     <text transform="translate(659.5 213.994)" className="st8 st0" fontSize="24.025">
-                                        Board was not found
+                                        {t("BoardNotFound")}
                                     </text>
                                 </g>
                                 <g id="ladders">
@@ -300,4 +302,4 @@ class BoardNotFound extends Component {
     }
 }
 
-export default BoardNotFound;
+export default withTranslation()(BoardNotFound);

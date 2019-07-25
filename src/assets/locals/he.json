@@ -84,5 +84,6 @@
     "archiveBoard": "הכנס לוח לארכיון",
     "unArchiveBoard": "הוצא לוח מארכיון",
     "archiveBoard.short": "ארכב לוח עבור המשתמש שלי",
-    "unArchiveBoard.short": "שחזר לוח עבור המשתמש שלי"
+    "unArchiveBoard.short": "שחזר לוח עבור המשתמש שלי",
+    "BoardNotFound": "הלוח המבוקש אינו קיים"
 }
