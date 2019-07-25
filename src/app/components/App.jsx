@@ -6,9 +6,9 @@ import Home from "./Home/Home";
 import Archive from "./Archive/Archive";
 import BoardContainer from "./Board/BoardContainer";
 import LandingPage from "./LandingPage/LandingPage";
+import BoardNotFound from '../components/Board/BoardNotFound/BoardNotFound';
 import "./App.scss";
 import socket from "../socketIOHandler";
-import NotFound from '../components/ErrorPages/NotFound/NotFound';
 
 // Adding I18n
 import './../../i18n';
@@ -61,7 +61,7 @@ const App = ({ user, isGuest, dispatch }) => {
         <Route exact path="/" component={Home} />
         <Route exact path="/archive" component={Archive} />
         <Route path="/b/:boardId" component={BoardContainer} />
-        <Route path="/404" component={NotFound} />
+        <Route path="/404" component={BoardNotFound} />
         <Redirect to="/"/>     
       </Switch>
     );
