@@ -76,11 +76,17 @@ class CardOptions extends Component {
     if (!this.state.isEditToggle) {
       this.addLabel(label)
     }
+
+    else if( this.state.setLabel && this.state.setLabel.id===label.id){
+      this.setState({ setLabel: null });
+      this.setState({ isEditOpen: false });
+    }
     else {
       this.setState({ setLabel: label });
-      this.setState({ isEditOpen: !this.state.isEditOpen });
-      
+      this.setState({ isEditOpen: true });
     }
+
+    
 
   }
 

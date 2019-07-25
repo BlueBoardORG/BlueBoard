@@ -15,11 +15,18 @@ class LabelColorPicker extends Component {
     boardId: PropTypes.string.isRequired,
     dispatch: PropTypes.func.isRequired
   };
+  constructor() {
+    super();
+    this.state = {
+        labelColor: null
+    };
+}
 
   handleSelection = color => {
     const { dispatch, boardId, label } = this.props;
-    if (color !== label.color) {
+    if (color !== label.color || color !== this.state.labelColor) {
       dispatch({  type: "Edit_LABEL", payload: { boardId, editedLabel: { id: label.id,  title: null,  color }}});
+      this.setState({labelColor: color});
     }
   };
 
@@ -45,7 +52,7 @@ class LabelColorPicker extends Component {
               className={classnames("color-picker-item", color)}
               key={color}
             >
-              {color ===  label.color && <FaCheck/>}
+              {this.state.labelColor ? color === this.state.labelColor && <FaCheck/> :color ===  label.color && <FaCheck/>}
             </MenuItem>
           ))}
         </Menu>

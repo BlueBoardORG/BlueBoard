@@ -144,6 +144,7 @@
   margin: 2px;
   border: 1px #999 solid;
   border-radius: 3px;
+  overflow: hidden;
 }
 
 .color-picker-color-animation {
@@ -153,6 +154,7 @@
   border: 1px #999 solid;
   border-radius: 3px;
   animation: mymove 0.2s infinite;
+  overflow: hidden;
 }
 @keyframes mymove {
   0%   {transform: rotate(2deg);}

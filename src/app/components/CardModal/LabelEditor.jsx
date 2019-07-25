@@ -21,7 +21,8 @@ class LabelEditor extends Component {
         };
     }
     handleChangeTitle = (e) => {
-        this.setState({ title: e.target.value });
+            this.setState({ title: e.target.value });
+        
     }
 
     deleteLabel = () => {
@@ -55,9 +56,8 @@ class LabelEditor extends Component {
         const {label} = this.props;
         const {title}=this.state;
         return (
-            
             <div className="editor">
-                <input className="titel-textarea"  onChange={this.handleChangeTitle} value={(title!==null) ? title : label.title } />
+                <input className="titel-textarea"  onChange={this.handleChangeTitle} value={(title!==null) ? title : label.title } maxLength={14}/>
                 <LabelColorPicker label={label} />
                 <div style={{flexdirection : "column"}}>
                     <button  onClick={this.editLabel} className="edit-button-ok"> אישור</button>
