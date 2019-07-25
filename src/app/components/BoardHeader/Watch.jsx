@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { Wrapper, Menu, MenuItem } from "react-aria-menubutton";
+//import { Wrapper, Menu, MenuItem } from "react-aria-menubutton";
 import { withTranslation } from "react-i18next";
 import PropTypes from "prop-types";
-import FaEye from "react-icons/lib/fa/eye";
-import "./ColorPicker.scss";
+//import FaEye from "react-icons/lib/fa/eye";
+import { faEye } from '@fortawesome/free-solid-svg-icons';
 import {
   Icon,
   Popover,
@@ -16,6 +16,7 @@ import {
   Table,
   Pill
 } from "evergreen-ui";
+import classes from "./Watch.scss";
 
 class Watch extends Component {
   static propTypes = {
@@ -44,18 +45,43 @@ class Watch extends Component {
 
   render() {
     const watchModes = ["Watching", "Not watching", "Ignoring"];
+    const {currentWatchMode} = this.props;
+
+    const styles = {
+      container: {
+        display: "flex",
+        alignItems: "center",
+        padding: 4,
+        background: "transparent",
+        border: "none",
+        outline: "none"
+      },
+      text: {
+        display: "flex",
+        background: "transparent",
+        border: "none",
+        outline: "none"
+      },
+      icon: {
+        height: "25px"
+      }
+    };
+
     return (
-      <div>
+      <div style={styles.container}>
         <Popover
           content={
             <Pane>
               {watchModes.map(watchMode => {
                 return (
                   <Table.Row
+                    background={
+                      watchMode === currentWatchMode ? "#C7CED4" : "#ffffff"
+                    }
+                    
                     key={watchMode}
                     isSelectable
                     onSelect={() => this.handleSelection(watchMode)}
-                    watchMode={watchMode}
                   >
                     <Table.TextCell>{watchMode}</Table.TextCell>
                   </Table.Row>
@@ -64,7 +90,14 @@ class Watch extends Component {
             </Pane>
           }
         >
-          <Button>Trigger Popover</Button>
+          <Button isActive={false} appearance="minimal" height={40}>
+            <Icon
+              appearance="minimal"
+              height={40}
+              icon="eye-open"
+              color="#ffffff"
+            />
+          </Button>
         </Popover>
       </div>
     );
