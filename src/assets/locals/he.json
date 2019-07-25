@@ -79,7 +79,7 @@
     "UserPicker.label.select_role": "בחר/י הרשאה:",
     "connection.wait": "ממתין לחיבור...",
     "connection.wait.message": "ככל הנראה מדובר בבעיה בגרסת הכרום שבשימוש. \r\n יש להגדיר אפשרות לשימוש באלגוריתם sha1 או לחלופין לשנמך גרסת כרום.",
-    "archive.title": "ארכיון",
+    "archive.title": "הארכיון שלי",
     "archive.boards": "לוחות בארכיון",
     "archiveBoard": "הכנס לוח לארכיון",
     "unArchiveBoard": "הוצא לוח מארכיון",
