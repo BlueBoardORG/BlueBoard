@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import "./BoardNotFound.scss";
 
-class NotFound extends Component {
+class BoardNotFound extends Component {
     render() {
         return (<div>
             <div className="main">
@@ -269,10 +269,10 @@ class NotFound extends Component {
                                 <g id="Text">
                                     <text transform="translate(377.037 230.025)" className="st8 st0" fontSize="21">
                                         404
-        </text>
+                                    </text>
                                     <text transform="translate(659.5 213.994)" className="st8 st0" fontSize="24.025">
                                         Board was not found
-        </text>
+                                    </text>
                                 </g>
                                 <g id="ladders">
                                     <g id="ladder-f">
@@ -300,4 +300,4 @@ class NotFound extends Component {
     }
 }
 
-export default NotFound;
+export default BoardNotFound;
