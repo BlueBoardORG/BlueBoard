@@ -45,28 +45,40 @@
     margin: 3px;
     cursor: pointer;
   
-    &.blue {
-      background: blue;
+    &.violet {
+      background:violet;
       &:focus {
-        background: dark-blue;
+        background: dark-violet;
       }
     }
-    &.green {
-      background: green;
+    &.Turquoise {
+      background: #00c2e0;
       &:focus {
-        background: dark-green;
+        background: dark-#00c2e0;
       }
     }
-    &.red {
-      background: red;
+    &.yellowgreen {
+      background: yellowgreen;
       &:focus {
-        background: dark-red;
+        background: dark-yellowgreen;
       }
     }
-    &.pink {
-      background: pink;
+    &.Gold {
+      background: #f2d600;
       &:focus {
-        background: dark-pink;
+        background: dark-#f2d600;
+      }
+    }
+    &.Orange {
+      background: #ff9f1a;
+      &:focus {
+        background: dark-#ff9f1a;
+      }
+    }
+    &.tomato {
+      background: tomato;
+      &:focus {
+        background: dark-tomato;
       }
     }
   }

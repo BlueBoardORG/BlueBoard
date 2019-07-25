@@ -79,6 +79,7 @@ class CardOptions extends Component {
     else {
       this.setState({ setLabel: label });
       this.setState({ isEditOpen: !this.state.isEditOpen });
+      
     }
 
   }
@@ -110,13 +111,18 @@ class CardOptions extends Component {
   toggleCalendar = () => {
     this.setState({ isCalendarOpen: !this.state.isCalendarOpen });
   };
+
   toggelEditMode = () => {
     this.setState({ isEditToggle: !this.state.isEditToggle });
-    if(this.state.isEditOpen)
+    if(this.state.isEditOpen){
       this.setState({ isEditOpen: !this.state.isEditOpen });
+      this.setState({setLabel: null});
+    }
   }
+
   toggelEdit = () => {
     this.setState({ isEditOpen: !this.state.isEditOpen });
+    this.setState({setLabel:null});
   }
 
 
@@ -156,7 +162,7 @@ class CardOptions extends Component {
       boardId
     } = this.props;
 
-    const { isEditOpen, isCalendarOpen, isCheckOpen, isAssignOpen,isEditToggle } = this.state;
+    const { isEditOpen, isCalendarOpen, isCheckOpen, isAssignOpen,isEditToggle,setLabel } = this.state;
 
     const calendarStyle = {
       content: {
@@ -219,7 +225,7 @@ class CardOptions extends Component {
                   className="color-picker-color"
                   onClick={() => this.toggelEditMode()}
                   style={isEditToggle?{
-                    boxshadow:"3px 3px 6px green",
+                    shadow:"3px 3px 6px green",
                     border: "2px green solid"
                   }:null} ><FaPencil /></button>
 
@@ -228,14 +234,18 @@ class CardOptions extends Component {
                   this.props.boardLabels.map((label, index) => {
                     const labelName = label.title;
                     const labelcolor = label.color;
+                    const labelId=label.id;
                     return (
                       <button
                         key={index}
-                        style={{
-                          color: "white",
+                        style={(setLabel && setLabel.id===labelId)?{
                           background: labelcolor,
                           fontSize: 12,
-                        }}
+                          border: "2px red solid"
+                        }: {
+                          background: labelcolor,
+                          fontSize: 12,
+                        } }
                         className={isEditToggle ? "color-picker-color-animation" : "color-picker-color"}
                         onClick={() => this.editModeCheack(label)}
                       >{labelName}</button>);
@@ -244,7 +254,7 @@ class CardOptions extends Component {
               </div>
               <div>
                   {isEditOpen
-                    ? <LabelEditor  action={this.toggelEdit}  cardId={card._id} boardId={boardId} label={this.state.setLabel} />
+                    ? <LabelEditor  action={this.toggelEdit}  cardId={card._id} boardId={boardId} label={setLabel} />
                     : null
                   }
                 </div>
