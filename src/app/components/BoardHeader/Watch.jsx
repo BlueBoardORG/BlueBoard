@@ -1,11 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-//import { Wrapper, Menu, MenuItem } from "react-aria-menubutton";
 import { withTranslation } from "react-i18next";
 import PropTypes from "prop-types";
-//import FaEye from "react-icons/lib/fa/eye";
-import { faEye } from '@fortawesome/free-solid-svg-icons';
 import {
   Icon,
   Popover,
@@ -71,7 +68,7 @@ class Watch extends Component {
       <div style={styles.container}>
         <Popover
           content={
-            <Pane>
+            <Table>
               {watchModes.map(watchMode => {
                 return (
                   <Table.Row
@@ -87,7 +84,7 @@ class Watch extends Component {
                   </Table.Row>
                 );
               })}
-            </Pane>
+            </Table>
           }
         >
           <Button isActive={false} appearance="minimal" height={40}>
@@ -102,28 +99,6 @@ class Watch extends Component {
       </div>
     );
 
-    /*const menuItems = watchModes.map((watch, i) => {
-        return (
-          <li key={i}>
-            <MenuItem className='MyMenuButton-menuItem'>
-              {watch}
-            </MenuItem>
-          </li>
-        );
-      });
-      return (
-        <Wrapper
-          className="MyMenuButton"
-          onSelection={this.handleSelection}
-        >
-          <Button className='MyMenuButton-button'>
-            <FaEye />
-          </Button>
-          <Menu className="MyMenuButton-menu">
-           <ul>{menuItems}</ul>
-          </Menu>
-        </Wrapper>
-      );*/
   }
 }
 
