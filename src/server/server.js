@@ -15,7 +15,7 @@ import api from "./routes/api";
 import auth from "./routes/auth";
 import fetchBoardData from "./fetchBoardData";
 import http from "http";
-import path from "path";
+import cookieParser from 'cookie-parser';
 
 // Load environment variables from .env file
 dotenv.config();
@@ -24,7 +24,7 @@ const app = express();
 
 const MongoStore = connectMongo(session);
 
-MongoClient.connect(process.env.MONGODB_URL).then(client => {
+MongoClient.connect(process.env.MONGODB_URL, { useNewUrlParser: true }).then(client => {
   const db = client.db(process.env.MONGODB_NAME);
 
   configurePassport(db);
@@ -37,6 +37,7 @@ MongoClient.connect(process.env.MONGODB_URL).then(client => {
   app.use(helmet());
   app.use(logger("tiny"));
   app.use(compression());
+  app.use(cookieParser());
   app.use(favicon("dist/public/favicons/favicon.ico"));
   app.use(express.json({limit:"100mb"}));
   app.use(express.urlencoded({ extended: true, limit:"100mb" }));
@@ -64,7 +65,7 @@ MongoClient.connect(process.env.MONGODB_URL).then(client => {
   if(process.env.NODE_ENV==="production"){
     app.use((req,res,next)=>{
       if(!req.user)
-        res.redirect("/auth/saml")
+        res.redirect("/auth/shraga");
       else
         next();
     })

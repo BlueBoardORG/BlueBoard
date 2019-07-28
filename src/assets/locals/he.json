@@ -68,6 +68,7 @@
     "DELETE_COMMENT": "מחק תגובה מכרטיס",
     "DELETE_CARD": "מחק כרטיס",
     "UPDATE_ASSIGNED_USER": "שינה את האחראי על הכרטיס",
+    "ARCHIVE_BOARD": "ארכב את הלוח לארכיון אישי",
     "UsersList.title": "משתמשים:",
     "UsersList.add_user_tip": "הוסף משתמש",
     "UserAdder.search_place_holder": "חפש משתמש...",
@@ -79,5 +80,12 @@
     "UserAvatar.menu.kick": "הוצא מהלוח",
     "UserPicker.label.select_user": "בחר/י משתמש:",
     "UserPicker.label.select_role": "בחר/י הרשאה:",
-    "connection.wait": "ממתין לחיבור..."
+    "connection.wait": "ממתין לחיבור...",
+    "connection.wait.message": "ככל הנראה מדובר בבעיה בגרסת הכרום שבשימוש. \r\n יש להגדיר אפשרות לשימוש באלגוריתם sha1 או לחלופין לשנמך גרסת כרום.",
+    "archive.title": "ארכיון",
+    "archive.boards": "לוחות בארכיון",
+    "archiveBoard": "הכנס לוח לארכיון",
+    "unArchiveBoard": "הוצא לוח מארכיון",
+    "archiveBoard.short": "ארכב לוח עבור המשתמש שלי",
+    "unArchiveBoard.short": "שחזר לוח עבור המשתמש שלי"
 }

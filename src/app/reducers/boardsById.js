@@ -186,6 +186,30 @@ const boardsById = (state = {}, action) => {
       const { [boardId]: deletedBoard, ...restOfBoards } = state;
       return restOfBoards;
     }
+    case "ARCHIVE_BOARD": {
+      const { boardId, userId } = action.payload;
+      let users = [...state[boardId].users];
+      users = users.map(user => user.id === userId ? {...user, isArchived: true} : user);
+      return {
+        ...state,
+        [boardId]: {
+          ...state[boardId],
+          users
+        }
+      }
+    }
+    case "UNARCHIVE_BOARD": {
+      const { boardId, userId } = action.payload;
+      let users = [...state[boardId].users];
+      users = users.map(user => user.id === userId ? {...user, isArchived: false} : user);
+      return {
+        ...state,
+        [boardId]: {
+          ...state[boardId],
+          users
+        }
+      }
+    }
     default:
       return state;
   }

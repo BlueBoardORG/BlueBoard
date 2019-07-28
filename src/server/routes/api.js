@@ -6,6 +6,7 @@ import {
   PUBLIC_USER_PROPERTIES
 } from "../../constants";
 import { pick } from "../helper";
+import { transformUser } from "../../app/components/utils";
 
 const api = db => {
   const router = Router();
@@ -129,14 +130,20 @@ const api = db => {
     const { userSearchField } = req.body;
 
     users
-      .find({ name: { $regex: userSearchField, $options: "i" } })
+      .find({
+        $or : [{"name.firstName": { $regex: userSearchField, $options: "i" }} , {"name.lastName": { $regex: userSearchField, $options: "i" }}]
+        
+      })
       .toArray()
       .then(users => {
         if (users) {
-          const serializedUsers = users.map(user => ({
-            value: user._id,
-            label: user.display
-          }));
+          const serializedUsers = users.map(user => {
+            user = transformUser(user);
+            return ({
+              value: user._id,
+              label: user.display
+            })
+          });
           res.status(200).json(serializedUsers);
         } else {
           res.status(404).send("no Users EXISTS with such name");
@@ -155,7 +162,7 @@ const api = db => {
       .then(users => {
         const serializedUsers = users.reduce((accumulator, currentUser) => {
           // Pick only public properties from the user's object
-          const serializedUser = pick(currentUser, PUBLIC_USER_PROPERTIES);
+          const serializedUser = pick(transformUser(currentUser), PUBLIC_USER_PROPERTIES);
           accumulator[currentUser._id] = serializedUser;
 
           return accumulator;

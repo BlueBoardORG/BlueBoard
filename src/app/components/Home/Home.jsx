@@ -1,13 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import { Title } from "react-head";
 import { withTranslation } from "react-i18next";
-import slugify from "slugify";
-import classnames from "classnames";
 import Header from "../Header/Header";
-import BoardAdder from "./BoardAdder";
+import BoardList from "../BoardList/BoardList";
 import { BOARD_BG_URLS } from "../../../constants";
 import "./Home.scss";
 
@@ -20,7 +17,6 @@ class Home extends Component {
         title: PropTypes.string.isRequired
       }).isRequired
     ).isRequired,
-    listsById: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired
@@ -35,8 +31,11 @@ class Home extends Component {
       }
     })
   }
+
   render = () => {
-    const { boards, listsById, history, t, user} = this.props;
+    const { boards, history, t, user} = this.props;
+    const myBoards = boards.filter(board=> board.users[0].id === user._id && !board.users[0].isArchived);
+    const mySharedBoards = boards.filter(board=> board.users[0].id !== user._id && !board.users.find(u=> u.id === user._id).isArchived);
     return (
       <>
         <Title>
@@ -46,67 +45,11 @@ class Home extends Component {
         <div className="home">
           <div className="main-content">
             <h1>{t("Home.myboards")}</h1>
-            <div className="boards">
-              {boards.filter(board=> board.users[0].id === user._id).map(board => (
-                <Link
-                  key={board._id}
-                  className={classnames("board-link", board.color)}
-                  style={{backgroundImage: `url(${board.backgroundImage})`, backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundSize: "cover"}}
-                  to={`/b/${board._id}/${slugify(board.title, {
-                    lower: true
-                  })}`}
-                >
-                  <div className="board-link-title">{board.title}</div>
-                  <div className="mini-board">
-                    {board.lists.map(listId => (
-                      <div
-                        key={listId}
-                        className="mini-list"
-                        style={{
-                          height: `${Math.min(
-                            (listsById[listId].cards.length + 1) * 18,
-                            100
-                          )}%`
-                        }}
-                      />
-                    ))}
-                  </div>
-                </Link>
-              ))}
-              {this.props.socketConnected ? (<BoardAdder history={history} />) : ""}
-              
-            </div>
+            <BoardList boards={myBoards} history={{history}} />
           </div>
           <div className="main-content">
-          <h1>{t("Home.sharedboards")}</h1>
-            <div className="boards">
-              {boards.filter(board=> board.users[0].id !== user._id).map(board => (
-                <Link
-                  key={board._id}
-                  className={classnames("board-link", board.color)}
-                  style={{backgroundImage: `url(${board.backgroundImage})`, backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundSize: "cover"}}
-                  to={`/b/${board._id}/${slugify(board.title, {
-                    lower: true
-                  })}`}
-                >
-                  <div className="board-link-title">{board.title}</div>
-                  <div className="mini-board">
-                    {board.lists.map(listId => (
-                      <div
-                        key={listId}
-                        className="mini-list"
-                        style={{
-                          height: `${Math.min(
-                            (listsById[listId].cards.length + 1) * 18,
-                            100
-                          )}%`
-                        }}
-                      />
-                    ))}
-                  </div>
-                </Link>
-              ))}
-            </div>
+            <h1>{t("Home.sharedboards")}</h1>
+            <BoardList boards={mySharedBoards} shouldAllowAddingBoard={false} history={{history}}/>
           </div>
         </div>
       </>
