@@ -13,7 +13,7 @@ import {
   Table,
   Pill
 } from "evergreen-ui";
-import classes from "./Watch.scss";
+import "./Watch.scss";
 
 class Watch extends Component {
   static propTypes = {
@@ -40,9 +40,35 @@ class Watch extends Component {
     }
   };
 
-  render() {
-    const watchModes = ["Watching", "Not watching", "Ignoring"];
+  addVIcon(watchMode) {
     const {currentWatchMode} = this.props;
+    return (watchMode === currentWatchMode ? <Icon icon="tick-circle" color="success" marginRight={0} /> : null)
+  }
+
+  makeWatchDiv(mode, description){
+    return (
+      <div>
+        <span className="div-heading">{mode}</span>
+        <span className="div-description">{description}</span>
+      </div>
+    );
+  }
+
+  render() {
+    const watchModes = [
+      {
+        mode: "Watching",
+        description: "Be notified of all conversations"
+      },
+      {
+        mode: "Not watching",
+        description: "Be notified only when assign "
+      },
+      {
+        mode: "Ignoring",
+        description: "Never be notified"
+      }
+  ];
 
     const styles = {
       container: {
@@ -68,23 +94,22 @@ class Watch extends Component {
       <div style={styles.container}>
         <Popover
           content={
-            <Table>
-              {watchModes.map(watchMode => {
+            <Pane width={300}>
+              {watchModes.map((watchMode, index) => {
                 return (
                   <Table.Row
-                    background={
-                      watchMode === currentWatchMode ? "#C7CED4" : "#ffffff"
-                    }
-                    
-                    key={watchMode}
+                    height={60} 
+                    paddingY={12}
+                    key={index}
                     isSelectable
-                    onSelect={() => this.handleSelection(watchMode)}
+                    onSelect={() => this.handleSelection(watchMode.mode)}
                   >
-                    <Table.TextCell>{watchMode}</Table.TextCell>
+                    <Table.TextCell className="text-wrapper">{this.makeWatchDiv(watchMode.mode, watchMode.description)}</Table.TextCell>
+                    <Table.Cell className="v-icon-wrapper" flex="none">{this.addVIcon(watchMode.mode)}</Table.Cell>
                   </Table.Row>
                 );
               })}
-            </Table>
+            </Pane>
           }
         >
           <Button isActive={false} appearance="minimal" height={40}>
