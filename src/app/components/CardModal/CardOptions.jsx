@@ -246,11 +246,11 @@ class CardOptions extends Component {
                         key={index}
                         style={(setLabel && setLabel.id===labelId)?{
                           background: labelcolor,
-                          fontSize: 12,
+                          fontSize: 10,
                           border: "2px red solid"
                         }: {
                           background: labelcolor,
-                          fontSize: 12,
+                          fontSize: 10,
                         } }
                         className={isEditToggle ? "color-picker-color-animation" : "color-picker-color"}
                         onClick={() => this.editModeCheack(label)}

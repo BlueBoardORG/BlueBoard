@@ -31,10 +31,8 @@ const boardsById = (state = {}, action) => {
     }
     case "CHANGE_USER_ROLE" : {
       const {boardId, userId, role} = action.payload;
-      
       // Finds the user (by userId) and change only it's role
       const newUsers = state[boardId].users.map(user => user.id === userId ? {...user, role} : user);
-      
       return {
         ...state,
         [boardId] : {
@@ -138,7 +136,7 @@ const boardsById = (state = {}, action) => {
       
     }
     case "ADD_BOARD": {
-      const { boardTitle, boardId, userId } = action.payload;
+      const { boardTitle, boardId, userId,labels } = action.payload;
       const image = BOARD_BG_URLS[Math.floor(Math.random()*BOARD_BG_URLS.length)];
       return {
         ...state,
@@ -149,7 +147,7 @@ const boardsById = (state = {}, action) => {
           users: [{id: userId, role: ADMIN_ROLE}],
           color: "blue",
           backgroundImage: image,
-          labels:[]
+          labels
         }
       };
     }
