@@ -84,5 +84,12 @@
     "archiveBoard": "הכנס לוח לארכיון",
     "unArchiveBoard": "הוצא לוח מארכיון",
     "archiveBoard.short": "ארכב לוח עבור המשתמש שלי",
-    "unArchiveBoard.short": "שחזר לוח עבור המשתמש שלי"
+    "unArchiveBoard.short": "שחזר לוח עבור המשתמש שלי",
+    "Watch": "צופה",
+    "Watching": "צופה",
+    "Not watching": "לא צופה",
+    "Ignoring": "מתעלם",
+    "Be notified of all conversations": "קבלת הודעה עבור כל שינוי",
+    "Be notified only when assign": "קבלת הודעה רק בעת שיוך",
+    "Never be notified": "לעולם לא לקבל הודעה"
 }

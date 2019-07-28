@@ -29,8 +29,6 @@ class Watch extends Component {
 
   handleSelection = newWatchMode => {
     const { dispatch, boardId, userId } = this.props;
-    console.log("The new watch mode: ");
-    console.log(newWatchMode);
     // Dispatch update only if selected color is not the same as current board color.
     if (newWatchMode !== this.props.currentWatchMode) {
       dispatch({
@@ -41,20 +39,24 @@ class Watch extends Component {
   };
 
   addVIcon(watchMode) {
-    const {currentWatchMode} = this.props;
-    return (watchMode === currentWatchMode ? <Icon icon="tick-circle" color="success" marginRight={0} /> : null)
+    const { currentWatchMode } = this.props;
+    return watchMode === currentWatchMode ? (
+      <Icon icon="tick-circle" color="success" marginRight={0} />
+    ) : null;
   }
 
-  makeWatchDiv(mode, description){
+  makeWatchDiv = (mode, description) => {
+    const {t} = this.props;
     return (
       <div>
-        <span className="div-heading">{mode}</span>
-        <span className="div-description">{description}</span>
+        <span className="div-heading">{t(mode)}</span>
+        <span className="div-description">{t(description)}</span>
       </div>
     );
-  }
+  };
 
   render() {
+    const {t} = this.props;
     const watchModes = [
       {
         mode: "Watching",
@@ -62,50 +64,34 @@ class Watch extends Component {
       },
       {
         mode: "Not watching",
-        description: "Be notified only when assign "
+        description: "Be notified only when assign"
       },
       {
         mode: "Ignoring",
         description: "Never be notified"
       }
-  ];
-
-    const styles = {
-      container: {
-        display: "flex",
-        alignItems: "center",
-        padding: 4,
-        background: "transparent",
-        border: "none",
-        outline: "none"
-      },
-      text: {
-        display: "flex",
-        background: "transparent",
-        border: "none",
-        outline: "none"
-      },
-      icon: {
-        height: "25px"
-      }
-    };
+    ];
 
     return (
-      <div style={styles.container}>
+      <div>
         <Popover
           content={
             <Pane width={300}>
               {watchModes.map((watchMode, index) => {
                 return (
                   <Table.Row
-                    height={60} 
+                    height={60}
                     paddingY={12}
                     key={index}
                     isSelectable
                     onSelect={() => this.handleSelection(watchMode.mode)}
                   >
-                    <Table.TextCell className="text-wrapper">{this.makeWatchDiv(watchMode.mode, watchMode.description)}</Table.TextCell>
-                    <Table.Cell className="v-icon-wrapper" flex="none">{this.addVIcon(watchMode.mode)}</Table.Cell>
+                    <Table.TextCell className="text-wrapper">
+                      {this.makeWatchDiv(watchMode.mode, watchMode.description)}
+                    </Table.TextCell>
+                    <Table.Cell className="v-icon-wrapper" flex="none">
+                      {this.addVIcon(watchMode.mode)}
+                    </Table.Cell>
                   </Table.Row>
                 );
               })}
@@ -119,11 +105,13 @@ class Watch extends Component {
               icon="eye-open"
               color="#ffffff"
             />
+            <div className="watch-header">
+              {t("Watch")}
+            </div>
           </Button>
         </Popover>
       </div>
     );
-
   }
 }
 
