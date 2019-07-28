@@ -269,10 +269,10 @@ class BoardNotFound extends Component {
                                 </g>
                                 <path className="st9" d="M320.3 257.8h549.9" />
                                 <g id="Text">
-                                    <text transform="translate(377.037 230.025)" className="st8 st0" fontSize="21">
+                                    <text x="5%" transform="translate(377.037 230.025)" className="st8 st0" fontSize="21">
                                         404
                                     </text>
-                                    <text transform="translate(659.5 213.994)" className="st8 st0" fontSize="24.025">
+                                    <text x="20%" transform="translate(659.5 213.994)" className="st8 st0" fontSize="24.025">
                                         {t("BoardNotFound.errorMessage")}
                                     </text>
                                     <a href="/" target="_top">
