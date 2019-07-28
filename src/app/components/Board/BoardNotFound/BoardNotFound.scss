@@ -110,9 +110,17 @@
   }
   
   @keyframes braces {
-      0% { transform: translateX(-2px); }
+    0% { transform: translateX(-2px); }
     25% { transform: translateX(3px); }
-      50% { transform: translateX(-2px); }
-      75% { transform: translateX(3px); }
+    50% { transform: translateX(-2px); }
+    75% { transform: translateX(3px); }
     100% { transform: translateX(-2px); }
   }
+
+.to-homepage {
+  font-size: 20px;
+  font-family: Monospace;
+  font-weight: bold;
+  fill:	#00008B	;
+  text-decoration: underline;
+}

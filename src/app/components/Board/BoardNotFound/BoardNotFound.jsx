@@ -273,8 +273,11 @@ class BoardNotFound extends Component {
                                         404
                                     </text>
                                     <text transform="translate(659.5 213.994)" className="st8 st0" fontSize="24.025">
-                                        {t("BoardNotFound")}
+                                        {t("BoardNotFound.errorMessage")}
                                     </text>
+                                    <a href="/" target="_top" className="to-homepage">
+                                        <text className="to-homepage" x="85%" y="70%">{t("BoardNotFound.homepage")}</text>
+                                    </a>
                                 </g>
                                 <g id="ladders">
                                     <g id="ladder-f">
@@ -297,7 +300,7 @@ class BoardNotFound extends Component {
                 </div>
             </div>
 
-        </div>
+        </div >
         );
     }
 }
