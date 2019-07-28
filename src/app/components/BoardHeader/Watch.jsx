@@ -46,7 +46,7 @@ class Watch extends Component {
   }
 
   makeWatchDiv = (mode, description) => {
-    const {t} = this.props;
+    const { t } = this.props;
     return (
       <div>
         <span className="div-heading">{t(mode)}</span>
@@ -56,7 +56,7 @@ class Watch extends Component {
   };
 
   render() {
-    const {t} = this.props;
+    const { t } = this.props;
     const watchModes = [
       {
         mode: "Watching",
@@ -79,20 +79,25 @@ class Watch extends Component {
             <Pane width={200}>
               {watchModes.map((watchMode, index) => {
                 return (
-                  <Table.Row
-                    height={60}
-                    paddingY={12}
-                    key={index}
-                    isSelectable
-                    onSelect={() => this.handleSelection(watchMode.mode)}
-                  >
-                    <Table.TextCell className="text-wrapper">
-                      {this.makeWatchDiv(watchMode.mode, watchMode.description)}
-                    </Table.TextCell>
-                    <Table.Cell className="v-icon-wrapper" flex="none">
-                      {this.addVIcon(watchMode.mode)}
-                    </Table.Cell>
-                  </Table.Row>
+                  <div className="row">
+                    <Table.Row
+                      height={60}
+                      paddingY={12}
+                      key={index}
+                      isSelectable
+                      onSelect={() => this.handleSelection(watchMode.mode)}
+                    >
+                      <Table.TextCell className="text-wrapper">
+                        {this.makeWatchDiv(
+                          watchMode.mode,
+                          watchMode.description
+                        )}
+                      </Table.TextCell>
+                      <Table.Cell className="v-icon-wrapper" flex="none">
+                        {this.addVIcon(watchMode.mode)}
+                      </Table.Cell>
+                    </Table.Row>
+                  </div>
                 );
               })}
             </Pane>
@@ -105,9 +110,7 @@ class Watch extends Component {
               icon="eye-open"
               color="#ffffff"
             />
-            <div className="watch-header">
-              {t("Watch")}
-            </div>
+            <div className="watch-header">{t("Watch")}</div>
           </Button>
         </Popover>
       </div>
