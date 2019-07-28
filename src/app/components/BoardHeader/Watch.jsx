@@ -76,7 +76,7 @@ class Watch extends Component {
       <div>
         <Popover
           content={
-            <Pane width={300}>
+            <Pane width={200}>
               {watchModes.map((watchMode, index) => {
                 return (
                   <Table.Row
