@@ -1,11 +1,12 @@
 import { Router } from "express";
-import {ObjectID} from 'mongodb';
+import { ObjectID } from 'mongodb';
 import {
   ADMIN_ROLE,
   READ_WRITE_ROLE,
   PUBLIC_USER_PROPERTIES
 } from "../../constants";
 import { pick } from "../helper";
+import { transformUser } from "../../app/components/utils";
 
 const api = db => {
   const router = Router();
@@ -18,7 +19,7 @@ const api = db => {
   // This solution sends more data than necessary, but cuts down on code and
   // effectively prevents the db and client from ever getting out of sync
   router.put("/board", (req, res) => {
-    let {boardData: board} = req.body;
+    let { boardData: board } = req.body;
     board = { ...board, changed_by: req.user._id };
     // Update the board only if the user's role in the board is admin/read-write
     boards
@@ -61,13 +62,13 @@ const api = db => {
       .find({ boardId: id }, "-_id -payload")
       .toArray()
       .then(histories => {
-        res.json(histories.map(hist=> ({...hist, payload: undefined})));
+        res.json(histories.map(hist => ({ ...hist, payload: undefined })));
       });
   });
 
   router.post("/notifications", (req, res) => {
     const { body: notification } = req;
-    const notificationWithWasSeen = {...notification, 'wasSeen' : false};
+    const notificationWithWasSeen = { ...notification, 'wasSeen': false };
     notifications
       .insert(notificationWithWasSeen)
       .then(result => {
@@ -84,7 +85,7 @@ const api = db => {
     notifications
       .findOneAndUpdate(
         { _id: ObjectID(_id) },
-        { $set: {'wasSeen': true} })
+        { $set: { 'wasSeen': true } })
       .then(() => {
         res.status(200).send();
       })
@@ -94,25 +95,26 @@ const api = db => {
   router.post("/notifications/getByUserId", (req, res) => {
     let { id } = req.body;
     notifications
-    .find({ userId: id })
-    .toArray()
-    .then(notifs=>{
-      res.json(notifs);
-    })
+      .find({ userId: id })
+      .toArray()
+      .then(notifs => {
+        res.json(notifs);
+      })
   })
 
-  router.delete("/notifications", (req,res)=>{
-    const {_id} = req.body;
-    notifications.deleteOne({_id: new ObjectID(_id)}).then(()=>{
+  router.delete("/notifications", (req, res) => {
+    const { _id } = req.body;
+    notifications.deleteOne({ _id: new ObjectID(_id) }).then(() => {
       res.status(200).send();
     });
   });
 
   router.delete("/board", (req, res) => {
     const { boardId } = req.body;
-    boards.deleteOne({ _id: boardId }).then(result => {
-      res.send(result);
-    });
+    // boards.deleteOne({ _id: boardId }).then(result => {
+    //   res.send(result);
+    // });
+    boards.updateOne({ _id: boardId }, { $set: { isDeleted: true } }).then(result => { res.send(result) });
   });
 
   router.post("/userId", (req, res) => {
@@ -129,13 +131,20 @@ const api = db => {
     const { userSearchField } = req.body;
 
     users
-      .find({ name: { $regex: userSearchField, $options: "i" } })
+      .find({
+        $or : [{"name.firstName": { $regex: userSearchField, $options: "i" }} , {"name.lastName": { $regex: userSearchField, $options: "i" }}]
+        
+      })
+      .toArray()
       .then(users => {
         if (users) {
-          const serializedUsers = users.map(user => ({
-            value: user._id,
-            label: user.display
-          }));
+          const serializedUsers = users.map(user => {
+            user = transformUser(user);
+            return ({
+              value: user._id,
+              label: user.display
+            })
+          });
           res.status(200).json(serializedUsers);
         } else {
           res.status(404).send("no Users EXISTS with such name");
@@ -150,11 +159,11 @@ const api = db => {
 
     users
       .find({ _id: { $in: req.body.ids || [] } })
-      //.toArray()
+      .toArray()
       .then(users => {
         const serializedUsers = users.reduce((accumulator, currentUser) => {
           // Pick only public properties from the user's object
-          const serializedUser = pick(currentUser, PUBLIC_USER_PROPERTIES);
+          const serializedUser = pick(transformUser(currentUser), PUBLIC_USER_PROPERTIES);
           accumulator[currentUser._id] = serializedUser;
 
           return accumulator;
