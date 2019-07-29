@@ -6,7 +6,7 @@ import Home from "./Home/Home";
 import Archive from "./Archive/Archive";
 import BoardContainer from "./Board/BoardContainer";
 import LandingPage from "./LandingPage/LandingPage";
-import BoardNotFound from '../components/Board/BoardNotFound/BoardNotFound';
+import BoardNotFound from '../components/ErrorPages/BoardNotFound/BoardNotFound';
 import "./App.scss";
 import socket from "../socketIOHandler";
 
