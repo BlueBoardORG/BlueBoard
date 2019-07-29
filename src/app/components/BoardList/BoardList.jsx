@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { withTranslation } from "react-i18next";
 import slugify from "slugify";
+import shortid from "shortid";
 import classnames from "classnames";
 import BoardAdder from "../Home/BoardAdder";
 import { BOARD_BG_URLS } from "../../../constants";
@@ -13,7 +14,7 @@ class BoardList extends Component {
   static propTypes = {
     listsById: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
   };
 
   componentDidMount = () => {
@@ -36,10 +37,32 @@ class BoardList extends Component {
     }
     return colors[color] || "rgba(255, 255, 255, 0.4)";
   }
+  defaultLabels= () =>{
+    return[{ id: shortid.generate(), title: "בטיפול", color: "violet" },
+    { id: shortid.generate(), title: "כללי", color: "Turquoise" },
+    { id: shortid.generate(), title: "מעקב", color: "yellowgreen" },
+    { id: shortid.generate(), title: "תקלה", color: "Gold" },
+    { id: shortid.generate(), title: "עזרה", color: "Orange" },
+    { id: shortid.generate(), title: "קריטי", color: "tomato" }]
+  }
+
+  checkFormat= (boards) => {
+    const { dispatch } = this.props;
+    boards.forEach(board => {
+      if(board.labels === undefined){
+        const labels = this.defaultLabels();
+        dispatch({
+          type: "ADD_LABEL_TO_BOARD",
+          payload: { boardId:board._id, labelToAdd:labels }
+        });
+
+      }
+    });
+  }
 
   render = () => {
     const { boards, listsById, history, shouldAllowAddingBoard=true} = this.props;
-    console.log(boards);
+    this.checkFormat(boards);
     return (
         <div className="boards">
             {boards.map(board => (
@@ -76,10 +99,12 @@ class BoardList extends Component {
     )};
 }
 
-const mapStateToProps = ({ listsById,user, socketConnected }) => ({
+const mapStateToProps = ({ listsById,user, socketConnected }) => {
+  return{
   listsById,
   user,
-  socketConnected
-});
+  socketConnected,
+  };
+};
 
 export default connect(mapStateToProps)(withTranslation()(BoardList));

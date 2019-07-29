@@ -23,6 +23,17 @@ const cardsById = (state = {}, action) => {
         [cardId]: { ...state[cardId], labels: [...cardLabels, label] }
       };
     }
+    case "FIX_LABELS_FORMAT": {
+      const { newLabelFormat, cardId } = action.payload;
+      return {
+        ...state,
+        [cardId]: {
+          ...state[cardId],
+          labels: newLabelFormat
+        }
+      };
+    }
+
     case "DELETE_LABEL": {
       const { label, cardId } = action.payload;
       const cardLabels = state[cardId].labels || [];

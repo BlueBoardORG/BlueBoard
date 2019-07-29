@@ -16,7 +16,7 @@ const configurePassport = db => {
   });
   passport.deserializeUser((id, cb) => {
     users.findOne({_id: id }).then(user => {
-      if(user && !user.provider){
+      if((user && !user.provider) || !user){
         cb(null, false);
       }
       cb(null, transformUser(user));

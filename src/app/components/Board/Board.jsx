@@ -25,7 +25,9 @@ class Board extends Component {
     boardColor: PropTypes.string.isRequired,
     boardImageBackground: PropTypes.string,
     dispatch: PropTypes.func.isRequired,
-    boardUsers: PropTypes.array
+    boardUsers: PropTypes.array,
+    boardLabels: PropTypes.array.isRequired,
+    cards:PropTypes.array.isRequired
   };
 
   constructor(props) {
@@ -140,8 +142,77 @@ class Board extends Component {
       window.scrollTo(window.scrollX - 80, 0);
     }
   };
+  checkFormat= (lists) => {
+    const { dispatch} = this.props;
+    const oldLabels = ["inprogress","general","tracking","bug","help","critical",]
+    let cardsId=[];
+    let newLabelFormat=[];
+    lists.forEach(list => {
+      cardsId = cardsId.concat(list.cards);
+    });
+    console.log(this.props.boardLabels);
+    cardsId.forEach(cardId => {
+      if(this.props.cards[cardId].labels && oldLabels.includes(this.props.cards[cardId].labels[0])){
+        newLabelFormat=[];
+        this.props.cards[cardId].labels.forEach(label => {
+          switch (label) {
+            case "inprogress":
+              this.props.boardLabels.forEach(label => {
+                if(label.title === "בטיפול" ){
+                  newLabelFormat.push(label.id)
+                }
+              });
+              break;
+              case "general":
+                this.props.boardLabels.forEach(label => {
+                  if(label.title === "כללי" ){
+                    newLabelFormat.push(label.id)
+                  }
+                });
+              break;
+              case "tracking":
+                this.props.boardLabels.forEach(label => {
+                  if(label.title === "מעקב" ){
+                    newLabelFormat.push(label.id)
+                  }
+                });
+              break;
+              case "bug":
+                this.props.boardLabels.forEach(label => {
+                  if(label.title === "תקלה" ){
+                    newLabelFormat.push(label.id)
+                  }
+                });
+              break;
+              case "help":
+                this.props.boardLabels.forEach(label => {
+                  if(label.title === "עזרה" ){
+                    newLabelFormat.push(label.id)
+                  }
+                });
+              break;
+              case "critical":
+                this.props.boardLabels.forEach(label => {
+                  if(label.title === "קריטי" ){
+                    newLabelFormat.push(label.id)
+                  }
+                });
+              break;
+          
+            default:
+              break;
+          }
+        });
+        dispatch({
+          type: "FIX_LABELS_FORMAT",
+          payload: { newLabelFormat, cardId }
+        });
+      }
+    });
+  }
 
   render = () => {
+    
     const { lists, boardTitle, boardId, boardColor, t, user, board, boardImageBackground, socketConnected } = this.props;
     const imageUrl = `url(${boardImageBackground})`;
     const wrapperStyle = {
@@ -165,7 +236,7 @@ class Board extends Component {
         height                : '25%'
       }
     };
-
+    this.checkFormat(lists);
     return (
       <>
         <div className={classnames("board", boardColor)} style={wrapperStyle}>
@@ -224,8 +295,8 @@ class Board extends Component {
 const mapStateToProps = (state, ownProps) => {
   const { board } = ownProps;
   const { user, boardUsersData, socketConnected } = state;
-
   return {
+    cards : state.cardsById,
     lists: board.lists.map(listId => state.listsById[listId]),
     boardTitle: board.title,
     boardColor: board.color,
@@ -234,7 +305,8 @@ const mapStateToProps = (state, ownProps) => {
     boardImageBackground: board.backgroundImage,
     user,
     boardUsersData, 
-    socketConnected
+    socketConnected,
+    boardLabels:board.labels
   };
 };
 

@@ -56,9 +56,7 @@ class CardOptions extends Component {
 
   addLabel = label => {
     const { dispatch, card } = this.props;
-    const cardLabels = card.labels || [];
-
-    
+    const cardLabels = card.labels || [];  
     if (cardLabels.includes(label.id)) {
       dispatch({
         type: "DELETE_LABEL",
@@ -70,6 +68,7 @@ class CardOptions extends Component {
         payload: { label: label.id, cardId: card._id }
       });
     }
+
   };
 
   editModeCheack = label => {
