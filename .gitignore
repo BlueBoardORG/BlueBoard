@@ -4,3 +4,4 @@ stats.json
 .env
 .idea
 npm-debug.log
+package-lock.json
