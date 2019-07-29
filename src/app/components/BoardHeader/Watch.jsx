@@ -7,11 +7,8 @@ import {
   Icon,
   Popover,
   Pane,
-  Text,
   Button,
-  Position,
   Table,
-  Pill
 } from "evergreen-ui";
 import "./Watch.scss";
 
@@ -29,7 +26,6 @@ class Watch extends Component {
 
   handleSelection = newWatchMode => {
     const { dispatch, boardId, userId } = this.props;
-    // Dispatch update only if selected color is not the same as current board color.
     if (newWatchMode !== this.props.currentWatchMode) {
       dispatch({
         type: "CHANGE_USER_WATCH",
@@ -45,7 +41,7 @@ class Watch extends Component {
     ) : null;
   }
 
-  makeWatchDiv = (mode, description) => {
+  renderWatchDiv = (mode, description) => {
     const { t } = this.props;
     return (
       <div>
@@ -88,7 +84,7 @@ class Watch extends Component {
                       onSelect={() => this.handleSelection(watchMode.mode)}
                     >
                       <Table.TextCell className="text-wrapper">
-                        {this.makeWatchDiv(
+                        {this.renderWatchDiv(
                           watchMode.mode,
                           watchMode.description
                         )}
