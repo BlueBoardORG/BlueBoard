@@ -6,6 +6,7 @@ import Home from "./Home/Home";
 import Archive from "./Archive/Archive";
 import BoardContainer from "./Board/BoardContainer";
 import LandingPage from "./LandingPage/LandingPage";
+import BoardNotFound from '../components/ErrorPages/BoardNotFound/BoardNotFound';
 import "./App.scss";
 import socket from "../socketIOHandler";
 
@@ -51,7 +52,7 @@ const App = ({ user, isGuest, dispatch }) => {
     })
   }
  
-  // Serve different pages depending on if user is logged in or not
+  //Serve different pages depending on if user is logged in or not
   if (user || isGuest) {
     // when user is connected registers socket to user for updates
     socket.emit("userDetails", {user});
@@ -60,7 +61,8 @@ const App = ({ user, isGuest, dispatch }) => {
         <Route exact path="/" component={Home} />
         <Route exact path="/archive" component={Archive} />
         <Route path="/b/:boardId" component={BoardContainer} />
-        <Redirect to="/" />
+        <Route path="/boardNotFound" component={BoardNotFound} />
+        <Redirect to="/"/>     
       </Switch>
     );
   }

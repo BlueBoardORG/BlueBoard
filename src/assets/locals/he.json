@@ -23,7 +23,7 @@
     "Comments.comment": "הגב",
     "Comments.add_comment": "הוסף תגובה",
     "Comments.delete": "מחק",
-    "Labels.inprogress": "בטיפול",
+    "Labels.inprogress": "בטיפול", resu resu
     "Labels.general": "כללי",
     "Labels.tracking": "מעקב",
     "Labels.bug": "תקלה",
@@ -85,6 +85,8 @@
     "unArchiveBoard": "הוצא לוח מארכיון",
     "archiveBoard.short": "ארכב לוח עבור המשתמש שלי",
     "unArchiveBoard.short": "שחזר לוח עבור המשתמש שלי",
+    "BoardNotFound.errorMessage": "הלוח המבוקש אינו קיים",
+    "BoardNotFound.homepage":"חזור לדף הבית",
     "BoardHeaders.colorPicker": "בחר צבע לסרגל",
     "BoardHeaders.imagePicker": "בחר תמונת רקע ללוח",
     "BoardHeaders.boardArchiver": "הארכיון הוא אישי ולא ישפיע על משתמשים נוספים",
