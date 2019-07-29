@@ -83,7 +83,7 @@ class Watch extends Component {
                       isSelectable
                       onSelect={() => this.handleSelection(watchMode.mode)}
                     >
-                      <Table.TextCell className="text-wrapper">
+                      <Table.TextCell>
                         {this.renderWatchDiv(
                           watchMode.mode,
                           watchMode.description
