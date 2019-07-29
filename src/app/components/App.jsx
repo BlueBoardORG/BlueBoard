@@ -61,7 +61,7 @@ const App = ({ user, isGuest, dispatch }) => {
         <Route exact path="/" component={Home} />
         <Route exact path="/archive" component={Archive} />
         <Route path="/b/:boardId" component={BoardContainer} />
-        <Route path="/404" component={BoardNotFound} />
+        <Route path="/boardNotFound" component={BoardNotFound} />
         <Redirect to="/"/>     
       </Switch>
     );
