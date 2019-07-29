@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import ReactTooltip from "react-tooltip";
 import { Button, Wrapper, Menu, MenuItem } from "react-aria-menubutton";
 import { withTranslation } from "react-i18next";
 import FaArchive from "react-icons/lib/fa/archive";
@@ -36,7 +37,11 @@ class BoardArchiver extends Component {
         className="board-deleter-wrapper"
         onSelection={this.handleSelection}
       >
-        <Button className="board-deleter-button">
+        <Button 
+          className="board-deleter-button"
+          data-tip={t("BoardHeaders.boardArchiver")}
+          data-place="bottom"
+        >
           <div className="modal-icon">
             <FaArchive />
           </div>
@@ -44,6 +49,7 @@ class BoardArchiver extends Component {
             &nbsp;{t("archiveBoard")}
           </div>
         </Button>
+        <ReactTooltip/>
         <Menu className="board-deleter-menu">
           <div className="board-deleter-header">{t("are_you_sure")}</div>
           <MenuItem className="board-deleter-confirm">{t("archiveBoard.short")}</MenuItem>

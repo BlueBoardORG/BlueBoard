@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import ReactTooltip from "react-tooltip";
 import { Button, Wrapper, Menu, MenuItem } from "react-aria-menubutton";
 import classnames from "classnames";
 import FaCheck from "react-icons/lib/fa/check";
@@ -33,12 +34,17 @@ class ColorPicker extends Component {
         className="color-picker-wrapper"
         onSelection={this.handleSelection}
       >
-        <Button className="color-picker">
+        <Button 
+          className="color-picker" 
+          data-tip={t("BoardHeaders.colorPicker")} 
+          data-place="bottom"
+        >
           <img src={colorIcon} alt="colorwheel" className="modal-icon" />
           <div className="board-header-right-text">
             &nbsp;{t('Color')} &nbsp;&#9662;
           </div>
         </Button>
+        <ReactTooltip/>
         <Menu className="color-picker-menu">
           {colors.map(color => (
             <MenuItem
