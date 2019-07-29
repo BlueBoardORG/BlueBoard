@@ -39,7 +39,6 @@ class BoardList extends Component {
 
   render = () => {
     const { boards, listsById, history, shouldAllowAddingBoard=true} = this.props;
-    console.log(boards);
     return (
         <div className="boards">
             {boards.map(board => (

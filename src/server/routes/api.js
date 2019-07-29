@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {ObjectID} from 'mongodb';
+import { ObjectID } from 'mongodb';
 import {
   ADMIN_ROLE,
   READ_WRITE_ROLE,
@@ -19,7 +19,7 @@ const api = db => {
   // This solution sends more data than necessary, but cuts down on code and
   // effectively prevents the db and client from ever getting out of sync
   router.put("/board", (req, res) => {
-    let {boardData: board} = req.body;
+    let { boardData: board } = req.body;
     board = { ...board, changed_by: req.user._id };
     // Update the board only if the user's role in the board is admin/read-write
     boards
@@ -62,13 +62,13 @@ const api = db => {
       .find({ boardId: id }, "-_id -payload")
       .toArray()
       .then(histories => {
-        res.json(histories.map(hist=> ({...hist, payload: undefined})));
+        res.json(histories.map(hist => ({ ...hist, payload: undefined })));
       });
   });
 
   router.post("/notifications", (req, res) => {
     const { body: notification } = req;
-    const notificationWithWasSeen = {...notification, 'wasSeen' : false};
+    const notificationWithWasSeen = { ...notification, 'wasSeen': false };
     notifications
       .insert(notificationWithWasSeen)
       .then(result => {
@@ -85,7 +85,7 @@ const api = db => {
     notifications
       .findOneAndUpdate(
         { _id: ObjectID(_id) },
-        { $set: {'wasSeen': true} })
+        { $set: { 'wasSeen': true } })
       .then(() => {
         res.status(200).send();
       })
@@ -97,25 +97,26 @@ const api = db => {
     console.log("\n\nreq.body: \n");
     
     notifications
-    .find({ userId: id })
-    .toArray()
-    .then(notifs=>{
-      res.json(notifs);
-    })
+      .find({ userId: id })
+      .toArray()
+      .then(notifs => {
+        res.json(notifs);
+      })
   })
 
-  router.delete("/notifications", (req,res)=>{
-    const {_id} = req.body;
-    notifications.deleteOne({_id: new ObjectID(_id)}).then(()=>{
+  router.delete("/notifications", (req, res) => {
+    const { _id } = req.body;
+    notifications.deleteOne({ _id: new ObjectID(_id) }).then(() => {
       res.status(200).send();
     });
   });
 
   router.delete("/board", (req, res) => {
     const { boardId } = req.body;
-    boards.deleteOne({ _id: boardId }).then(result => {
-      res.send(result);
-    });
+    // boards.deleteOne({ _id: boardId }).then(result => {
+    //   res.send(result);
+    // });
+    boards.updateOne({ _id: boardId }, { $set: { isDeleted: true } }).then(result => { res.send(result) });
   });
 
   router.post("/userId", (req, res) => {
