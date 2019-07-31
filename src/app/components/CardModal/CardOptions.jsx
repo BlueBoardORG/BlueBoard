@@ -31,9 +31,6 @@ class CardOptions extends Component {
 
   constructor() {
     super();
-
-    this.toggelEdit = this.toggelEdit.bind(this);
-
     this.state = {
       isCalendarOpen: false,
       isCheckOpen: false,
@@ -71,7 +68,7 @@ class CardOptions extends Component {
 
   };
 
-  editModeCheack = label => {
+  editModecheck = label => {
     if (!this.state.isEditToggle) {
       this.addLabel(label)
     }
@@ -91,18 +88,18 @@ class CardOptions extends Component {
 
 
   addLabelToBoard = labelToAdd => {
-    const { dispatch, boardId } = this.props;
-    dispatch({
-      type: "ADD_LABEL_TO_BOARD",
-      payload: { boardId, labelToAdd }
-    });
+    c<LabelEditorId } = this.props;
+    d<LabelEditor
+     <LabelEditorOARD",
+     <LabelEditorabelToAdd }
+    }<LabelEditor
   };
 
-  handleKeyDown = event => {
-    if (event.keyCode === 27) {
-      this.props.toggleColorPicker();
-      this.colorPickerButton.focus();
-    }
+  han<LabelEditor{
+    i<LabelEditor7) {
+     <LabelEditorrPicker();
+     <LabelEditorn.focus();
+    }<LabelEditor
   };
 
   handleClickOutside = () => {
@@ -252,7 +249,7 @@ class CardOptions extends Component {
                           fontSize: 10,
                         } }
                         className={isEditToggle ? "color-picker-color-animation" : "color-picker-color"}
-                        onClick={() => this.editModeCheack(label)}
+                        onClick={() => this.editModecheck(label)}
                       >{labelName}</button>);
                   })}
                 

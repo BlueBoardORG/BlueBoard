@@ -15,7 +15,6 @@ class ColorPicker extends Component {
     boardId: PropTypes.string.isRequired,
     boardColor: PropTypes.string.isRequired,
     dispatch: PropTypes.func.isRequired
-    
   };
 
   handleSelection = color => {

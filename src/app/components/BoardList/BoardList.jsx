@@ -99,12 +99,10 @@ class BoardList extends Component {
     )};
 }
 
-const mapStateToProps = ({ listsById,user, socketConnected }) => {
-  return{
+const mapStateToProps = ({ listsById,user, socketConnected }) => ({
   listsById,
   user,
-  socketConnected,
-  };
-};
+  socketConnected
+});
 
 export default connect(mapStateToProps)(withTranslation()(BoardList));

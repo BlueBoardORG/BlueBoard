@@ -29,22 +29,6 @@ class CardBadges extends Component {
   constructor() {
     super();
   }
-/*
-  shouldComponentUpdate(nextProps){ 
-    if(this.props.labels.length != nextProps.labels.length){
-      console.log(true);
-      return true;
-    }
-      
-
-    for(let i = 0;i<this.props.labels.length ;i++){
-      if(this.props.labels.length[i] != nextProps.labels.length[i]){
-      console.log(true);
-        return true;
-      }
-    }
-    return false;
-  }*/
 
   renderDueDate = () => {
     const { date } = this.props;
@@ -143,9 +127,15 @@ class CardBadges extends Component {
       e.preventDefault();
     }
   };
+  deleteLabel=(labelId) => {
+    const { dispatch, cardId } = this.props;
+    dispatch({
+      type: "DELETE_LABEL",
+      payload: { label: labelId,  cardId }
+    });
+  }
 
   getLabelById = (labelId) => {
-    const { dispatch, cardId } = this.props;
     let labelvalue;
     this.props.boardLabels.map(label => {
       if (labelId === label.id) {
@@ -153,14 +143,10 @@ class CardBadges extends Component {
       }
     });
     if (labelvalue === undefined) {
-      dispatch({
-        type: "DELETE_LABEL",
-        payload: { label: labelId,  cardId }
-      });
+      this.deleteLabel(labelId);
       return null;
     }
     return labelvalue;
-
   }
 
   renderLabels = () => {
@@ -207,9 +193,9 @@ class CardBadges extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const boardLabel = state.boardsById[ownProps.boardId].labels;
+  const boardLabels = state.boardsById[ownProps.boardId].labels;
   return {
-    boardLabels: boardLabel
+    boardLabels
   };
 };
 

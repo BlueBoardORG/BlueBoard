@@ -26,15 +26,15 @@ class LabelEditor extends Component {
     }
 
     deleteLabel = () => {
-        const { dispatch, boardId, label } = this.props;
+        const { dispatch, boardId, label,cards } = this.props;
         dispatch({
             type: "REMOVE_LABEL_FROM_BOARD",
             payload: {  boardId, labelToRemove: label.id }
         });
 
         
-        for (let card in this.props.cards) {
-            if(this.props.cards[card].labels && this.props.cards[card].labels.includes(label.id)){
+        for (let card in cards) {
+            if(cards[card].labels && cards[card].labels.includes(label.id)){
             dispatch({
                 type: "DELETE_LABEL",
                 payload: { label:label.id, cardId: card }
