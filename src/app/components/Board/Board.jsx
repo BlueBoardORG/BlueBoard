@@ -155,7 +155,7 @@ class Board extends Component {
     cards[cardId].labels.forEach(label => {
       newLabelFormat.push(map[label]);
     });
-    console.log(newLabelFormat);
+    
     dispatch({
       type: "FIX_LABELS_FORMAT",
       payload: { newLabelFormat, cardId }
