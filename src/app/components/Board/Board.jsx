@@ -143,58 +143,19 @@ class Board extends Component {
     }
   };
 
-  updateFormat = (cardId,boardLabels) => {
-    const {dispatch,cards} = this.props;
-    let newLabelFormat=[];
+  updateFormat = (cardId) => {
+    const {dispatch,cards,boardLabels} = this.props;
+    const newLabelFormat=[];
+    const map ={'inprogress':boardLabels[0].id,
+                'general':boardLabels[1].id,
+                'tracking':boardLabels[2].id,
+                'bug':boardLabels[3].id,
+                'help':boardLabels[4].id,
+                'critical':boardLabels[5].id};
     cards[cardId].labels.forEach(label => {
-      switch (label) {
-        case "inprogress":
-          boardLabels.forEach(label => {
-            if(label.title === "בטיפול" ){
-              newLabelFormat.push(label.id)
-            }
-          });
-          break;
-          case "general":
-            boardLabels.forEach(label => {
-              if(label.title === "כללי" ){
-                newLabelFormat.push(label.id)
-              }
-            });
-          break;
-          case "tracking":
-            boardLabels.forEach(label => {
-              if(label.title === "מעקב" ){
-                newLabelFormat.push(label.id)
-              }
-            });
-          break;
-          case "bug":
-            boardLabels.forEach(label => {
-              if(label.title === "תקלה" ){
-                newLabelFormat.push(label.id)
-              }
-            });
-          break;
-          case "help":
-            boardLabels.forEach(label => {
-              if(label.title === "עזרה" ){
-                newLabelFormat.push(label.id)
-              }
-            });
-          break;
-          case "critical":
-            boardLabels.forEach(label => {
-              if(label.title === "קריטי" ){
-                newLabelFormat.push(label.id)
-              }
-            });
-          break;
-      
-        default:
-          break;
-      }
+      newLabelFormat.push(map[label]);
     });
+    console.log(newLabelFormat);
     dispatch({
       type: "FIX_LABELS_FORMAT",
       payload: { newLabelFormat, cardId }

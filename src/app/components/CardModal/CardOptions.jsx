@@ -88,18 +88,11 @@ class CardOptions extends Component {
 
 
   addLabelToBoard = labelToAdd => {
-    c<LabelEditorId } = this.props;
-    d<LabelEditor
-     <LabelEditorOARD",
-     <LabelEditorabelToAdd }
-    }<LabelEditor
-  };
-
-  han<LabelEditor{
-    i<LabelEditor7) {
-     <LabelEditorrPicker();
-     <LabelEditorn.focus();
-    }<LabelEditor
+    const { dispatch, boardId } = this.props;
+    dispatch({
+      type: "ADD_LABEL_TO_BOARD",
+      payload: { boardId, labelToAdd }
+    });
   };
 
   handleClickOutside = () => {
