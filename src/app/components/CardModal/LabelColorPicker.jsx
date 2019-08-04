@@ -33,7 +33,7 @@ class LabelColorPicker extends Component {
 
   render() {
     const {label,t} = this.props;
-    const colors = ["violet", "Turquoise", "yellowgreen", "Gold" ,"Orange","tomato"];
+    const colors = ["Purple","violet","PaleVioletRed","RoyalBlue", "Turquoise","SpringGreen", "yellowgreen", "Gold" ,"Orange","red","tomato","gray"];
     return (
       <Wrapper
         className="color-picker-wrapper"
@@ -45,7 +45,7 @@ class LabelColorPicker extends Component {
             &nbsp;{t('Color')} &nbsp;&#9662;
           </div>
         </Button>
-        <Menu className="color-picker-menu">
+        <Menu className="menu-color-picker">
           {colors.map(color => (
             <MenuItem
               value={color}
