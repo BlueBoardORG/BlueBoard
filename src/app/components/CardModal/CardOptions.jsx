@@ -72,7 +72,6 @@ class CardOptions extends Component {
     if (!this.state.isEditToggle) {
       this.addLabel(label)
     }
-
     else if( this.state.setLabel && this.state.setLabel.id===label.id){
       this.setState({ setLabel: null });
       this.setState({ isEditOpen: false });
@@ -81,11 +80,7 @@ class CardOptions extends Component {
       this.setState({ setLabel: label });
       this.setState({ isEditOpen: true });
     }
-
-    
-
   }
-
 
   addLabelToBoard = labelToAdd => {
     const { dispatch, boardId } = this.props;
@@ -93,13 +88,16 @@ class CardOptions extends Component {
       type: "ADD_LABEL_TO_BOARD",
       payload: { boardId, labelToAdd }
     });
+    this.setState({ isEditOpen: true });
+    this.setState({ setLabel: labelToAdd });
   };
 
   handleClickOutside = () => {
     const { toggleColorPicker } = this.props;
     toggleColorPicker();
-    this.setState({ isEditOpen: false })
-    this.setState({ isEditToggle: false })
+    this.setState({ isEditOpen: false });
+    this.setState({ isEditToggle: false });
+    this.setState({ setLabel: null });
     this.colorPickerButton.focus();
   };
 
@@ -230,17 +228,23 @@ class CardOptions extends Component {
                     const labelName = label.title;
                     const labelcolor = label.color;
                     const labelId=label.id;
+                    const opacity =  (card.labels.includes(labelId)) ? 0.5 : 1;
+                   
                     return (
                       <button
                         key={index}
-                        style={(setLabel && setLabel.id===labelId)?{
+                        style={(setLabel && setLabel.id===labelId)
+                          ?{
                           background: labelcolor,
                           fontSize: 10,
-                          border: "2px red solid"
-                        }: {
-                          background: labelcolor,
-                          fontSize: 10,
-                        } }
+                          border: "2px red solid",
+                          opacity: opacity
+                          }
+                          :{
+                            background: labelcolor,
+                            fontSize: 10,
+                            opacity: opacity
+                          } }
                         className={isEditToggle ? "color-picker-color-animation" : "color-picker-color"}
                         onClick={() => this.editModecheck(label)}
                       >{labelName}</button>);
@@ -248,7 +252,7 @@ class CardOptions extends Component {
                 
               </div>
               <div>
-                  {isEditOpen
+                  { isEditOpen
                     ? <LabelEditor  action={this.toggelEdit}  cardId={card._id} boardId={boardId} label={setLabel} />
                     : null
                   }
