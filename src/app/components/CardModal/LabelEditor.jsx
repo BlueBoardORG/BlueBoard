@@ -58,7 +58,7 @@ class LabelEditor extends Component {
         const {title}=this.state;
         return (
             <div className="editor">
-                <input className="titel-textarea"  onChange={this.handleChangeTitle} value={(title!==null) ? title : label.title } maxLength={14}/>
+                <input className="titel-textarea"  onChange={this.handleChangeTitle} value={(title!==null) ? title : label.title } maxLength={14} placeholder="Your name.."/>
                 <LabelColorPicker label={label} />
                 <div style={{flexdirection : "column"}}>
                     <button  onClick={this.editLabel} className="edit-button-ok"> אישור</button>

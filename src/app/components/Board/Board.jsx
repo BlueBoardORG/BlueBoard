@@ -27,7 +27,7 @@ class Board extends Component {
     dispatch: PropTypes.func.isRequired,
     boardUsers: PropTypes.array,
     boardLabels: PropTypes.array.isRequired,
-    cards:PropTypes.array.isRequired
+    cards:PropTypes.object.isRequired
   };
 
   constructor(props) {

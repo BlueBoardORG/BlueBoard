@@ -33,7 +33,7 @@ class LabelColorPicker extends Component {
 
   render() {
     const {label,t} = this.props;
-    const colors = ["Purple","violet","PaleVioletRed","RoyalBlue", "Turquoise","SpringGreen", "yellowgreen", "Gold" ,"Orange","red","tomato","gray"];
+    const colors = ["Purple","violet","PaleVioletRed","RoyalBlue", "Turquoise","SpringGreen", "yellowgreen", "Gold" ,"Orange","Red","tomato","gray"];
     return (
       <Wrapper
         className="color-picker-wrapper"

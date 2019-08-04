@@ -25,6 +25,7 @@
     width: 50px;
     height: 36px;
     margin: 2px;
+    margin-right:-1px; 
     border: 1px #999 solid;
     border-radius: 3px;
     background : green;
@@ -36,6 +37,7 @@
     width: 50px;
     height: 36px;
     margin: 2px;
+    margin-left:-1px; 
     border: 1px #999 solid;
     border-radius: 3px;
     background : red;
@@ -43,6 +45,8 @@
   }
 
   .titel-textarea {
+    margin-bottom: 4px;
+    padding: 1px;
     flex-grow: 1;
     box-sizing: border-box;
     width: 100%;
@@ -53,4 +57,7 @@
     resize: none;
     overflow: hidden;
     outline: none;
+    padding: 8px;
+    border: 2px solid #999;
+    border-radius: 4px;
   }
