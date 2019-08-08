@@ -1,5 +1,5 @@
 import { ADMIN_ROLE , BOARD_BG_URLS} from '../../constants';
-import { chooseAnotherAdmin, isCurrentUserAdmin} from '../components/BoardHeader/BoardLeaveHelper';
+import { adminLeaveHandler, isCurrentUserAdmin} from '../components/BoardHeader/BoardLeaveHelper';
 
 const boardsById = (state = {}, action) => {
   switch (action.type) {
@@ -46,10 +46,10 @@ const boardsById = (state = {}, action) => {
     }
     case "REMOVE_USER": {
       const {boardId, userIdToRemove} = action.payload;
-      var currentUsers = [...state[boardId].users];
+      let currentUsers = state[boardId].users.map(user => user);
       
       if(isCurrentUserAdmin(userIdToRemove, currentUsers)){
-        const newUsersWithAnotherAdmin = chooseAnotherAdmin(currentUsers);
+        const newUsersWithAnotherAdmin = adminLeaveHandler(userIdToRemove,currentUsers);
         currentUsers = newUsersWithAnotherAdmin;
       }
       const newUsersAfterRemovingUser = currentUsers.filter(user => user.id !== userIdToRemove);

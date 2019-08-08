@@ -5,57 +5,53 @@ import {
 } from "../../../constants";
 
 
-export const chooseAnotherAdmin = (users) => {
+export const adminLeaveHandler = (userId, users) => {
     let newUsers = users;
-    if (checkRoleSum(ADMIN_ROLE, users) === 1) {
-        if (checkRoleSum(READ_WRITE_ROLE, users) === 0) {
-            if (checkRoleSum(READ_ROLE, users) === 0) {
-                console.log('LAST USER');
+    if (!doesMoreAdmin(userId, users)) {
+        const firstReadWrite = findFirstUserInRole(READ_WRITE_ROLE, users)
+        if (!firstReadWrite) {
+            const firstRead = findFirstUserInRole(READ_ROLE, users);
+            if (!firstRead)
                 return newUsers;
-            }
-            else {
-                console.log('READ');
-                newUsers = mkFirstToAdmin(READ_ROLE, users)
-            }
+            else
+                newUsers = changeUserRoleToAdmin(firstRead, users);
         }
-        else {
-            console.log('READ-WRITE');
-            newUsers = mkFirstToAdmin(READ_WRITE_ROLE, users);
-        }
+        else
+            newUsers = changeUserRoleToAdmin(firstReadWrite, users);
     }
-    else {
-        console.log('MORE ADMINS');
+    else{
+        console.log('MORE ADMIN');
     }
     return newUsers;
 }
 
-const checkRoleSum = (role, users) => {
-    let count = 0;
-    console.log(users);
+const findFirstUserInRole = (role, users) => {
     for (var i = 0; i < users.length; i++) {
-        console.log(users[i].role, role);
         if (users[i].role === role) {
-            count++;
+            console.log('findFirstUserInRole', i);
+            return i;
         }
     }
-    return count;
+    return null;
 }
 
-const mkFirstToAdmin = (role, users) => {
-    const newUsersArray = users.map(user => user);
-    console.log(newUsersArray);
-    for (var i = 0; i < newUsersArray.length; i++) {
-        if (newUsersArray[i].role === role) {
-            newUsersArray[i].role = ADMIN_ROLE;
-            console.log('mkFirstToAdmin', newUsersArray[i].id, newUsersArray)
-            return newUsersArray;
-        }
+const doesMoreAdmin = (userId, users) => {
+    for(var i=0; i<users.length; i++) {
+        if(users[i].id !== userId && users[i].role === ADMIN_ROLE)
+           return true; 
     }
+    return false;
+}
+
+
+const changeUserRoleToAdmin = (userIndex, users) => {
+    users[userIndex].role = ADMIN_ROLE;
+    return users;
 }
 
 export const isCurrentUserAdmin = (userIdToRemove, users) => {
-    for(var i=0; i<users.length; i++) {
-        if(users[i].id === userIdToRemove)
-           return  users[i].role === ADMIN_ROLE;
+    for (var i = 0; i < users.length; i++) {
+        if (users[i].id === userIdToRemove)
+            return users[i].role === ADMIN_ROLE;
     }
 }
