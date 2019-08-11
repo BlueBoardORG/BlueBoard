@@ -11,7 +11,7 @@ import ListAdder from "../ListAdder/ListAdder";
 import Header from "../Header/Header";
 import BoardHeader from "../BoardHeader/BoardHeader";
 import { loadBoardUsersData } from "../../actions/boardActions";
-import { CAN_EDIT_ROLES } from "../../../constants";
+import { CAN_EDIT_ROLES, ADMIN_ROLE } from "../../../constants";
 import "./Board.scss";
 import BoardMenu from "../BoardHeader/BoardMenu";
 
@@ -151,6 +151,7 @@ class Board extends Component {
       backgroundSize: "cover"
     };
     const userData = board.users.find(u => u.id === user._id) || {};
+    const isUserAdmin = userData.role === ADMIN_ROLE;
     const isAbleToEdit = CAN_EDIT_ROLES.includes(userData.role) && socketConnected;
     
     const customStyles = {
@@ -181,7 +182,7 @@ class Board extends Component {
             <h1 style={{textAlign: "center", alignContent:"center", float:"none", margin:"auto"}}> {t("connection.wait")} </h1>
             <p style={{textAlign: "center", alignContent:"center", float:"none", margin:"auto", paddingTop: "5vh"}}> {t("connection.wait.message")} </p>
           </Modal>
-          <BoardHeader isAbleToEdit={isAbleToEdit}/>
+          <BoardHeader isAbleToEdit={isAbleToEdit} isCurrentUserAdmin={isUserAdmin}/>
           {/* eslint-disable jsx-a11y/no-static-element-interactions */}
           <div
             className="lists-wrapper"

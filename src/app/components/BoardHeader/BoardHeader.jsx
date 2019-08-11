@@ -8,7 +8,7 @@ import BoardArchiver from "./BoardArchiver";
 
 import "./BoardHeader.scss";
 
-const BoardHeader = ({ isAbleToEdit }) => (
+const BoardHeader = ({ isAbleToEdit, isCurrentUserAdmin }) => (
   <div className="board-header">
     <BoardTitle isAbleToEdit={isAbleToEdit} />
     <div className="board-header-right">
@@ -18,8 +18,8 @@ const BoardHeader = ({ isAbleToEdit }) => (
       {isAbleToEdit && <ImagePicker />}
       {isAbleToEdit && <div className="vertical-line" />}
       {isAbleToEdit && <BoardArchiver />}
-      {isAbleToEdit && <div className="vertical-line" />}
-      {isAbleToEdit && <BoardDeleter />}
+      {isCurrentUserAdmin ? <div className="vertical-line" /> : null}
+      {isCurrentUserAdmin && <BoardDeleter />}
       {isAbleToEdit && <div className="vertical-line" />}
       <BoardLeave />
     </div>
