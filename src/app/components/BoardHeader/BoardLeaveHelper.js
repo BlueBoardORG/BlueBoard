@@ -6,19 +6,27 @@ import {
 
 
 export const adminLeaveHandler = (userId, users) => {
+    let newAdminIfExist=null;
     if (!doesAnotherAdminExist(userId, users)) {
         const firstReadWrite = findFirstUserInRole(READ_WRITE_ROLE, users)
         if (!firstReadWrite) {
             const firstRead = findFirstUserInRole(READ_ROLE, users);
             if (!firstRead)
                 return users;
-            else 
+            else {
                 users[firstRead].role = ADMIN_ROLE;
+                newAdminIfExist = users[firstRead].id;
+            }
         }
-        else
+        else{
             users[firstReadWrite].role = ADMIN_ROLE;
+            newAdminIfExist = users[firstReadWrite].id;
+        }
     }
-    return users;
+    return  {
+        users: users,
+        newAdminIfExist: newAdminIfExist
+    }
 }
 
 const findFirstUserInRole = (role, users) => {

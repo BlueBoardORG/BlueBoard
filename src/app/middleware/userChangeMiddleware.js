@@ -27,6 +27,9 @@ const userChangeMiddleware = store => next => action => {
         case "REMOVE_USER": {
           let { userIdToRemove: userId } = action.payload;
           const { title } = boardsById[boardId];
+          const newAdminId = boardsById[boardId].newAdminNotifications;
+          if (newAdminId)
+            postWithParams(newAdminId, boardId, "CHANGE_USER_ROLE", title);
           postWithParams(userId, boardId, action.type, title);
           break;
         }
@@ -49,5 +52,8 @@ function postWithParams(userId, boardId, action, title) {
     credentials: "include"
   });
 }
+
+
+
 
 export default userChangeMiddleware;
