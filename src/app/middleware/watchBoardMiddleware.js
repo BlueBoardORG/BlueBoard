@@ -33,27 +33,15 @@ const watchMiddleware = store => next => action => {
     });
   }
 
-  function debugConsole(userId, currentWatchMode){
-    console.log("userId: ");
-    console.log(userId);
-    console.log("userWatch:");
-    console.log(currentWatchMode);
-  }
 
   if (!action.dontPersist) {
-    console.log("action");
-    console.log(action);
-
     if (boardsById[boardId]) {
       boardsById[boardId].users.forEach(user => {
-        console.log("user:");
-        console.log(user);
 
-        const currentWatchMode = user.watch;
+        const { watch : currentWatchMode } = user;
         const { title } = boardsById[boardId];
 
         if(currentWatchMode === "Watching" && !watchingFunctions.includes(action.type)){
-          console.log("got into watching");
           postWithParams(user.id, boardId, action.type, title);
         }
         

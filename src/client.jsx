@@ -11,7 +11,6 @@ import persistMiddleware from "./app/middleware/persistMiddleware";
 import filterMiddleware from "./app/middleware/filterMiddleware";
 import historyMiddleware from "./app/middleware/historyMiddleware";
 import watchMiddleware from "./app/middleware/watchBoardMiddleware";
-import userChangeMiddleware from "./app/middleware/userChangeMiddleware";
 import App from "./app/components/App";
 
 
