@@ -62,6 +62,7 @@ MongoClient.connect(process.env.MONGODB_URL, { useNewUrlParser: true }).then(cli
   app.use("/auth", auth);
   app.use("/api", api(db));
   app.use(fetchBoardData(db));
+
   app.use((req,res,next)=>{
     if(!req.user)
       res.redirect("/auth/shraga");

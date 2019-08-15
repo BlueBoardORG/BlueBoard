@@ -26,9 +26,26 @@ const boardsById = (state = {}, action) => {
         [boardId] : {
           ...state[boardId],
           users: newUsers
+
         }
       }
     }
+
+    case "CHANGE_USER_WATCH" : {
+      const {boardId, userId, newWatchMode: watch} = action.payload;
+      // Finds the user (by userId) and change only it's watch mode
+      const newUsers = state[boardId].users.map(user => user.id === userId ? {...user, watch} : user);
+
+      return {
+        ...state,
+        [boardId] : {
+          ...state[boardId],
+          users: newUsers
+        }
+      }
+
+    }
+
     case "CHANGE_USER_ROLE" : {
       const {boardId, userId, role} = action.payload;
       // Finds the user (by userId) and change only it's role

@@ -94,6 +94,7 @@ const api = db => {
 
   router.post("/notifications/getByUserId", (req, res) => {
     let { id } = req.body;
+    
     notifications
       .find({ userId: id })
       .toArray()
