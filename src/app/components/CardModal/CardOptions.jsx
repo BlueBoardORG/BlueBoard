@@ -228,7 +228,7 @@ class CardOptions extends Component {
                     const labelName = label.title;
                     const labelcolor = label.color;
                     const labelId=label.id;
-                    const opacity =  (card.labels.includes(labelId)) ? 0.5 : 1;
+                    const opacity =  (card.labels && card.labels.includes(labelId)) ? 0.5 : 1;
                    
                     return (
                       <button
