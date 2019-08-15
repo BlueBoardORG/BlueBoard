@@ -55,16 +55,16 @@ class Watch extends Component {
     const { t } = this.props;
     const watchModes = [
       {
-        mode: "Watching",
-        description: "Be notified of all conversations"
+        mode: "Watch.mode.watching.title",
+        description: "Watch.mode.watching.description"
       },
       {
-        mode: "Not watching",
-        description: "Be notified only when assign"
+        mode: "Watch.mode.not_watching.title",
+        description: "Watch.mode.not_watching.description"
       },
       {
-        mode: "Ignoring",
-        description: "Never be notified"
+        mode: "Watch.mode.ignoring.title",
+        description: "Watch.mode.ignoring.description"
       }
     ];
 
@@ -106,7 +106,7 @@ class Watch extends Component {
               icon="eye-open"
               color="#ffffff"
             />
-            <div className="watch-header">{t("Watch")}</div>
+            <div className="watch-header">{t("Watch.watch")}</div>
           </Button>
         </Popover>
       </div>
