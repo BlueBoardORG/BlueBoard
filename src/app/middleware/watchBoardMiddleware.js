@@ -33,6 +33,8 @@ const watchMiddleware = store => next => action => {
     });
   }
 
+  
+
 
   if (!action.dontPersist) {
     if (boardsById[boardId]) {
