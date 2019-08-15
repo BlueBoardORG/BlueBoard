@@ -25,3 +25,12 @@ export const transformUser = (profile) => {
     imageUrl: profile.photo || null
   });
 }
+
+export const findFirstUserInRole = (role, users) => {
+  for (var i = 0; i < users.length; i++) {
+      if (users[i].role === role) {
+          return i;
+      }
+  }
+  return;
+}
