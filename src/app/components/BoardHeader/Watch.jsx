@@ -25,8 +25,6 @@ class Watch extends Component {
   }
 
   handleSelection = newWatchMode => {
-    console.log("newWatchMode");
-    console.log(newWatchMode);
     const { dispatch, boardId, userId } = this.props;
     if (newWatchMode !== this.props.currentWatchMode) {
       dispatch({
