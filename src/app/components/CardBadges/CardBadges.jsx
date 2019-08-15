@@ -21,8 +21,14 @@ class CardBadges extends Component {
     assignedToMe: PropTypes.bool,
     assignedUserName: PropTypes.string,
     assignedUserId: PropTypes.string,
-    labels: PropTypes.array
+    labels: PropTypes.array,
+    boardId: PropTypes.string.isRequired,
+    cardId: PropTypes.string.isRequired,
+    dispatch: PropTypes.func.isRequired
   };
+  constructor() {
+    super();
+  }
 
   renderDueDate = () => {
     const { date } = this.props;
@@ -83,21 +89,21 @@ class CardBadges extends Component {
   hashCode = (str) => { // java String#hashCode
     var hash = 0;
     for (var i = 0; i < str.length; i++) {
-       hash = str.charCodeAt(i) + ((hash << 5) - hash);
+      hash = str.charCodeAt(i) + ((hash << 5) - hash);
     }
     return hash;
-  } 
+  }
 
   intToRGB = (i) => {
-      var c = (i & 0x00FFFFFF)
-          .toString(16)
-          .toUpperCase();
+    var c = (i & 0x00FFFFFF)
+      .toString(16)
+      .toUpperCase();
 
-      return "00000".substring(0, 6 - c.length) + c;
+    return "00000".substring(0, 6 - c.length) + c;
   }
 
   renderAssigned = () => {
-    const {assignedUserName , assignedUserId} = this.props;
+    const { assignedUserName, assignedUserId } = this.props;
 
     if (!assignedUserName) {
       return null;
@@ -114,28 +120,6 @@ class CardBadges extends Component {
       </div>
     );
   };
-
-  renderLabels = () => {
-    const { labels, t } = this.props;
-    const colorsWithLabelsMap = new Map(colorsWithLabels);
-
-    if (!labels) {
-      return null;
-    }
-
-    return labels.map(label => (
-      <div
-        key={label}
-        className="badge"
-        style={{ background: colorsWithLabelsMap.get(label) }}
-      >
-        <MdLabel className="badge-icon" />
-        &nbsp;
-        {t(`Labels.${label}`)}
-      </div>
-    ));
-  };
-
   onWheelLabels = e => {
     const { currentTarget, deltaY } = e;
     if (currentTarget.className === "scroll-wrapper") {
@@ -143,6 +127,52 @@ class CardBadges extends Component {
       e.preventDefault();
     }
   };
+  deleteLabel=(labelId) => {
+    const { dispatch, cardId } = this.props;
+    dispatch({
+      type: "DELETE_LABEL",
+      payload: { label: labelId,  cardId }
+    });
+  }
+
+  getLabelById = (labelId) => {
+    let labelvalue;
+    this.props.boardLabels.map(label => {
+      if (labelId === label.id) {
+        labelvalue = label;
+      }
+    });
+    if (labelvalue === undefined) {
+      this.deleteLabel(labelId);
+      return null;
+    }
+    return labelvalue;
+  }
+
+  renderLabels = () => {
+    const { labels } = this.props;
+    if (!labels) {
+      return null;
+    }
+
+    return labels.map((label) => (
+      <div key={label}>
+        {this.getLabelById(label)
+          ? <div
+            className="badge"
+            style={{ background: this.getLabelById(label).color }}
+          >
+            <MdLabel className="badge-icon" />
+            &nbsp;
+        {this.getLabelById(label).title}
+          </div>
+          : null
+        }
+      </div>
+    ));
+  };
+
+ 
 
   render() {
     return (
@@ -162,4 +192,11 @@ class CardBadges extends Component {
   }
 }
 
-export default connect()(withTranslation()(CardBadges));
+const mapStateToProps = (state, ownProps) => {
+  const boardLabels = state.boardsById[ownProps.boardId].labels;
+  return {
+    boardLabels
+  };
+};
+
+export default connect(mapStateToProps)(withTranslation()(CardBadges));

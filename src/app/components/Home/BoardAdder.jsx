@@ -24,6 +24,15 @@ class BoardAdder extends Component {
   handleChange = event => {
     this.setState({ title: event.target.value });
   };
+  defaultLabels= () =>{
+
+    return[{ id: shortid.generate(), title: "בטיפול", color: "violet" },
+    { id: shortid.generate(), title: "כללי", color: "Turquoise" },
+    { id: shortid.generate(), title: "מעקב", color: "yellowgreen" },
+    { id: shortid.generate(), title: "תקלה", color: "Gold" },
+    { id: shortid.generate(), title: "עזרה", color: "Orange" },
+    { id: shortid.generate(), title: "קריטי", color: "tomato" }]
+  }
 
   handleSubmit = event => {
     // Dispatch action to put new empty board in redux store and db + push new url to history
@@ -34,12 +43,14 @@ class BoardAdder extends Component {
     }
     const { dispatch, history, userId } = this.props;
     const boardId = shortid.generate();
+    const labels = this.defaultLabels();
     dispatch({
       type: "ADD_BOARD",
       payload: {
         boardTitle: title,
         boardId,
-        userId
+        userId,
+        labels
       }
     });
 

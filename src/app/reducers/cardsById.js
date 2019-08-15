@@ -23,14 +23,30 @@ const cardsById = (state = {}, action) => {
         [cardId]: { ...state[cardId], labels: [...cardLabels, label] }
       };
     }
-    case "DELETE_LABEL": {
-      const { label, cardId } = action.payload;
-      const cardLabels = state[cardId].labels || [];
+    case "FIX_LABELS_FORMAT": {
+      const { newLabelFormat, cardId } = action.payload;
       return {
         ...state,
         [cardId]: {
           ...state[cardId],
-          labels: cardLabels.filter(currLabel => currLabel !== label)
+          labels: newLabelFormat
+        }
+      };
+    }
+
+    case "DELETE_LABEL": {
+      const { label, cardId } = action.payload;
+      const cardLabels = state[cardId].labels || [];
+      cardLabels.map((cardLabel,index) =>{
+        if(cardLabel === label){
+          cardLabels.splice(index, 1);
+        }
+      })
+      return {
+        ...state,
+        [cardId]: {
+          ...state[cardId],
+          labels: cardLabels
         }
       };
     }

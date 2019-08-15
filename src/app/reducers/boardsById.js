@@ -8,7 +8,7 @@ const boardsById = (state = {}, action) => {
         ...state,
         [boardId]: {
           ...state[boardId],
-          lists: [...state[boardId].lists, listId]
+          lists: [...state[boardId].lists, listId],
         }
       };
     }
@@ -48,9 +48,8 @@ const boardsById = (state = {}, action) => {
 
     case "CHANGE_USER_ROLE" : {
       const {boardId, userId, role} = action.payload;
-      
+      // Finds the user (by userId) and change only it's role
       const newUsers = state[boardId].users.map(user => user.id === userId ? {...user, role} : user);
-      
       return {
         ...state,
         [boardId] : {
@@ -93,8 +92,69 @@ const boardsById = (state = {}, action) => {
         }
       };
     }
+    case "REMOVE_LABEL_FROM_BOARD":{
+      const {boardId,labelToRemove} = action.payload;
+      const boardLabels = state[boardId].labels || [];
+      boardLabels.map((label,index) =>{
+        if(label.id === labelToRemove){
+          boardLabels.splice(index, 1);
+        }
+      })
+      return {
+        ...state,
+        [boardId]: {
+          ...state[boardId],
+          labels: boardLabels
+        }
+      };
+    }
+    case "Edit_LABEL":{
+      const {boardId,editedLabel} = action.payload;
+      const boardLabels = state[boardId].labels || [];
+      boardLabels.map((label,index) =>{
+        if(label.id === editedLabel.id){
+          if(!editedLabel.color){
+            editedLabel.color=label.color;
+          }
+          if(!editedLabel.title){
+            editedLabel.title=label.title;
+          }
+          boardLabels.splice(index, 1);
+        }
+      })
+
+      return {
+        ...state,
+        [boardId]: {
+          ...state[boardId],
+          labels: [...state[boardId].labels, editedLabel]
+        }
+      };
+    }
+    case "ADD_LABEL_TO_BOARD":{
+      const {boardId,labelToAdd} = action.payload;
+
+      if(state[boardId].labels === undefined){
+      return {
+        ...state,
+        [boardId]: {
+          ...state[boardId],
+          labels: labelToAdd
+        }
+      };
+    }
+        return {
+          ...state,
+          [boardId]: {
+            ...state[boardId],
+            labels: [...state[boardId].labels, labelToAdd]
+          }
+        };
+      
+    }
+
     case "ADD_BOARD": {
-      const { boardTitle, boardId, userId } = action.payload;
+      const { boardTitle, boardId, userId,labels } = action.payload;
       const image = BOARD_BG_URLS[Math.floor(Math.random()*BOARD_BG_URLS.length)];
       return {
         ...state,
@@ -104,7 +164,8 @@ const boardsById = (state = {}, action) => {
           lists: [],
           users: [{id: userId, role: ADMIN_ROLE}],
           color: "blue",
-          backgroundImage: image
+          backgroundImage: image,
+          labels
         }
       };
     }
