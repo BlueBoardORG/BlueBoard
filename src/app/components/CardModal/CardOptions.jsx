@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Modal from "react-modal";
+import shortid from "shortid";
+import FaPencil from "react-icons/lib/fa/pencil";
 import FaTrash from "react-icons/lib/fa/trash";
 import FaUserPlus from "react-icons/lib/fa/user-plus";
 import { FaCheckSquare } from "react-icons/lib/fa";
@@ -12,7 +14,7 @@ import ClickOutside from "../ClickOutside/ClickOutside";
 import UserPicker from "../UserPicker/UserPicker";
 import colorIcon from "../../../assets/images/color-icon.png";
 import "./CardOptions.scss";
-import { colorsWithLabels } from "../utils";
+import LabelEditor from "./LabelEditor";
 
 class CardOptions extends Component {
   static propTypes = {
@@ -23,7 +25,8 @@ class CardOptions extends Component {
     isThinDisplay: PropTypes.bool.isRequired,
     boundingRect: PropTypes.object.isRequired,
     toggleColorPicker: PropTypes.func.isRequired,
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
+    boardId: PropTypes.string.isRequired,
   };
 
   constructor() {
@@ -31,9 +34,14 @@ class CardOptions extends Component {
     this.state = {
       isCalendarOpen: false,
       isCheckOpen: false,
-      isAssignOpen: false
+      isAssignOpen: false,
+      isEditToggle: false,
+      setLabel: null,
+      isEditOpen: false
     };
   }
+
+
 
   deleteCard = () => {
     const { dispatch, listId, card } = this.props;
@@ -45,37 +53,71 @@ class CardOptions extends Component {
 
   addLabel = label => {
     const { dispatch, card } = this.props;
-    const cardLabels = card.labels || [];
-
-    if (cardLabels.includes(label)) {
+    const cardLabels = card.labels || [];  
+    if (cardLabels.includes(label.id)) {
       dispatch({
         type: "DELETE_LABEL",
-        payload: { label, cardId: card._id }
+        payload: { label: label.id, cardId: card._id }
       });
     } else {
       dispatch({
         type: "ADD_LABEL",
-        payload: { label, cardId: card._id }
+        payload: { label: label.id, cardId: card._id }
       });
     }
+
   };
 
-  handleKeyDown = event => {
-    if (event.keyCode === 27) {
-      this.props.toggleColorPicker();
-      this.colorPickerButton.focus();
+  editModecheck = label => {
+    if (!this.state.isEditToggle) {
+      this.addLabel(label)
     }
+    else if( this.state.setLabel && this.state.setLabel.id===label.id){
+      this.setState({ setLabel: null });
+      this.setState({ isEditOpen: false });
+    }
+    else {
+      this.setState({ setLabel: label });
+      this.setState({ isEditOpen: true });
+    }
+  }
+
+  addLabelToBoard = labelToAdd => {
+    const { dispatch, boardId } = this.props;
+    dispatch({
+      type: "ADD_LABEL_TO_BOARD",
+      payload: { boardId, labelToAdd }
+    });
+    this.setState({ isEditOpen: true });
+    this.setState({ setLabel: labelToAdd });
   };
 
   handleClickOutside = () => {
     const { toggleColorPicker } = this.props;
     toggleColorPicker();
+    this.setState({ isEditOpen: false });
+    this.setState({ isEditToggle: false });
+    this.setState({ setLabel: null });
     this.colorPickerButton.focus();
   };
 
   toggleCalendar = () => {
     this.setState({ isCalendarOpen: !this.state.isCalendarOpen });
   };
+
+  toggelEditMode = () => {
+    this.setState({ isEditToggle: !this.state.isEditToggle });
+    if(this.state.isEditOpen){
+      this.setState({ isEditOpen: !this.state.isEditOpen });
+      this.setState({setLabel: null});
+    }
+  }
+
+  toggelEdit = () => {
+    this.setState({ isEditOpen: !this.state.isEditOpen });
+    this.setState({setLabel:null});
+  }
+
 
   toggleAssign = () => {
     this.setState({ isAssignOpen: !this.state.isAssignOpen });
@@ -88,7 +130,7 @@ class CardOptions extends Component {
   addCheckList = e => {
     if (e.key === "Enter") {
       const { dispatch, card } = this.props;
-      if(!e.target.value.trim()) {
+      if (!e.target.value.trim()) {
         return this.toggleCheck();
       }
       dispatch({
@@ -109,10 +151,11 @@ class CardOptions extends Component {
       card,
       isThinDisplay,
       boundingRect,
-      t
+      t,
+      boardId
     } = this.props;
 
-    const { isCalendarOpen, isCheckOpen, isAssignOpen } = this.state;
+    const { isEditOpen, isCalendarOpen, isCheckOpen, isAssignOpen,isEditToggle,setLabel } = this.state;
 
     const calendarStyle = {
       content: {
@@ -162,35 +205,59 @@ class CardOptions extends Component {
             <ClickOutside
               eventTypes="click"
               handleClickOutside={this.handleClickOutside}
+
             >
-              {/* eslint-disable */}
+              <div onKeyDown={this.handleKeyDown}>
               <div
                 className="modal-color-picker"
-                onKeyDown={this.handleKeyDown}
               >
-                {/* eslint-enable */}
-                {colorsWithLabels.map(colorLabel => {
-                  const [label, color] = colorLabel;
-                  const labels = this.props.card.labels || [];
-                  const isLabelSelected = labels.includes(label);
-                  const opacity = isLabelSelected ? 0.5 : 1;
+                <button
+                  className="color-picker-color"
+                  onClick={() => this.addLabelToBoard({ id: shortid.generate(), title: "תגית חדשה", color: "gray" })} >+</button>
+                <button
+                  className="color-picker-color"
+                  onClick={() => this.toggelEditMode()}
+                  style={isEditToggle?{
+                    shadow:"3px 3px 6px green",
+                    border: "2px green solid"
+                  }:null} ><FaPencil /></button>
 
-                  return (
-                    <button
-                      key={color}
-                      style={{
-                        background: color,
-                        fontSize: 10,
-                        opacity: opacity
-                      }}
-                      className="color-picker-color"
-                      onClick={() => this.addLabel(label)}
-                    >
-                      {t(`Labels.${label}`)}
-                    </button>
-                  );
-                })}
+                {/* eslint-enable */}
+                {
+                  this.props.boardLabels.map((label, index) => {
+                    const labelName = label.title;
+                    const labelcolor = label.color;
+                    const labelId=label.id;
+                    const opacity =  (card.labels.includes(labelId)) ? 0.5 : 1;
+                   
+                    return (
+                      <button
+                        key={index}
+                        style={(setLabel && setLabel.id===labelId)
+                          ?{
+                          background: labelcolor,
+                          fontSize: 10,
+                          border: "2px red solid",
+                          opacity: opacity
+                          }
+                          :{
+                            background: labelcolor,
+                            fontSize: 10,
+                            opacity: opacity
+                          } }
+                        className={isEditToggle ? "color-picker-color-animation" : "color-picker-color"}
+                        onClick={() => this.editModecheck(label)}
+                      >{labelName}</button>);
+                  })}
+                
               </div>
+              <div>
+                  { isEditOpen
+                    ? <LabelEditor  action={this.toggelEdit}  cardId={card._id} boardId={boardId} label={setLabel} />
+                    : null
+                  }
+                </div>
+            </div>
             </ClickOutside>
           )}
         </div>
@@ -253,9 +320,19 @@ class CardOptions extends Component {
         >
           <UserPicker cardId={card._id} toggleAssign={this.toggleAssign} />
         </Modal>
+
+
       </div>
     );
   }
 }
+const mapStateToProps = (state, ownProps) => {
+  const boardLabel = state.boardsById[ownProps.boardId].labels;
+  const cardLabel = state.cardsById[ownProps.card._id].labels;
+  return {
+    boardLabels: boardLabel,
+    cardLabels: cardLabel
+  };
+};
 
-export default connect()(withTranslation()(CardOptions));
+export default connect(mapStateToProps)(withTranslation()(CardOptions));

@@ -25,7 +25,9 @@ class Board extends Component {
     boardColor: PropTypes.string.isRequired,
     boardImageBackground: PropTypes.string,
     dispatch: PropTypes.func.isRequired,
-    boardUsers: PropTypes.array
+    boardUsers: PropTypes.array,
+    boardLabels: PropTypes.array.isRequired,
+    cards:PropTypes.object.isRequired
   };
 
   constructor(props) {
@@ -141,7 +143,38 @@ class Board extends Component {
     }
   };
 
+  updateFormat = (cardId) => {
+    const {dispatch,cards,boardLabels} = this.props;
+    const newLabelFormat=[];
+    const map ={'inprogress':boardLabels[0].id,
+                'general':boardLabels[1].id,
+                'tracking':boardLabels[2].id,
+                'bug':boardLabels[3].id,
+                'help':boardLabels[4].id,
+                'critical':boardLabels[5].id};
+    cards[cardId].labels.forEach(label => {
+      newLabelFormat.push(map[label]);
+    });
+    dispatch({
+      type: "FIX_LABELS_FORMAT",
+      payload: { newLabelFormat, cardId }
+    });
+  }
+
+  checkFormat= (lists) => {
+    const {cards} = this.props;
+    const oldLabels = ["inprogress","general","tracking","bug","help","critical",]
+    lists.forEach(list => {
+      list.cards.forEach(cardId => {
+        if(cards[cardId].labels && oldLabels.includes(cards[cardId].labels[0])){
+          this.updateFormat(cardId);
+        }
+      });
+    });
+  }
+
   render = () => {
+    
     const { lists, boardTitle, boardId, boardColor, t, user, board, boardImageBackground, socketConnected } = this.props;
     const imageUrl = `url(${boardImageBackground})`;
     const wrapperStyle = {
@@ -165,7 +198,7 @@ class Board extends Component {
         height                : '25%'
       }
     };
-
+    this.checkFormat(lists);
     return (
       <>
         <div className={classnames("board", boardColor)} style={wrapperStyle}>
@@ -224,8 +257,8 @@ class Board extends Component {
 const mapStateToProps = (state, ownProps) => {
   const { board } = ownProps;
   const { user, boardUsersData, socketConnected } = state;
-
   return {
+    cards : state.cardsById,
     lists: board.lists.map(listId => state.listsById[listId]),
     boardTitle: board.title,
     boardColor: board.color,
@@ -234,7 +267,8 @@ const mapStateToProps = (state, ownProps) => {
     boardImageBackground: board.backgroundImage,
     user,
     boardUsersData, 
-    socketConnected
+    socketConnected,
+    boardLabels:board.labels
   };
 };
 

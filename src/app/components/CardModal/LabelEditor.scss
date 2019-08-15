@@ -1,0 +1,63 @@
+.editor {
+  position: absolute;
+  top: 100%;
+  right: 35%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-wrap: wrap;
+  width: 170px;
+  margin-top: 4px;
+  padding: 5px;
+  border-radius: 3px;
+  color: black;
+  background: white;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.6);
+  font-weight: 700;
+  text-align: center;
+  z-index: 4;
+  display: flex;
+  flex-shrink: 0;
+  display: inline-flex;
+  flex-direction: column;
+  }
+
+  .edit-button-ok {
+    width: 50px;
+    height: 36px;
+    margin: 2px;
+    margin-right:-1px; 
+    border: 1px #999 solid;
+    border-radius: 3px;
+    background : green;
+    float : right;
+    
+  }
+
+  .edit-button-delete { 
+    width: 50px;
+    height: 36px;
+    margin: 2px;
+    margin-left:-1px; 
+    border: 1px #999 solid;
+    border-radius: 3px;
+    background : red;
+    float : left;
+  }
+
+  .titel-textarea {
+    margin-bottom: 4px;
+    padding: 1px;
+    flex-grow: 1;
+    box-sizing: border-box;
+    width: 100%;
+    color: inherit;
+    background: inherit;
+    font-family: inherit;
+    line-height: inherit;
+    resize: none;
+    overflow: hidden;
+    outline: none;
+    padding: 8px;
+    border: 2px solid #999;
+    border-radius: 4px;
+  }
