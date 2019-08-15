@@ -25,6 +25,8 @@ class Watch extends Component {
   }
 
   handleSelection = newWatchMode => {
+    console.log("newWatchMode");
+    console.log(newWatchMode);
     const { dispatch, boardId, userId } = this.props;
     if (newWatchMode !== this.props.currentWatchMode) {
       dispatch({
@@ -39,6 +41,19 @@ class Watch extends Component {
     return watchMode === currentWatchMode ? (
       <Icon icon="tick-circle" color="success" marginRight={0} />
     ) : null;
+  }
+
+  convertTitleToMode(modeTitle){
+    switch(modeTitle){
+      case "Watch.mode.watching.title":
+        return "Watching";
+      case "Watch.mode.not_watching.title":
+        return "Not watching";
+      case "Watch.mode.ignoring.title":
+        return "Ignoring";
+      default:
+        return "error";
+    }
   }
 
   renderWatchDiv = (mode, description) => {
@@ -81,7 +96,7 @@ class Watch extends Component {
                       paddingY={12}
                       key={index}
                       isSelectable
-                      onSelect={() => this.handleSelection(watchMode.mode)}
+                      onSelect={() => this.handleSelection(this.convertTitleToMode(watchMode.mode))}
                     >
                       <Table.TextCell>
                         {this.renderWatchDiv(
@@ -90,7 +105,7 @@ class Watch extends Component {
                         )}
                       </Table.TextCell>
                       <Table.Cell className="v-icon-wrapper" flex="none">
-                        {this.addVIcon(watchMode.mode)}
+                        {this.addVIcon(this.convertTitleToMode(watchMode.mode))}
                       </Table.Cell>
                     </Table.Row>
                   </div>
