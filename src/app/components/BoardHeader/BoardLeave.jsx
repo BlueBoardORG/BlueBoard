@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import Modal from "react-modal";
+import ReactTooltip from "react-tooltip";
 import { Button, Wrapper, Menu, MenuItem } from "react-aria-menubutton";
 import { withTranslation } from "react-i18next";
 import FaSignOut from "react-icons/lib/fa/sign-out";
@@ -27,6 +29,10 @@ class BoardLeave extends Component {
     document.location.href = "/";
   };
 
+  componentWillMount() {
+    Modal.setAppElement('body');
+  }
+
   render = () => {
     const { t } = this.props;
     return (
@@ -34,7 +40,12 @@ class BoardLeave extends Component {
         className="board-leave-wrapper"
         onSelection={this.handleSelection}
       >
-        <Button className="board-leave-button">
+        <Button 
+          className="board-leave-button" 
+          data-tip={t("BoardHeaders.BoardLeave")} 
+          data-place="bottom"
+          data-multiline={true}
+        >
           <div className="modal-icon">
             <FaSignOut />
           </div>
@@ -42,6 +53,7 @@ class BoardLeave extends Component {
             &nbsp;{t("BoardLeave.Leave")}
           </div>
         </Button>
+        <ReactTooltip/>
         <Menu className="board-leave-menu">
           <div className="board-leave-header">{t("are_you_sure")}</div>
           <MenuItem className="board-leave-confirm">
