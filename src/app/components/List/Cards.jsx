@@ -16,7 +16,7 @@ class Cards extends Component {
   render() {
     const { listId, cards, isAbleToEdit,boardId} = this.props;
     const filteredCardsById = this.props.filteredCardsById;
-
+    
     return (
       <Droppable droppableId={listId} isDropDisabled={!isAbleToEdit}>
         {(provided, { isDraggingOver }) => (
