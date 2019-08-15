@@ -209,11 +209,11 @@ class Notification extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const { user } = state;
+  const { user, boardsById } = state;
   return {
-    userId: state.user ? state.user._id : "guest",
+    userId: user ? user._id : "guest",
     userName: user.name,
-    boardsById: state.boardsById
+    boardsById
   };
 };
 
