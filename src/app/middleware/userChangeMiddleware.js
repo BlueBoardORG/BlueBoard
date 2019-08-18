@@ -3,43 +3,13 @@ const userChangeMiddleware = store => next => action => {
   const { user, currentBoardId: boardId, boardsById } = store.getState();
 
   if (user && !action.dontPersist) {
-    if (
-      [
-        "UPDATE_ASSIGNED_USER",
-        "ADD_USER",
-        "REMOVE_USER",
-        "CHANGE_USER_ROLE"
-      ].includes(action.type)
-    ) {
-      switch (action.type) {
-        case "UPDATE_ASSIGNED_USER": {
-          let { assignedUserId } = action.payload;
-          const { title } = boardsById[boardId];
-          postWithParams(assignedUserId, boardId, action.type, title);
-          break;
-        }
-        case "ADD_USER": {
-          let { userToAdd } = action.payload;
-          const { title } = boardsById[boardId];
-          postWithParams(userToAdd.id, boardId, action.type, title);
-          break;
-        }
-        case "REMOVE_USER": {
-          let { userIdToRemove: userId } = action.payload;
-          const { title } = boardsById[boardId];
-          const newAdminId = boardsById[boardId].newAdminIfExist;
-          if (newAdminId)
-            postWithParams(newAdminId, boardId, "CHANGE_USER_ROLE", title);
-          postWithParams(userId, boardId, action.type, title);
-          break;
-        }
-        case "CHANGE_USER_ROLE": {
-          let { userId } = action.payload;
-          const { title } = boardsById[boardId];
-          postWithParams(userId, boardId, action.type, title);
-          break;
-        }
-      }
+    if (action.type === "REMOVE_USER") {
+      let { userIdToRemove: userId } = action.payload;
+      const { title } = boardsById[boardId];
+      const newAdminId = boardsById[boardId].newAdminIfExist;
+      if (newAdminId)
+        postWithParams(newAdminId, boardId, "CHANGE_USER_ROLE", title);
+      postWithParams(userId, boardId, action.type, title);
     }
   }
 };
