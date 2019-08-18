@@ -80,9 +80,11 @@ class Notification extends React.Component {
     });
   }
 
+  
+
   notificationMessage(notification) {
-    const { user, t } = this.props;
-    return `${t("Notifications." + notification.action)} ${notification.title}`;
+    const { t} = this.props;
+    return `${t(notification.action)} ${this.props.userName} `;
   }
 
   deleteHandler(notification) {
@@ -206,10 +208,12 @@ class Notification extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
+  const { user, boardsById } = state;
   return {
-    userId: state.user ? state.user._id : "guest",
-    boardsById: state.boardsById
+    userId: user ? user._id : "guest",
+    userName: user.name,
+    boardsById
   };
 };
 

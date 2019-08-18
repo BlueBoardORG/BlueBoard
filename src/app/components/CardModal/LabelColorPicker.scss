@@ -1,0 +1,122 @@
+
+.color-picker-wrapper {
+    position: relative;
+    font-size: 16px;
+  }
+  
+  .color-picker {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 8px 10px 8px 10px;
+    border-radius: 3px;
+    color: black;
+    transition: background 0.1s;
+    cursor: pointer;
+  }
+  
+  .color-picker:hover,
+  .color-picker:focus {
+    background: transparent-black;
+  }
+  
+  .menu-color-picker {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    flex-direction: column;
+    width: 100px;
+    margin-top: 4px;
+    padding: 3px;
+    border-radius: 3px;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.6);
+    color: black;
+    background: rgba(255, 255, 255, 0.9);
+    height: 200px;
+    overflow-y: overlay;
+  }
+  
+  .color-picker-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    height: 40px;
+    margin: 3px;
+    cursor: pointer;
+  
+    &.Purple {
+      background:Purple;
+      &:focus {
+        background: dark-Purple  ;
+      }
+    }
+    &.violet {
+      background:violet;
+      &:focus {
+        background: dark-violet;
+      }
+    } 
+    &.PaleVioletRed {
+      background: PaleVioletRed;
+      &:focus {
+        background: dark-PaleVioletRed;
+      }
+    }
+    &.RoyalBlue {
+      background: RoyalBlue;
+      &:focus {
+        background: dark-RoyalBlue;
+      }
+    }
+    &.Turquoise {
+      background: #00c2e0;
+      &:focus {
+        background: dark-#00c2e0;
+      }
+    }
+    &.SpringGreen {
+      background: SpringGreen;
+      &:focus {
+        background: dark-SpringGreen;
+      }
+    }
+    &.yellowgreen {
+      background: yellowgreen;
+      &:focus {
+        background: dark-yellowgreen;
+      }
+    }
+    &.Gold {
+      background: #f2d600;
+      &:focus {
+        background: dark-#f2d600;
+      }
+    }
+    &.Orange {
+      background: #ff9f1a;
+      &:focus {
+        background: dark-#ff9f1a;
+      }
+    }
+    &.Red {
+      background: Red;
+      &:focus {
+        background: Red;
+      }
+    }
+    &.tomato {
+      background: tomato;
+      &:focus {
+        background: dark-tomato;
+      }
+    }
+    &.gray {
+      background: gray;
+      &:focus {
+        background: dark-gray;
+      }
+    }
+  }
+  

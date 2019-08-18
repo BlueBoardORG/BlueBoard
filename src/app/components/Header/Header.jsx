@@ -10,6 +10,7 @@ import kanbanLogo from "../../../assets/images/kanban-logo.svg";
 import SearchBar from "./SearchBar";
 import Notification from "./Notification";
 import "./Header.scss";
+import Watch from "../BoardHeader/Watch"; 
 
 class Header extends Component {
   static propTypes = { user: PropTypes.object, location: PropTypes.object };

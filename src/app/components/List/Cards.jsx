@@ -8,14 +8,15 @@ class Cards extends Component {
   static propTypes = {
     listId: PropTypes.string.isRequired,
     cards: PropTypes.arrayOf(PropTypes.string).isRequired,
-    isAbleToEdit: PropTypes.bool.isRequired
+    isAbleToEdit: PropTypes.bool.isRequired,
+    boardId: PropTypes.string.isRequired
   };
   
 
   render() {
-    const { listId, cards, isAbleToEdit } = this.props;
+    const { listId, cards, isAbleToEdit,boardId} = this.props;
     const filteredCardsById = this.props.filteredCardsById;
-
+    
     return (
       <Droppable droppableId={listId} isDropDisabled={!isAbleToEdit}>
         {(provided, { isDraggingOver }) => (
@@ -29,6 +30,7 @@ class Cards extends Component {
                     index={index}
                     listId={listId}
                     isAbleToEdit={isAbleToEdit}
+                    boardId={boardId}
                   /> : null
                 ))}
                 {provided.placeholder}

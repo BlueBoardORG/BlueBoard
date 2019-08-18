@@ -42,11 +42,11 @@ class List extends Component {
                   listTitle={list.title}
                   listId={list._id}
                   cards={list.cards}
-                  boardId={boardId}
                   isAbleToEdit={isAbleToEdit}
+                  boardId={boardId}
                 />
                 <div className="cards-wrapper">
-                  <Cards listId={list._id} isAbleToEdit={isAbleToEdit}/>
+                  <Cards listId={list._id} isAbleToEdit={isAbleToEdit} boardId={boardId} />
                 </div>
               </div>
               {isAbleToEdit && <CardAdder listId={list._id} />}

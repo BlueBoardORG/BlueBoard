@@ -5,6 +5,7 @@ import ImagePicker from "./ImagePicker";
 import BoardDeleter from "./BoardDeleter";
 import BoardLeave from "./BoardLeave";
 import BoardArchiver from "./BoardArchiver";
+import Watch from "./Watch";
 
 import "./BoardHeader.scss";
 
@@ -12,6 +13,8 @@ const BoardHeader = ({ isAbleToEdit, isCurrentUserAdmin }) => (
   <div className="board-header">
     <BoardTitle isAbleToEdit={isAbleToEdit} />
     <div className="board-header-right">
+      {isAbleToEdit && <div className="vertical-line" />}
+      {isAbleToEdit && <Watch />}
       {isAbleToEdit && <div className="vertical-line" />}
       {isAbleToEdit && <ColorPicker />}
       {isAbleToEdit && <div className="vertical-line" />}
