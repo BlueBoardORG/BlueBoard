@@ -17,11 +17,13 @@ export const colorsWithLabels = [
 
 
 export const transformUser = (profile) => {
-  return ({
-    _id: profile._id,
-    name: profile.name.lastName + " " + profile.name.firstName,
-    mail: profile.mail,
-    display: profile.displayName,
-    imageUrl: profile.photo || null
-  });
+  if(profile.provider)
+    return ({
+      _id: profile._id,
+      name: profile.name.lastName + " " + profile.name.firstName,
+      mail: profile.mail,
+      display: profile.displayName,
+      imageUrl: profile.photo || null
+    });
+  return {...profile};
 }
