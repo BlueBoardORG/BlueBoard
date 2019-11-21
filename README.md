@@ -70,11 +70,6 @@ CALLBACK_URL=http://localhost:1337/auth/shraga
 # socket IO server url (remember - no http://)
 REACT_APP_SOCKETLOCATION
 
-# metadata file location:
-METADATA_FILE
-
-
-
 # Has to be port 1337
 ROOT_URL=http://127.0.0.1:1337
 ```
