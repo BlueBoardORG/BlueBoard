@@ -9,7 +9,6 @@ import { withTranslation } from 'react-i18next';
 class BoardAdder extends Component {
   static propTypes = {
     userId: PropTypes.string.isRequired,
-    history: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired
   };
   constructor() {
@@ -24,9 +23,9 @@ class BoardAdder extends Component {
   handleChange = event => {
     this.setState({ title: event.target.value });
   };
-  defaultLabels= () =>{
+  defaultLabels = () => {
 
-    return[{ id: shortid.generate(), title: "בטיפול", color: "violet" },
+    return [{ id: shortid.generate(), title: "בטיפול", color: "violet" },
     { id: shortid.generate(), title: "כללי", color: "Turquoise" },
     { id: shortid.generate(), title: "מעקב", color: "yellowgreen" },
     { id: shortid.generate(), title: "תקלה", color: "Gold" },
@@ -41,7 +40,7 @@ class BoardAdder extends Component {
     if (title === "") {
       return;
     }
-    const { dispatch, history, userId } = this.props;
+    const { dispatch, userId } = this.props;
     const boardId = shortid.generate();
     const labels = this.defaultLabels();
     dispatch({
@@ -53,9 +52,6 @@ class BoardAdder extends Component {
         labels
       }
     });
-
-    const urlSlug = slugify(title, { lower: true });
-    history.push(`/b/${boardId}/${urlSlug}`);
 
     this.setState({ isOpen: false, title: "" });
   };
@@ -90,10 +86,10 @@ class BoardAdder extends Component {
         </form>
       </ClickOutside>
     ) : (
-      <button onClick={this.toggleOpen} className="add-board-button">
-        {t('Add-new-board')}
-      </button>
-    );
+        <button onClick={this.toggleOpen} className="add-board-button">
+          {t('Add-new-board')}
+        </button>
+      );
   };
 }
 

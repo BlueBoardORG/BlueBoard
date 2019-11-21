@@ -12,17 +12,41 @@ import {
 } from "evergreen-ui";
 import "./Watch.scss";
 
+
+const convertTitleToMode = (modeTitle) => {
+  switch (modeTitle) {
+    case "Watch.mode.watching.title":
+      return "Watching";
+    case "Watch.mode.not_watching.title":
+      return "Not watching";
+    case "Watch.mode.ignoring.title":
+      return "Ignoring";
+    default:
+      return "error";
+  }
+};
+
 class Watch extends Component {
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
     boardId: PropTypes.string.isRequired,
     userId: PropTypes.string.isRequired,
-    currentWatchMode: PropTypes.string.isRequired
+    currentWatchMode: PropTypes.string
   };
   constructor(props) {
     super(props);
     this.state = {};
   }
+
+  componentDidMount() {
+    const { currentWatchMode, dispatch, boardId, userId } = this.props;
+    if (!currentWatchMode) {
+      dispatch({
+        type: "CHANGE_USER_WATCH",
+        payload: { boardId, userId, newWatchMode: "Not watching" }
+      });
+    }
+  };
 
   handleSelection = newWatchMode => {
     const { dispatch, boardId, userId } = this.props;
@@ -39,19 +63,6 @@ class Watch extends Component {
     return watchMode === currentWatchMode ? (
       <Icon icon="tick-circle" color="success" marginRight={0} />
     ) : null;
-  }
-
-  convertTitleToMode(modeTitle){
-    switch(modeTitle){
-      case "Watch.mode.watching.title":
-        return "Watching";
-      case "Watch.mode.not_watching.title":
-        return "Not watching";
-      case "Watch.mode.ignoring.title":
-        return "Ignoring";
-      default:
-        return "error";
-    }
   }
 
   renderWatchDiv = (mode, description) => {
@@ -86,29 +97,28 @@ class Watch extends Component {
         <Popover
           content={
             <Pane width={200}>
-              {watchModes.map((watchMode, index) => {
-                return (
-                  <div className="row">
-                    <Table.Row
-                      height={60}
-                      paddingY={12}
-                      key={index}
-                      isSelectable
-                      onSelect={() => this.handleSelection(this.convertTitleToMode(watchMode.mode))}
-                    >
-                      <Table.TextCell>
-                        {this.renderWatchDiv(
-                          watchMode.mode,
-                          watchMode.description
-                        )}
-                      </Table.TextCell>
-                      <Table.Cell className="v-icon-wrapper" flex="none">
-                        {this.addVIcon(this.convertTitleToMode(watchMode.mode))}
-                      </Table.Cell>
-                    </Table.Row>
-                  </div>
-                );
-              })}
+              {watchModes.map((watchMode, index) => (
+                <div className="row" key={index}>
+                  <Table.Row
+                    height={60}
+                    paddingY={12}
+                    key={index}
+                    isSelectable
+                    onSelect={() => this.handleSelection(convertTitleToMode(watchMode.mode))}
+                  >
+                    <Table.TextCell>
+                      {this.renderWatchDiv(
+                        watchMode.mode,
+                        watchMode.description
+                      )}
+                    </Table.TextCell>
+                    <Table.Cell className="v-icon-wrapper" flex="none">
+                      {this.addVIcon(convertTitleToMode(watchMode.mode))}
+                    </Table.Cell>
+                  </Table.Row>
+                </div>
+              )
+              )}
             </Pane>
           }
         >
@@ -138,5 +148,6 @@ const mapStateToProps = (state, ownProps) => {
     ).watch
   };
 };
+
 
 export default withRouter(connect(mapStateToProps)(withTranslation()(Watch)));

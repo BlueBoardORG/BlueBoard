@@ -94,7 +94,7 @@ const api = db => {
 
   router.post("/notifications/getByUserId", (req, res) => {
     let { id } = req.body;
-    
+
     notifications
       .find({ userId: id })
       .toArray()
@@ -128,14 +128,26 @@ const api = db => {
     });
   });
 
+  const getOrArray = userSearchField => {
+    const names = userSearchField.split(' ');
+    if (names.length > 1) {
+      return [
+        { $and: [{ "name.firstName": { $regex: names[0], $options: "i" } }, { "name.lastName": { $regex: names[1], $options: "i" } }] },
+        { $and: [{ "name.firstName": { $regex: names[1], $options: "i" } }, { "name.lastName": { $regex: names[0], $options: "i" } }] },
+        { "name": { $regex: userSearchField, $options: "i" } }
+      ]
+    }
+    return [
+      { "name.firstName": { $regex: userSearchField, $options: "i" } },
+      { "name.lastName": { $regex: userSearchField, $options: "i" } },
+      { "name": { $regex: userSearchField, $options: "i" } }
+    ]
+  };
+
   router.post("/userRegex", (req, res) => {
     const { userSearchField } = req.body;
-
     users
-      .find({
-        $or : [{"name.firstName": { $regex: userSearchField, $options: "i" }} , {"name.lastName": { $regex: userSearchField, $options: "i" }}]
-        
-      })
+      .find({ $or: getOrArray(userSearchField) })
       .toArray()
       .then(users => {
         if (users) {

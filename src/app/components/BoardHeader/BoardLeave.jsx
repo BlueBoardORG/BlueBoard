@@ -40,9 +40,9 @@ class BoardLeave extends Component {
         className="board-leave-wrapper"
         onSelection={this.handleSelection}
       >
-        <Button 
-          className="board-leave-button" 
-          data-tip={t("BoardHeaders.BoardLeave")} 
+        <Button
+          className="board-leave-button"
+          data-tip={t("BoardHeaders.BoardLeave")}
           data-place="bottom"
           data-multiline={true}
         >
@@ -53,7 +53,7 @@ class BoardLeave extends Component {
             &nbsp;{t("BoardLeave.Leave")}
           </div>
         </Button>
-        <ReactTooltip/>
+        <ReactTooltip />
         <Menu className="board-leave-menu">
           <div className="board-leave-header">{t("are_you_sure")}</div>
           <MenuItem className="board-leave-confirm">

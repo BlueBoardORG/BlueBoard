@@ -28,9 +28,10 @@ class HistoryList extends Component {
       }
     });
 
-    socket.on("historyItem", ({action, boardId: changedBoardId, userId}) => {
-      if(boardId === changedBoardId)
-        this.setState({history: [{action,changedBoardId,userId}, ...this.state.history]}) 
+    socket.on("historyItem", ({ action, boardId: changedBoardId, userId }) => {
+      console.log("asd");
+      if (boardId === changedBoardId)
+        this.setState({ history: [{ action, changedBoardId, userId }, ...this.state.history] })
     })
   }
 
@@ -38,14 +39,14 @@ class HistoryList extends Component {
   render() {
     const { history } = this.state;
     const { t } = this.props;
-    const {boardUsersData} = this.props;
+    const { boardUsersData } = this.props;
     return (
       <div id="history-list-container">
         <p id="title">{t("History")}</p>
         <div id="history-container">
-          { history.map((historyItem, key) => (
+          {history.map((historyItem, key) => (
             <div id="history-item" key={key}>
-              <p>{(boardUsersData[historyItem.userId] || {name:""}).name}</p>
+              <p>{(boardUsersData[historyItem.userId] || { name: "" }).name}</p>
               <p>{t(historyItem.action)}</p>
             </div>
           ))}
