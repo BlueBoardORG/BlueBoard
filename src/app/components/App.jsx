@@ -1,4 +1,5 @@
-import React, {Component} from "react";
+import "@babel/polyfill";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Route, Redirect, Switch, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -15,8 +16,8 @@ import './../../i18n';
 
 const App = ({ user, isGuest, dispatch }) => {
   // In order to attach listener only on first loading off App.
-  if(!socket.hasListeners("change")){
-    socket.on("change", ({action, payload}) => {
+  if (!socket.hasListeners("change")) {
+    socket.on("change", ({ action, payload }) => {
       dispatch({
         type: action,
         payload,
@@ -25,8 +26,8 @@ const App = ({ user, isGuest, dispatch }) => {
     })
   }
 
-  const interval = setInterval(()=>{
-    if(socket.connected){
+  const interval = setInterval(() => {
+    if (socket.connected) {
       dispatch({
         type: "TOGGLE_SOCKET_CONNECTION",
         payload: true,
@@ -34,15 +35,15 @@ const App = ({ user, isGuest, dispatch }) => {
       })
       clearInterval(interval);
     }
-  },10);
+  }, 10);
 
-  if(!socket.hasListeners("reconnect")){
+  if (!socket.hasListeners("reconnect")) {
     socket.on("reconnect", () => {
       window.location.reload();
     })
   }
 
-  if(!socket.hasListeners("disconnect")){
+  if (!socket.hasListeners("disconnect")) {
     socket.on("disconnect", () => {
       dispatch({
         type: "TOGGLE_SOCKET_CONNECTION",
@@ -51,18 +52,18 @@ const App = ({ user, isGuest, dispatch }) => {
       })
     })
   }
- 
+
   //Serve different pages depending on if user is logged in or not
   if (user || isGuest) {
     // when user is connected registers socket to user for updates
-    socket.emit("userDetails", {user});
+    socket.emit("userDetails", { user });
     return (
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/archive" component={Archive} />
         <Route path="/b/:boardId" component={BoardContainer} />
         <Route path="/boardNotFound" component={BoardNotFound} />
-        <Redirect to="/"/>     
+        <Redirect to="/" />
       </Switch>
     );
   }

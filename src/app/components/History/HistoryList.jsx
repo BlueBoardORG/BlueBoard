@@ -13,10 +13,10 @@ class HistoryList extends Component {
   };
 
   componentDidMount() {
-    const boardId = this.props.match.params.boardId;
+    const { boardId } = this.props.match.params;
     fetch("/api/history/getByBoardId", {
       method: "POST",
-      body: JSON.stringify({ id: boardId }),
+      body: JSON.stringify({ id: boardId, index: 0 }),
       headers: { "Content-Type": "application/json" },
       credentials: "include"
     }).then(res => {
@@ -28,10 +28,9 @@ class HistoryList extends Component {
       }
     });
 
-    socket.on("historyItem", ({ action, boardId: changedBoardId, userId }) => {
-      console.log("asd");
+    socket.on("historyItem", ({ action, boardId: changedBoardId, userId, date }) => {
       if (boardId === changedBoardId)
-        this.setState({ history: [{ action, changedBoardId, userId }, ...this.state.history] })
+        this.setState({ history: [{ action, changedBoardId, userId, date }, ...this.state.history] })
     })
   }
 
@@ -48,6 +47,7 @@ class HistoryList extends Component {
             <div id="history-item" key={key}>
               <p>{(boardUsersData[historyItem.userId] || { name: "" }).name}</p>
               <p>{t(historyItem.action)}</p>
+              {historyItem.date ? (<p>{(new Date(historyItem.date)).toLocaleDateString('en-GB')}</p>) : null}
             </div>
           ))}
         </div>
