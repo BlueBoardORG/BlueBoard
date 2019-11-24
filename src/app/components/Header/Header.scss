@@ -4,6 +4,7 @@
 // the drag-drop context can only have one scroll container so the entire board has to be scrolled. Therefore,
 // header has to be part of the page that is being scrolled and as a workaround we use position:fixed.
 header {
+  top: 0;
   position: fixed;
   display: flex;
   justify-content: space-between;
