@@ -47,7 +47,7 @@ const api = db => {
   router.post("/history", (req, res) => {
     const { body: historyObj } = req;
     history
-      .insert({...historyObj, date: new Date})
+      .insert({ ...historyObj, date: new Date })
       .then(result => {
         res.status(200).send();
       })
@@ -57,9 +57,9 @@ const api = db => {
   });
 
   router.post("/history/getByBoardId", (req, res) => {
-    const { id } = req.body;
+    const { id, skip, limit } = req.body;
     history
-      .find({ boardId: id }, "-_id -payload")
+      .find({ boardId: id }, "-_id -payload").skip(skip).limit(limit)
       .toArray()
       .then(histories => {
         res.json(histories.map(hist => ({ ...hist, payload: undefined })));
