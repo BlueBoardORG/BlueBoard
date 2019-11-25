@@ -43,7 +43,7 @@ class HistoryList extends Component {
             this.setState({
               history: [...this.state.history, ...history],
               isLoading: false
-            }, )
+            })
             setTimeout(() => {
               const { scrollHeight: historyContainerScrollHeight, clientHeight: historyContainerClientHeight } = document.getElementById('history-list-container');
               if (historyContainerScrollHeight - historyContainerClientHeight === 0) {
@@ -73,6 +73,21 @@ class HistoryList extends Component {
     }
   }
 
+  displayDate = (historyDate) => {
+    if (!historyDate)
+      return (<p />);
+
+    const lessThanTen = n => (n < 10) ? ((0).toString() + n) : n;
+    const date = new Date(historyDate);
+    const time = `${lessThanTen(date.getHours())}:${lessThanTen(date.getMinutes())}`;
+
+    return (
+      <div style={{ textAlign: 'center' }}>
+        <p>{`${date.toLocaleDateString('en-GB')}\r\n${time}`}</p>
+      </div>
+    )
+  }
+
   render() {
     const { history } = this.state;
     const { t } = this.props;
@@ -86,14 +101,16 @@ class HistoryList extends Component {
               <div id="history-item" key={key}>
                 <p>{(boardUsersData[historyItem.userId] || { name: "" }).name}</p>
                 <p>{t(historyItem.action)}</p>
-                {historyItem.date ? (<p>{(new Date(historyItem.date)).toLocaleDateString('en-GB')}</p>) : null}
+                {this.displayDate(historyItem.date)}
               </div>
             ))}
           </div>
-          {this.state.isLoading ?
-            <Pane display="flex" alignItems="center" justifyContent="center" height={400}>
-              <Spinner />
-            </Pane> : null}
+          {
+            this.state.isLoading ?
+              <Pane display="flex" alignItems="center" justifyContent="center" height={400}>
+                <Spinner />
+              </Pane> : null
+          }
         </div>
       </Fragment>
     );

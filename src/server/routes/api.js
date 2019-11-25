@@ -47,7 +47,7 @@ const api = db => {
   router.post("/history", (req, res) => {
     const { body: historyObj } = req;
     history
-      .insert({ ...historyObj, date: new Date })
+      .insert({ ...historyObj, date: new Date() })
       .then(result => {
         res.status(200).send();
       })

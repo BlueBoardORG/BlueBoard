@@ -1,5 +1,5 @@
 const path = require("path");
-const {DefinePlugin} = require("webpack");
+const { DefinePlugin } = require("webpack");
 const CopyPlugin = require("copy-webpack-plugin");
 const ManifestPlugin = require("webpack-manifest-plugin");
 const CleanPlugin = require("clean-webpack-plugin");
