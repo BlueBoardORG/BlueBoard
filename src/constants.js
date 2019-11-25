@@ -16,6 +16,7 @@ import image15 from "./assets/images/sea.jpg";
 import image16 from "./assets/images/sheep.jpg";
 
 export const ADMIN_ROLE = "admin";
+export const HISTORY_ITEMS_PER_FETCH = process.HISTORY_ITEMS_PER_FETCH || 10; 
 export const READ_WRITE_ROLE = "read-write";
 export const READ_ROLE = "read";
 export const SOCKETLOCATION = process.env.REACT_APP_SOCKETLOCATION || "localhost:8200"
