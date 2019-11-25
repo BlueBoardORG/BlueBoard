@@ -59,7 +59,7 @@ const api = db => {
   router.post("/history/getByBoardId", (req, res) => {
     const { id, skip, limit } = req.body;
     history
-      .find({ boardId: id }, "-_id -payload").skip(skip).limit(limit)
+      .find({ boardId: id }, "-_id -payload").hint({ $natural: -1 }).skip(skip).limit(limit)
       .toArray()
       .then(histories => {
         res.json(histories.map(hist => ({ ...hist, payload: undefined })));

@@ -18,7 +18,7 @@ class HistoryList extends Component {
 
   componentDidMount() {
     const { boardId } = this.props.match.params;
-    this.fetchData(); 
+    this.fetchData();
 
     socket.on("historyItem", ({ action, boardId: changedBoardId, userId, date }) => {
       if (boardId === changedBoardId)
@@ -39,11 +39,9 @@ class HistoryList extends Component {
     }).then(res => {
       if (res.status === 200) {
         res.json().then(history => {
-          if (history.length === HISTORY_ITEMS_PER_FETCH) {
-            const reverseHistory = history.reverse();
-            // reverse history to get the last action first
+          if (history.length !== 0) {
             this.setState({
-              history: [...this.state.history, ...reverseHistory],
+              history: [...this.state.history, ...history],
               isLoading: false
             });
           } else {
@@ -83,10 +81,10 @@ class HistoryList extends Component {
             </div>
           ))}
         </div>
-        {this.state.isLoading ? 
-        <Pane display="flex" alignItems="center" justifyContent="center" height={400}>
+        {this.state.isLoading ?
+          <Pane display="flex" alignItems="center" justifyContent="center" height={400}>
             <Spinner />
-        </Pane> : null}
+          </Pane> : null}
       </div>
     );
   }
