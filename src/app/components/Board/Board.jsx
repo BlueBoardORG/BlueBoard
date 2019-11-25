@@ -27,7 +27,7 @@ class Board extends Component {
     dispatch: PropTypes.func.isRequired,
     boardUsers: PropTypes.array,
     boardLabels: PropTypes.array.isRequired,
-    cards:PropTypes.object.isRequired
+    cards: PropTypes.object.isRequired
   };
 
   constructor(props) {
@@ -144,14 +144,16 @@ class Board extends Component {
   };
 
   updateFormat = (cardId) => {
-    const {dispatch,cards,boardLabels} = this.props;
-    const newLabelFormat=[];
-    const map ={'inprogress':boardLabels[0].id,
-                'general':boardLabels[1].id,
-                'tracking':boardLabels[2].id,
-                'bug':boardLabels[3].id,
-                'help':boardLabels[4].id,
-                'critical':boardLabels[5].id};
+    const { dispatch, cards, boardLabels } = this.props;
+    const newLabelFormat = [];
+    const map = {
+      'inprogress': boardLabels[0].id,
+      'general': boardLabels[1].id,
+      'tracking': boardLabels[2].id,
+      'bug': boardLabels[3].id,
+      'help': boardLabels[4].id,
+      'critical': boardLabels[5].id
+    };
     cards[cardId].labels.forEach(label => {
       newLabelFormat.push(map[label]);
     });
@@ -161,12 +163,12 @@ class Board extends Component {
     });
   }
 
-  checkFormat= (lists) => {
-    const {cards} = this.props;
-    const oldLabels = ["inprogress","general","tracking","bug","help","critical",]
+  checkFormat = (lists) => {
+    const { cards } = this.props;
+    const oldLabels = ["inprogress", "general", "tracking", "bug", "help", "critical",]
     lists.forEach(list => {
       list.cards.forEach(cardId => {
-        if(cards[cardId].labels && oldLabels.includes(cards[cardId].labels[0])){
+        if (cardId && cards[cardId].labels && oldLabels.includes(cards[cardId].labels[0])) {
           this.updateFormat(cardId);
         }
       });
@@ -174,7 +176,7 @@ class Board extends Component {
   }
 
   render = () => {
-    
+
     const { lists, boardTitle, boardId, boardColor, t, user, board, boardImageBackground, socketConnected } = this.props;
     const imageUrl = `url(${boardImageBackground})`;
     const wrapperStyle = {
@@ -185,17 +187,17 @@ class Board extends Component {
     };
     const userData = board.users.find(u => u.id === user._id) || {};
     const isAbleToEdit = CAN_EDIT_ROLES.includes(userData.role) && socketConnected;
-    
+
     const customStyles = {
-      content : {
-        top                   : '50%',
-        left                  : '50%',
-        right                 : 'auto',
-        bottom                : 'auto',
-        marginRight           : '-50%',
-        transform             : 'translate(-50%, -50%)',
-        width                 : '25%',
-        height                : '25%'
+      content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        width: '25%',
+        height: '25%'
       }
     };
     this.checkFormat(lists);
@@ -211,10 +213,10 @@ class Board extends Component {
             contentLabel="Waiting for connection"
             style={customStyles}
           >
-            <h1 style={{textAlign: "center", alignContent:"center", float:"none", margin:"auto"}}> {t("connection.wait")} </h1>
-            <p style={{textAlign: "center", alignContent:"center", float:"none", margin:"auto", paddingTop: "5vh"}}> {t("connection.wait.message")} </p>
+            <h1 style={{ textAlign: "center", alignContent: "center", float: "none", margin: "auto" }}> {t("connection.wait")} </h1>
+            <p style={{ textAlign: "center", alignContent: "center", float: "none", margin: "auto", paddingTop: "5vh" }}> {t("connection.wait.message")} </p>
           </Modal>
-          <BoardHeader isAbleToEdit={isAbleToEdit}/>
+          <BoardHeader isAbleToEdit={isAbleToEdit} />
           {/* eslint-disable jsx-a11y/no-static-element-interactions */}
           <div
             className="lists-wrapper"
@@ -258,7 +260,7 @@ const mapStateToProps = (state, ownProps) => {
   const { board } = ownProps;
   const { user, boardUsersData, socketConnected } = state;
   return {
-    cards : state.cardsById,
+    cards: state.cardsById,
     lists: board.lists.map(listId => state.listsById[listId]),
     boardTitle: board.title,
     boardColor: board.color,
@@ -266,9 +268,9 @@ const mapStateToProps = (state, ownProps) => {
     boardUsers: board.users,
     boardImageBackground: board.backgroundImage,
     user,
-    boardUsersData, 
+    boardUsersData,
     socketConnected,
-    boardLabels:board.labels
+    boardLabels: board.labels
   };
 };
 
