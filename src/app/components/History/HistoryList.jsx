@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { withRouter } from "react-router-dom";
 import { withTranslation } from "react-i18next";
 import PropTypes from "prop-types";
@@ -43,7 +43,14 @@ class HistoryList extends Component {
             this.setState({
               history: [...this.state.history, ...history],
               isLoading: false
-            });
+            }, )
+            setTimeout(() => {
+              const { scrollHeight: historyContainerScrollHeight, clientHeight: historyContainerClientHeight } = document.getElementById('history-list-container');
+              if (historyContainerScrollHeight - historyContainerClientHeight === 0) {
+                this.fetchData();
+              }
+            }, 100);
+
           } else {
             this.setState({
               shouldFetch: false,
@@ -58,7 +65,8 @@ class HistoryList extends Component {
   trackScrolling = (e) => {
     if (this.state.shouldFetch && !this.state.isLoading) {
       const element = e.target;
-      if (element.scrollHeight - element.scrollTop === element.clientHeight) {
+
+      if (element.scrollHeight - element.scrollTop === element.offsetHeight) {
         this.setState({ isLoading: true });
         this.fetchData();
       }
@@ -70,22 +78,24 @@ class HistoryList extends Component {
     const { t } = this.props;
     const { boardUsersData } = this.props;
     return (
-      <div id="history-list-container" onScroll={this.trackScrolling}>
-        <p id="title">{t("History")}</p>
-        <div id="history-container" >
-          {history.map((historyItem, key) => (
-            <div id="history-item" key={key}>
-              <p>{(boardUsersData[historyItem.userId] || { name: "" }).name}</p>
-              <p>{t(historyItem.action)}</p>
-              {historyItem.date ? (<p>{(new Date(historyItem.date)).toLocaleDateString('en-GB')}</p>) : null}
-            </div>
-          ))}
+      <Fragment>
+        <p id="title" >{t("History")}</p>
+        <div id="history-list-container" onScroll={this.trackScrolling}>
+          <div id="history-container" >
+            {history.map((historyItem, key) => (
+              <div id="history-item" key={key}>
+                <p>{(boardUsersData[historyItem.userId] || { name: "" }).name}</p>
+                <p>{t(historyItem.action)}</p>
+                {historyItem.date ? (<p>{(new Date(historyItem.date)).toLocaleDateString('en-GB')}</p>) : null}
+              </div>
+            ))}
+          </div>
+          {this.state.isLoading ?
+            <Pane display="flex" alignItems="center" justifyContent="center" height={400}>
+              <Spinner />
+            </Pane> : null}
         </div>
-        {this.state.isLoading ?
-          <Pane display="flex" alignItems="center" justifyContent="center" height={400}>
-            <Spinner />
-          </Pane> : null}
-      </div>
+      </Fragment>
     );
   }
 }

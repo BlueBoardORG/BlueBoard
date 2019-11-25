@@ -26,4 +26,18 @@
 .user-list-wrapper {
   border-bottom: 1px solid rgba(9, 45, 66, 0.13);
   padding-right: 5px;
+  max-height: 15vh;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    background: #ddd;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background: #aaa;
+  }
 }
+
+
