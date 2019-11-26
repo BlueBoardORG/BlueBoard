@@ -82,10 +82,10 @@ class HistoryList extends Component {
     const time = `${lessThanTen(date.getHours())}:${lessThanTen(date.getMinutes())}`;
 
     return (
-      <div style={{ textAlign: 'center' }}>
+      <div style={{ textAlign: 'center', width: 'min-content' }}>
         <p>{`${date.toLocaleDateString('en-GB')}\r\n${time}`}</p>
       </div>
-    )
+    );
   }
 
   render() {

@@ -33,20 +33,5 @@ module.exports = {
       }
     ],
     "@babel/plugin-proposal-json-strings"
-  ],
-  "env": {
-    "production": {
-      "plugins": [
-        [
-          "@babel/plugin-transform-runtime"
-        ],
-        [
-          "transform-react-remove-prop-types",
-          {
-            "removeImport": true
-          }
-        ]
-      ]
-    }
-  }
+  ]
 }
