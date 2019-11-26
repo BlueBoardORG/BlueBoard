@@ -22,7 +22,8 @@ module.exports = {
   output: {
     path: path.join(__dirname, "dist/public"),
     publicPath: "/static/",
-    filename: "bundle.[hash:6].js"
+    filename: "bundle.[hash:6].js",
+    libraryTarget: "umd"
   },
   module: {
     rules: [
@@ -31,7 +32,7 @@ module.exports = {
         use: {
           loader: "babel-loader"
         },
-        exclude: /node_modules/
+        exclude: /node_modules\/(?!(socket.io-client|debug|browser|engine.io-client|evergreen-ui|ui-box)\/).*/
       },
       {
         test: /\.(css|scss)$/,

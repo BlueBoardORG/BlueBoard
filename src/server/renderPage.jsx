@@ -41,6 +41,34 @@ const renderPage = (req, res) => {
 
   const preloadedState = store.getState();
 
+
+  // !!MUST BE USED FOR OLDER CHROME VERSIONS - UNDER 54!!
+  const webAPIAppendNodePolyfill = `
+    (function (arr) {
+      arr.forEach(function (item) {
+        if (item.hasOwnProperty('append')) {
+          return;
+        }
+        Object.defineProperty(item, 'append', {
+          configurable: true,
+          enumerable: true,
+          writable: true,
+          value: function append() {
+            var argArr = Array.prototype.slice.call(arguments),
+              docFrag = document.createDocumentFragment();
+            
+            argArr.forEach(function (argItem) {
+              var isNode = argItem instanceof Node;
+              docFrag.appendChild(isNode ? argItem : document.createTextNode(String(argItem)));
+            });
+            
+            this.appendChild(docFrag);
+          }
+        });
+      });
+    })([Element.prototype, Document.prototype, DocumentFragment.prototype]);
+  `;
+
   const html = `
     <!DOCTYPE html>
     <html style="width: 100vw;">
@@ -64,6 +92,7 @@ const renderPage = (req, res) => {
         <div id="app">${appString}</div>
       </body>
       <script>
+        ${webAPIAppendNodePolyfill}
         window.PRELOADED_STATE = ${JSON.stringify(preloadedState)}
       </script>
       <script src=${manifest["main.js"]}></script>
