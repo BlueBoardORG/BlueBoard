@@ -24,6 +24,6 @@ export const SOCKETLOCATION = process.env.REACT_APP_SOCKETLOCATION || "localhost
 export const DEFAULT_ROLE = READ_WRITE_ROLE;
 export const CAN_EDIT_ROLES = [ADMIN_ROLE, READ_WRITE_ROLE];
 
-export const PUBLIC_USER_PROPERTIES = ["_id", "name", "display"];
+export const PUBLIC_USER_PROPERTIES = ["_id", "name", "display", "watch"];
 
 export const BOARD_BG_URLS = [image1, image2, image3, image4, image5, image6, image7, image8, image9, image10, image11, image12, image13, image14, image15, image16];

@@ -26,7 +26,7 @@ class UserAdder extends Component {
       type: "ADD_USER",
       payload: {
         boardId,
-        userToAdd: { id: selectedUserId, role: selectedRole || DEFAULT_ROLE, watch: "Not Watching" }
+        userToAdd: { id: selectedUserId, role: selectedRole || DEFAULT_ROLE, watch: "Not watching" }
       }
     });
     const newUserIds = new Set([...users.map(user => user.id), selectedUserId]);
