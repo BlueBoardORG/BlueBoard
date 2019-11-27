@@ -122,7 +122,7 @@ class Watch extends Component {
             </Pane>
           }
         >
-          <Button isActive={false} appearance="minimal" height={40}>
+          <Button isActive={false} appearance="minimal" height={40} data-tip={t("BoardHeaders.watch")} data-place="bottom">
             <Icon
               appearance="minimal"
               height={40}
