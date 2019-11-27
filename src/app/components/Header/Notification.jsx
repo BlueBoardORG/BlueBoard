@@ -80,11 +80,11 @@ class Notification extends React.Component {
     });
   }
 
-  
+
 
   notificationMessage(notification) {
-    const { t} = this.props;
-    return `${t(notification.action)} ${this.props.userName} `;
+    const { t } = this.props;
+    return `${notification.from} ${t(notification.action)}`;
   }
 
   deleteHandler(notification) {

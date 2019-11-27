@@ -96,7 +96,7 @@ const api = db => {
     let { id } = req.body;
 
     notifications
-      .find({ userId: id })
+      .find({ notifTo: id })
       .toArray()
       .then(notifs => {
         res.json(notifs);
