@@ -27,3 +27,8 @@ export const CAN_EDIT_ROLES = [ADMIN_ROLE, READ_WRITE_ROLE];
 export const PUBLIC_USER_PROPERTIES = ["_id", "name", "display", "watch"];
 
 export const BOARD_BG_URLS = [image1, image2, image3, image4, image5, image6, image7, image8, image9, image10, image11, image12, image13, image14, image15, image16];
+
+export const PIWIK_COOKIE_DOMAIN = process.env.PIWIK_COOKIE_DOMAIN || 'localhost';
+export const SHOULD_RUN_PIWIK = process.env.SHOULD_RUN_PIWIK || false;
+export const PIWIK_URL = process.env.PIWIK_URL || '//piwik/piwik/';
+export const PIWIK_SITE_ID = process.env.PIWIK_SITE_ID  || '100';

@@ -10,6 +10,7 @@ import { HeadCollector } from "react-head";
 import { resetContext } from "react-beautiful-dnd";
 import App from "../app/components/App";
 import rootReducer from "../app/reducers";
+import {SHOULD_RUN_PIWIK, PIWIK_COOKIE_DOMAIN, PIWIK_URL, PIWIK_SITE_ID} from "../constants";
 
 // Get the manifest which contains the names of the generated files. The files contain hashes
 // that change every time they are updated, which enables aggressive caching.
@@ -41,6 +42,20 @@ const renderPage = (req, res) => {
 
   const preloadedState = store.getState();
 
+
+  const piwikCodeToRun = `
+    var _paq = _paq || [];
+    _paq.push(["setCookieDomain", "${PIWIK_COOKIE_DOMAIN}"]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="${PIWIK_URL}";
+      _paq.push(['setTrackerUrl', u+'piwik.php']);
+      _paq.push(['setSiteId', '${PIWIK_SITE_ID}']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+    })();
+  `;
 
   // !!MUST BE USED FOR OLDER CHROME VERSIONS - UNDER 54!!
   const webAPIAppendNodePolyfill = `
@@ -92,6 +107,7 @@ const renderPage = (req, res) => {
         <div id="app">${appString}</div>
       </body>
       <script>
+        ${SHOULD_RUN_PIWIK ? piwikCodeToRun : ''}
         ${webAPIAppendNodePolyfill}
         window.PRELOADED_STATE = ${JSON.stringify(preloadedState)}
       </script>
