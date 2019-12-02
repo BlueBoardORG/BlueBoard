@@ -14,21 +14,6 @@ const persistMiddleware = store => next => action => {
 
   // Nothing is persisted for guest users
   if (user && !action.dontPersist) {
-    if (window._paq) {
-      if (action.type === "ADD_BOARD") {
-        window._paq.push([
-          "trackEvent",
-          "ADD_BOARD",
-          action.payload.boardTitle
-        ]);
-      }
-      if (action.type === "ADD_LIST") {
-        window._paq.push(["trackEvent", "ADD_LIST", action.payload.listTitle]);
-      }
-      if (action.type === "ADD_CARD") {
-        window._paq.push(["trackEvent", "ADD_CARD", action.payload.cardId]);
-      }
-    }
 
     if (action.type === "DELETE_BOARD") {
       fetch("/api/board", {
@@ -49,6 +34,30 @@ const persistMiddleware = store => next => action => {
         "TOGGLE_SOCKET_CONNECTION"
       ].includes(action.type)
     ) {
+
+      if (window._paq) {
+        switch (action.type) {
+          case "ADD_BOARD": {
+            window._paq.push([
+              "trackEvent",
+              "ADD_BOARD",
+              action.payload.boardTitle
+            ]);
+            break;
+          }
+          case "ADD_LIST": {
+            window._paq.push(["trackEvent", "ADD_LIST", action.payload.listTitle]);
+            break;
+          }
+          case "ADD_CARD": {
+            window._paq.push(["trackEvent", "ADD_CARD", action.payload.cardId]);
+            break;
+          }
+          default:
+            window._paq.push(["trackEvent", action.type]);
+        }
+      }
+
       // Transform the flattened board state structure into the tree-shaped structure that the db uses.
       const comment = new schema.Entity(
         "commentsById",
