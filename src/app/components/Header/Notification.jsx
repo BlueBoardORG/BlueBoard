@@ -60,8 +60,7 @@ class Notification extends React.Component {
 
   goToBoard(notification) {
     this.wasSeenHandler(notification);
-    const { history } = this.props;
-    history.push(`/b/${notification.boardId}`);
+    window.location = `/b/${notification.boardId}`;
   }
 
   wasSeenHandler(notification) {
