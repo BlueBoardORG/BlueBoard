@@ -1,5 +1,13 @@
 const path = require("path");
 const nodeExternals = require("webpack-node-externals");
+const { DefinePlugin } = require("webpack");
+const env = require("dotenv").config().parsed;
+
+// reduce it to a nice object, the same as before
+const envKeys = Object.keys(env).reduce((prev, next) => {
+  prev[`process.env.${next}`] = JSON.stringify(env[next]);
+  return prev;
+}, {});
 
 module.exports = {
   name: "server",
@@ -53,6 +61,9 @@ module.exports = {
       }
     ]
   },
+  plugins: [
+    new DefinePlugin(envKeys)
+  ],
   resolve: {
     extensions: [".js", ".jsx"]
   }

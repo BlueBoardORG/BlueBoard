@@ -42,7 +42,7 @@ const renderPage = (req, res) => {
 
   const preloadedState = store.getState();
 
-  const { id: userId } = req.user;
+  const { _id: userId } = req.user;
 
   const piwikCodeToRun = `
     var _paq = _paq || [];
