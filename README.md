@@ -29,6 +29,15 @@ A server-rendered React app inspired by [Trello](https://trello.com/home).
 
 Setting up the full app with your own mongoDB instance  requires significant effort.
 
+#### Docker Compose
+
+use docker-compose to run development instance with automatic builds on code changes based on docker containers.
+
+```shell
+cd ./compose/
+docker-compose -f "docker-compose-dev.yaml" up -d --build
+```
+
 #### Full setup
 
 ```shell
@@ -79,7 +88,19 @@ npm run build
 npm run serve
 ```
 
-For production deployment run:
+
+### Production
+
+#### Docker Compose
+
+```shell
+cd ./compose/
+docker-compose -f "docker-compose.yaml" up -d --build
+```
+
+#### Full Setup
+
+follow all above steps for full setup and run:
 
 ```shell
 npm run build:prod
