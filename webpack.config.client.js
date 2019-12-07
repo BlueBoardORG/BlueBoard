@@ -10,7 +10,7 @@ const autoprefixer = require("autoprefixer");
 const env = require("dotenv").config().parsed;
 
 // reduce it to a nice object, the same as before
-const envKeys = Object.keys(env).reduce((prev, next) => {
+const envKeys = Object.keys(env || {}).reduce((prev, next) => {
   prev[`process.env.${next}`] = JSON.stringify(env[next]);
   return prev;
 }, {});
