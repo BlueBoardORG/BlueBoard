@@ -1,8 +1,0 @@
-version: '2.1'
-
-services:
-  blue-board:
-    image: blue-board
-    build: .
-    ports:
-      - 1337:1337
