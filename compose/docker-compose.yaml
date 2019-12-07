@@ -5,7 +5,14 @@ services:
    image: mongo:latest
    restart: always
    command: "--bind_ip_all --replSet rs0"
-
+  
+  mongo-client:
+   image: mongo:latest
+   volumes: 
+   - ./initiate_replica.sh:/scripts/initiate_replica.sh
+   entrypoint: 
+   - /scripts/initiate_replica.sh
+  
   testsamlidp_idp:
     image: kristophjunge/test-saml-idp
     environment:
