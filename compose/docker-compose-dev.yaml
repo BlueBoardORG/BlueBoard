@@ -51,7 +51,7 @@ services:
     depends_on:
      - mongo
 
-  blueboard:
+  blueboard-build:
     environment:
       MONGODB_URL: mongodb://mongo:27017
       MONGODB_NAME: kanban
@@ -61,9 +61,36 @@ services:
       ROOT_URL: http://127.0.0.1:1337
       SHRAGA_URL: http://localhost:3000 
       CALLBACK_URL: /auth/shraga
-    image: blueaiteam/blueboard
+      CHOKIDAR_USEPOLLING: 'true'
+    build:
+      context: ../
+      dockerfile: dev.forbuild.Dockerfile
+    volumes:
+      - ../src/:/usr/src/app/src/
+      - ../dist/:/usr/src/app/dist/
+    depends_on:
+     - mongo
+     - socketio-connector
+
+  blueboard-server:
+    environment:
+      MONGODB_URL: mongodb://mongo:27017
+      MONGODB_NAME: kanban
+      SESSION_SECRET: 123
+      REACT_APP_SOCKETLOCATION: socketio-connector:8200
+      PORT: 1337
+      ROOT_URL: http://127.0.0.1:1337
+      SHRAGA_URL: http://localhost:3000 
+      CALLBACK_URL: /auth/shraga
+      CHOKIDAR_USEPOLLING: 'true'
+    build:
+      context: ../
+      dockerfile: dev.forserve.Dockerfile
+    volumes:
+      - ../dist/:/usr/src/app/dist
     ports:
       - 1337:1337
     depends_on:
      - mongo
      - socketio-connector
+     - blueboard-build
