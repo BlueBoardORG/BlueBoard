@@ -26,7 +26,7 @@ class CardModal extends Component {
     toggleCardEditor: PropTypes.func.isRequired,
     dispatch: PropTypes.func.isRequired,
     assignedToMe: PropTypes.bool,
-    assignedUserName: PropTypes.string,
+    assignedUserName: PropTypes.array,
     boardId: PropTypes.string.isRequired
   };
 

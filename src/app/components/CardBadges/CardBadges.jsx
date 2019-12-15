@@ -19,8 +19,9 @@ class CardBadges extends Component {
       checked: PropTypes.number.isRequired
     }).isRequired,
     assignedToMe: PropTypes.bool,
-    assignedUserName: PropTypes.string,
-    assignedUserId: PropTypes.string,
+    assignedUserName: PropTypes.array,
+    assignedUserId: PropTypes.array,
+    boardUsersData: PropTypes.object,
     labels: PropTypes.array,
     boardId: PropTypes.string.isRequired,
     cardId: PropTypes.string.isRequired,
@@ -103,22 +104,24 @@ class CardBadges extends Component {
   }
 
   renderAssigned = () => {
-    const { assignedUserName, assignedUserId } = this.props;
+    const { assignedUserId } = this.props;
+    if(Array.isArray(assignedUserId) && assignedUserId.length > 0 ){
+      return (
+        <div>
+          {assignedUserId.map(item =>(
+            <div
+            className="badge"
+            style={{ background: "#" + this.intToRGB(this.hashCode(item.name))}}
+          >
+            <FaUser className="badge-icon" />
+            &nbsp;
+            {item.name}
+          </div>
+          ))}
+        </div>
+      );
+    }   
 
-    if (!assignedUserName) {
-      return null;
-    }
-
-    return (
-      <div
-        className="badge"
-        style={{ background: "#" + this.intToRGB(this.hashCode(assignedUserId)) }}
-      >
-        <FaUser className="badge-icon" />
-        &nbsp;
-        {assignedUserName}
-      </div>
-    );
   };
   onWheelLabels = e => {
     const { currentTarget, deltaY } = e;
@@ -194,9 +197,8 @@ class CardBadges extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   const boardLabels = state.boardsById[ownProps.boardId].labels;
-  return {
-    boardLabels
-  };
+  const { boardUsersData } = state;
+  return {boardLabels,boardUsersData};
 };
 
 export default connect(mapStateToProps)(withTranslation()(CardBadges));

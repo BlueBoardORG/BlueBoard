@@ -43,14 +43,39 @@ class UserPicker extends Component {
 
   handleSave = () => {
     const { chosenUser } = this.state;
-    const { dispatch, cardId, toggleAssign } = this.props;
+    const { dispatch, cardId, toggleAssign,assignedUserId } = this.props;
+    let newAssignedUserId = [];
+    let isExist = false;
 
-    dispatch({
-      type: "UPDATE_ASSIGNED_USER",
-      payload: { cardId, assignedUserId: chosenUser.value }
-    });
+    if(Array.isArray(assignedUserId))
+    {
+      newAssignedUserId=assignedUserId;
+      for(let i=0; i<= assignedUserId.length ;i++){
+        if(newAssignedUserId[i] === chosenUser.value){
+          newAssignedUserId.splice(i, 1);
+          isExist = true;
+        }
+      }
+      if(!isExist)
+        newAssignedUserId.push(chosenUser.value);
+      
+      dispatch({
+        type: "UPDATE_ASSIGNED_USER",
+        payload: { cardId, assignedUserId: newAssignedUserId }
+      });
+    }
+    else{
+      if(chosenUser.value !== assignedUserId ){
+        newAssignedUserId.push(chosenUser.value);
+        if(assignedUserId)
+          newAssignedUserId.push(assignedUserId);
+      }
+      dispatch({
+        type: "UPDATE_ASSIGNED_USER",
+        payload: { cardId, assignedUserId: newAssignedUserId }
+      });     
+    }
 
-    toggleAssign();
   };
 
   handleChange = chosenUser => {
@@ -90,7 +115,6 @@ class UserPicker extends Component {
 const mapStateToProps = (state, ownProps) => {
   const { boardUsersData, cardsById } = state;
   const { assignedUserId } = cardsById[ownProps.cardId] || {};
-
   return { boardUsersData, assignedUserId };
 };
 

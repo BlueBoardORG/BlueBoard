@@ -22,7 +22,7 @@ class Card extends Component {
     index: PropTypes.number.isRequired,
     dispatch: PropTypes.func.isRequired,
     assignedToMe: PropTypes.bool,
-    assignedUserName: PropTypes.string,
+    assignedUserName: PropTypes.array,
     isAbleToEdit: PropTypes.bool.isRequired,
     boardId: PropTypes.string.isRequired
   };
@@ -179,13 +179,29 @@ class Card extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   const card = state.cardsById[ownProps.cardId];
-  const assignedUser = state.boardUsersData[card.assignedUserId] || {};
-
+  let  assignedUser = [];
+  let assignedToMe=false;
+  if(Array.isArray(card.assignedUserId)){
+    console.log("1");
+    for(let i = 0; i <= card.assignedUserId.length; i++){
+      if(state.boardUsersData[card.assignedUserId[i]]!== undefined ){
+        assignedUser.push(state.boardUsersData[card.assignedUserId[i]]);
+        if(state.boardUsersData[card.assignedUserId[i]]=== state.user._id)
+          assignedToMe=true;
+      }
+    }
+  }
+  else if(state.boardUsersData[card.assignedUserId] !== undefined)  {
+    console.log([state.boardUsersData[card.assignedUserId]]);
+    assignedUser = [state.boardUsersData[card.assignedUserId]];
+    assignedToMe = [state.boardUsersData[card.assignedUserId]]._id === state.user._id;
+  } 
+  console.log(assignedUser);
   return {
     card,
-    assignedUserName: assignedUser.name,
-    assignedUserId: assignedUser._id,
-    assignedToMe: assignedUser._id === state.user._id
+    assignedUserName:assignedUser,
+    assignedUserId:assignedUser,
+    assignedToMe
   };
 };
 
