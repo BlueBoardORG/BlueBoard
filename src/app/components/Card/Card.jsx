@@ -182,7 +182,6 @@ const mapStateToProps = (state, ownProps) => {
   let  assignedUser = [];
   let assignedToMe=false;
   if(Array.isArray(card.assignedUserId)){
-    console.log("1");
     for(let i = 0; i <= card.assignedUserId.length; i++){
       if(state.boardUsersData[card.assignedUserId[i]]!== undefined ){
         assignedUser.push(state.boardUsersData[card.assignedUserId[i]]);
@@ -192,11 +191,9 @@ const mapStateToProps = (state, ownProps) => {
     }
   }
   else if(state.boardUsersData[card.assignedUserId] !== undefined)  {
-    console.log([state.boardUsersData[card.assignedUserId]]);
     assignedUser = [state.boardUsersData[card.assignedUserId]];
     assignedToMe = [state.boardUsersData[card.assignedUserId]]._id === state.user._id;
   } 
-  console.log(assignedUser);
   return {
     card,
     assignedUserName:assignedUser,
