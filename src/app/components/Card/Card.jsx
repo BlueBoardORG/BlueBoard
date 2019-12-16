@@ -6,7 +6,9 @@ import classnames from "classnames";
 import CardModal from "../CardModal/CardModal";
 import CardBadges from "../CardBadges/CardBadges";
 import { findCheckboxes } from "../utils";
+import { withTranslation } from "react-i18next";
 import formatMarkdown from "./formatMarkdown";
+import FaTrash from "react-icons/lib/fa/comments-o";
 import "./Card.scss";
 
 class Card extends Component {
@@ -95,11 +97,11 @@ class Card extends Component {
       assignedUserName,
       assignedUserId,
       isAbleToEdit,
-      boardId
+      boardId,
+      t
     } = this.props;
     const { isModalOpen } = this.state;
     const checkboxes = findCheckboxes(card.text);
-
     return (
       <>
         <Draggable
@@ -132,12 +134,13 @@ class Card extends Component {
                   ...provided.draggableProps.style
                 }}
               >
+                {card.comments.length>0 ? <div style={{float:'left' , marginTop:'-2px',marginRight:'10px'}} data-tip={t("Card.comments")}><FaTrash/></div> : null}
                   <div
                     className="card-title-html"
                     dangerouslySetInnerHTML={{
                       __html: formatMarkdown(card.text)
                     }}
-                  />
+                  /> 
                 {/* eslint-enable */}
                 {(card.date ||
                   checkboxes.total > 0 ||
@@ -189,4 +192,4 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps)(Card);
+export default connect(mapStateToProps)(withTranslation()(Card));
