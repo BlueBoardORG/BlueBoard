@@ -180,7 +180,6 @@ const mapStateToProps = (state, ownProps) => {
     for(let i = 0; i <= card.assignedUserId.length; i++){
       if(state.boardUsersData[card.assignedUserId[i]]!== undefined ){
         assignedUser.push(state.boardUsersData[card.assignedUserId[i]]);
-        if(state.boardUsersData[card.assignedUserId[i]]=== state.user._id)
       }
     }
   }
