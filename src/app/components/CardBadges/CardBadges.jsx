@@ -18,7 +18,6 @@ class CardBadges extends Component {
       total: PropTypes.number.isRequired,
       checked: PropTypes.number.isRequired
     }).isRequired,
-    assignedToMe: PropTypes.bool,
     assignedUserName: PropTypes.array,
     assignedUserId: PropTypes.array,
     boardUsersData: PropTypes.object,

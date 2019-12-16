@@ -21,7 +21,6 @@ class Card extends Component {
     isDraggingOver: PropTypes.bool.isRequired,
     index: PropTypes.number.isRequired,
     dispatch: PropTypes.func.isRequired,
-    assignedToMe: PropTypes.bool,
     assignedUserName: PropTypes.array,
     isAbleToEdit: PropTypes.bool.isRequired,
     boardId: PropTypes.string.isRequired
@@ -91,7 +90,6 @@ class Card extends Component {
       index,
       listId,
       isDraggingOver,
-      assignedToMe,
       assignedUserName,
       assignedUserId,
       isAbleToEdit,
@@ -150,7 +148,6 @@ class Card extends Component {
                     checkboxes={checkboxes}
                     assignedUserName={assignedUserName}
                     assignedUserId={assignedUserId}
-                    assignedToMe={assignedToMe}
                     labels={card.labels}
                   />
                 )}
@@ -169,7 +166,6 @@ class Card extends Component {
             toggleCardEditor={this.toggleCardEditor}
             assignedUserName={assignedUserName}
             assignedUserId={assignedUserId}
-            assignedToMe={assignedToMe}
             boardId={boardId}
           />
       </>
@@ -180,25 +176,21 @@ class Card extends Component {
 const mapStateToProps = (state, ownProps) => {
   const card = state.cardsById[ownProps.cardId];
   let  assignedUser = [];
-  let assignedToMe=false;
   if(Array.isArray(card.assignedUserId)){
     for(let i = 0; i <= card.assignedUserId.length; i++){
       if(state.boardUsersData[card.assignedUserId[i]]!== undefined ){
         assignedUser.push(state.boardUsersData[card.assignedUserId[i]]);
         if(state.boardUsersData[card.assignedUserId[i]]=== state.user._id)
-          assignedToMe=true;
       }
     }
   }
   else if(state.boardUsersData[card.assignedUserId] !== undefined)  {
     assignedUser = [state.boardUsersData[card.assignedUserId]];
-    assignedToMe = [state.boardUsersData[card.assignedUserId]]._id === state.user._id;
   } 
   return {
     card,
     assignedUserName:assignedUser,
     assignedUserId:assignedUser,
-    assignedToMe
   };
 };
 
