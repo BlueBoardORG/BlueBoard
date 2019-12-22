@@ -8,7 +8,7 @@ import CardBadges from "../CardBadges/CardBadges";
 import { findCheckboxes } from "../utils";
 import { withTranslation } from "react-i18next";
 import formatMarkdown from "./formatMarkdown";
-import FaTrash from "react-icons/lib/fa/comments-o";
+import FaComment from "react-icons/lib/fa/comments-o";
 import "./Card.scss";
 
 class Card extends Component {
@@ -134,7 +134,7 @@ class Card extends Component {
                   ...provided.draggableProps.style
                 }}
               >
-                {card.comments.length>0 ? <div className="card-comments-icon" data-tip={t("Card.comments")}><FaTrash/></div> : null}
+                {card.comments.length>0 ? <div className="card-comments-icon" data-tip={t("Card.comments")}><FaComment/></div> : null}
                   <div
                     className="card-title-html"
                     dangerouslySetInnerHTML={{
