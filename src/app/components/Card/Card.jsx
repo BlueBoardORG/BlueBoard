@@ -134,7 +134,7 @@ class Card extends Component {
                   ...provided.draggableProps.style
                 }}
               >
-                {card.comments.length>0 ? <div style={{float:'left' , marginTop:'-2px',marginRight:'10px'}} data-tip={t("Card.comments")}><FaTrash/></div> : null}
+                {card.comments.length>0 ? <div className="card-comments-icon" data-tip={t("Card.comments")}><FaTrash/></div> : null}
                   <div
                     className="card-title-html"
                     dangerouslySetInnerHTML={{
