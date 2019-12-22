@@ -22,8 +22,12 @@ class Card extends Component {
     index: PropTypes.number.isRequired,
     dispatch: PropTypes.func.isRequired,
     assignedUserName: PropTypes.array,
+    assignedUserId: PropTypes.array,
     isAbleToEdit: PropTypes.bool.isRequired,
-    boardId: PropTypes.string.isRequired
+    boardId: PropTypes.string.isRequired,
+    boardUsers: PropTypes.object,
+    newAssignedUser: PropTypes.array,
+    needChange: PropTypes.bool
   };
 
   constructor() {
@@ -84,6 +88,16 @@ class Card extends Component {
     });
   };
 
+  checkIfUserExist = () => {
+    const { dispatch,card,newAssignedUser,needChange } = this.props;
+    if(needChange){
+      dispatch({
+        type: "UPDATE_ASSIGNED_USER",
+        payload: { cardId: card._id, assignedUserId: newAssignedUser }
+      });
+    }
+  }
+
   render() {
     const {
       card,
@@ -97,7 +111,7 @@ class Card extends Component {
     } = this.props;
     const { isModalOpen } = this.state;
     const checkboxes = findCheckboxes(card.text);
-
+    this.checkIfUserExist();
     return (
       <>
         <Draggable
@@ -176,10 +190,17 @@ class Card extends Component {
 const mapStateToProps = (state, ownProps) => {
   const card = state.cardsById[ownProps.cardId];
   let  assignedUser = [];
+  const newAssignedUser = [];
+  let needChange = false;
   if(Array.isArray(card.assignedUserId)){
     for(let i = 0; i <= card.assignedUserId.length; i++){
       if(state.boardUsersData[card.assignedUserId[i]]!== undefined ){
         assignedUser.push(state.boardUsersData[card.assignedUserId[i]]);
+        newAssignedUser.push(state.boardUsersData[card.assignedUserId[i]]._id);
+      }
+      
+      else if(Object.keys(state.boardUsersData).length !== 0 && card.assignedUserId[i] ) {
+        needChange = true;
       }
     }
   }
@@ -190,6 +211,9 @@ const mapStateToProps = (state, ownProps) => {
     card,
     assignedUserName:assignedUser,
     assignedUserId:assignedUser,
+    boardUsers:state.boardUsersData,
+    newAssignedUser,
+    needChange
   };
 };
 
