@@ -87,6 +87,15 @@ class Card extends Component {
     });
   };
 
+  drawIcon = () => {
+    const {card, t} = this.props;
+    if((card.comments && card.comments.length > 0)){
+      return(
+        <span className="card-comments-icon" data-tip={t("Card.comments")}><FaComment/></span>
+      );
+    }
+  }
+
   render() {
     const {
       card,
@@ -134,13 +143,13 @@ class Card extends Component {
                   ...provided.draggableProps.style
                 }}
               >
-                {card.comments.length>0 ? <div className="card-comments-icon" data-tip={t("Card.comments")}><FaComment/></div> : null}
+                {this.drawIcon()}
                   <div
                     className="card-title-html"
                     dangerouslySetInnerHTML={{
                       __html: formatMarkdown(card.text)
                     }}
-                  /> 
+                  />
                 {/* eslint-enable */}
                 {(card.date ||
                   checkboxes.total > 0 ||
