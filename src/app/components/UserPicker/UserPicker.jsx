@@ -16,13 +16,8 @@ class UserPicker extends Component {
   constructor(props) {
     super(props);
     const { boardUsersData, assignedUserId } = this.props;
-    let chosenUser = {};
-    if (boardUsersData[assignedUserId]) {
-      chosenUser = {
-        value: boardUsersData[assignedUserId]._id,
-        label: boardUsersData[assignedUserId].name
-      };
-    }
+    const chosenUser = assignedUserId;
+
 
     this.state = {
       chosenUser
@@ -31,45 +26,26 @@ class UserPicker extends Component {
 
   componentDidMount() {
     const { boardUsersData, assignedUserId } = this.props;
-    let chosenUser = {};
-    if (boardUsersData[assignedUserId]) {
-      chosenUser = {
-        value: boardUsersData[assignedUserId]._id,
-        label: boardUsersData[assignedUserId].name
-      };
-    }
-    this.setState({ chosenUser });
+    this.setState({ chosenUser:assignedUserId });
   }
 
   handleSave = () => {
     const { chosenUser } = this.state;
     const { dispatch, cardId, toggleAssign,assignedUserId } = this.props;
     let newAssignedUserId = [];
-    let isExist = false;
 
     if(Array.isArray(assignedUserId))
     {
       newAssignedUserId=assignedUserId;
-      for(let i=0; i<= assignedUserId.length ;i++){
-        if(newAssignedUserId[i] === chosenUser.value){
-          newAssignedUserId.splice(i, 1);
-          isExist = true;
-        }
-      }
-      if(!isExist)
-        newAssignedUserId.push(chosenUser.value);
-      
       dispatch({
         type: "UPDATE_ASSIGNED_USER",
         payload: { cardId, assignedUserId: newAssignedUserId }
       });
     }
     else{
-      if(chosenUser.value !== assignedUserId ){
-        newAssignedUserId.push(chosenUser.value);
-        if(assignedUserId)
-          newAssignedUserId.push(assignedUserId);
-      }
+      newAssignedUserId.push(chosenUser);
+      if(assignedUserId)
+        newAssignedUserId.push(assignedUserId);
       dispatch({
         type: "UPDATE_ASSIGNED_USER",
         payload: { cardId, assignedUserId: newAssignedUserId }
@@ -78,18 +54,36 @@ class UserPicker extends Component {
 
   };
 
-  handleChange = chosenUser => {
+  handleChange = newChosenUser => {
+    const { chosenUser } = this.state;
+    if(newChosenUser.value){
+      console.log(newChosenUser.value);
+      chosenUser.push(newChosenUser.value);
+    }
     this.setState({ chosenUser });
   };
 
   render() {
-    const { toggleAssign, boardUsersData, t } = this.props;
+    const { toggleAssign, boardUsersData, t,assignedUserId } = this.props;
     const { chosenUser } = this.state;
-    const usersList = Object.values(boardUsersData).map(userData => ({
+
+   /* const usersList = Object.values(boardUsersData).map(userData => (assignedUserId && assignedUserId.includes(userData._id))?
+    ({
+
+    }):
+    ({
       value: userData._id,
       label: userData.name
-    }));
+    })
+    );*/
 
+    const usersList = Object.values(boardUsersData).filter(userData => {
+      if (assignedUserId && assignedUserId.includes(userData._id)) {
+        return false; // skip
+      }
+      return true;
+    }).map(userData => { return {value: userData._id,label: userData.name} });
+    console.log(assignedUserId);
     return (
       <div className="user-picker">
         <label>{t("Choose-User")}</label>
