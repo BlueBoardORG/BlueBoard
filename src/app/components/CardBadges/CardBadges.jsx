@@ -101,24 +101,37 @@ class CardBadges extends Component {
 
     return "00000".substring(0, 6 - c.length) + c;
   }
+  /**
+   * return labels.map((label) => (
+      <div key={label}>
+        {this.getLabelById(label)
+          ? <div
+            className="badge"
+            style={{ background: this.getLabelById(label).color }}
+          >
+            <MdLabel className="badge-icon" />
+            &nbsp;
+        {this.getLabelById(label).title}
+          </div>
+          : null
+        }
+   */
 
   renderAssigned = () => {
     const { assignedUserId } = this.props;
     if(Array.isArray(assignedUserId) && assignedUserId.length > 0 ){
-      return (
-        <div>
-          {assignedUserId.map(item =>(
+      return assignedUserId.map((item) => (
+        <div key={item._id}>
             <div
             className="badge"
-            style={{ background: "#" + this.intToRGB(this.hashCode(item.name))}}
+            style={{ background: "#" + this.intToRGB(this.hashCode(item._id))}}
           >
             <FaUser className="badge-icon" />
             &nbsp;
             {item.name}
           </div>
-          ))}
         </div>
-      );
+      ));
     }   
 
   };
