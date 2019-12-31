@@ -87,17 +87,43 @@ class UserPicker extends Component {
     this.setState({ chosenUser });
   };
 
+  deleteUser = event => {
+    const {dispatch,cardId} = this.props;
+    const {assignedUser} = this.state;
+    for(let i=0;i<assignedUser.length;i++){
+      if(assignedUser[i] === event.target.value){
+        assignedUser.splice(i, 1);
+      }
+    }
+    this.setState({
+      assignedUser
+    });
+    dispatch({
+      type: "UPDATE_ASSIGNED_USER",
+      payload: { cardId, assignedUserId: assignedUser }
+    });
+  }
+  
+  showUsers = () => {
+    const {assignedUser} = this.state;
+    if(Array.isArray(assignedUser)){
+      return assignedUser.map((item) => (
+        <button key={item} value={item} onClick={this.deleteUser} >
+          {item}
+        </button>
+      ));
+    }
+  }
+
   render() {
     const { toggleAssign, boardUsersData, t } = this.props;
     const { chosenUser,assignedUser } = this.state;
-    console.log(assignedUser);
     const usersList = Object.values(boardUsersData).filter(userData => {
       if (assignedUser && assignedUser.includes(userData._id)) {
         return false; // skip
       }
       return true;
     }).map(userData => { return {value: userData._id,label: userData.name} });
-    console.log(usersList);
 
     return (
       <div className="user-picker">
@@ -116,6 +142,7 @@ class UserPicker extends Component {
           </button>
           <button onClick={toggleAssign}>{t("Cancel")}</button>
         </div>
+        {this.showUsers()}
       </div>
     );
   }
