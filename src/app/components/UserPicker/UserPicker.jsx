@@ -91,7 +91,6 @@ class UserPicker extends Component {
   deleteUser = event => {
     const {dispatch,cardId} = this.props;
     const {assignedUser} = this.state;
-    console.log(assignedUser);
     if(Array.isArray(assignedUser)){
       for(let i=0;i<assignedUser.length;i++){
         if(assignedUser[i] === event.target.value){
