@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import ReactTooltip from "react-tooltip";
 import { withTranslation } from "react-i18next";
 import Select from "react-select";
-
 import "./UserPicker.scss";
 
 class UserPicker extends Component {
@@ -43,7 +43,7 @@ class UserPicker extends Component {
   }
 
   handleSave = () => {
-    const { chosenUser } = this.state;
+    const { chosenUser,assignedUser } = this.state;
     const { dispatch, cardId, toggleAssign,assignedUserId } = this.props;
     let newAssignedUserId = [];
     let isExist = false;
@@ -56,21 +56,22 @@ class UserPicker extends Component {
           isExist = true;
         }
       }
-      if(!isExist)
+      if(!isExist){
         newAssignedUserId.push(chosenUser.value);
         this.setState({
           assignedUser:newAssignedUserId
         });
-      dispatch({
-        type: "UPDATE_ASSIGNED_USER",
-        payload: { cardId, assignedUserId: newAssignedUserId }
-      });
+        dispatch({
+          type: "UPDATE_ASSIGNED_USER",
+          payload: { cardId, assignedUserId: newAssignedUserId }
+        });
+      }
+      
     }
-    else{
-      if(chosenUser.value !== assignedUserId ){
-        newAssignedUserId.push(chosenUser.value);
-        if(assignedUserId)
-          newAssignedUserId.push(assignedUserId);
+    else if(chosenUser.value !== assignedUserId ){
+      newAssignedUserId.push(chosenUser.value);
+      if(assignedUserId){
+        newAssignedUserId.push(assignedUserId);
       }
       this.setState({
         assignedUser:newAssignedUserId
@@ -78,9 +79,9 @@ class UserPicker extends Component {
       dispatch({
         type: "UPDATE_ASSIGNED_USER",
         payload: { cardId, assignedUserId: newAssignedUserId }
-      });     
+      });    
     }
-
+      
   };
 
   handleChange = chosenUser => {
@@ -103,15 +104,48 @@ class UserPicker extends Component {
       payload: { cardId, assignedUserId: assignedUser }
     });
   }
+
+  intToRGB = (i) => {
+    let c = (i & 0x00FFFFFF)
+      .toString(16)
+      .toUpperCase();
+    return "00000".substring(0, 6 - c.length) + c;
+  }
+
+  hashCode = (str) => { // java String#hashCode
+    let hash = 0;
+    for (var i = 0; i < str.length; i++) {
+       hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    return hash;
+  } 
   
   showUsers = () => {
     const {assignedUser} = this.state;
+    const {boardUsersData,t} = this.props;
+
+    const usersList = Object.values(boardUsersData).filter(userData => {
+      if (assignedUser && assignedUser.includes(userData._id)) {
+        return true; // skip
+      }
+      return false;
+    }).map(userData => { return {value: userData._id,label: userData.name} });
+    
     if(Array.isArray(assignedUser)){
-      return assignedUser.map((item) => (
-        <button key={item} value={item} onClick={this.deleteUser} >
-          {item}
-        </button>
-      ));
+      return(
+        <div>
+        {usersList.map((item) =>(
+
+          <button className="user-avatar" data-tip={t("assigned.user.dalete")}  style={{ background: "#" + this.intToRGB(this.hashCode(item.value))}} key={item.value} value={item.value} onClick={this.deleteUser} >
+            {item.label.split(" ")[0][0]}
+            {item.label.split(" ").length > 1 && item.label.split(" ")[item.label.split(" ").length - 1][0]}
+            <ReactTooltip/>
+          </button>
+          
+
+        ))}
+        </div>
+      );
     }
   }
 

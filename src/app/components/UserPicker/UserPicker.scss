@@ -7,6 +7,15 @@
   background: white;
   padding: 5px;
 }
+.user-avatar {
+  width: 36px;
+  height: 36px;
+  margin: 2px;
+  border: 1px #999 solid;
+  border-radius: 3px;
+  overflow: hidden;
+  color: white;
+}
 
 .user-picker-buttons {
   display: flex;
