@@ -165,7 +165,10 @@ class UserPicker extends Component {
     const { toggleAssign, boardUsersData, t } = this.props;
     const { chosenUser,assignedUser } = this.state;
     const usersList = Object.values(boardUsersData).filter(userData => {
-      if (assignedUser && assignedUser.includes(userData._id)) {
+      if(!Array.isArray(assignedUser) && assignedUser === userData._id){
+        return false; // skip
+      }
+      else if (Array.isArray(assignedUser) && assignedUser && assignedUser.includes(userData._id)) {
         return false; // skip
       }
       return true;
