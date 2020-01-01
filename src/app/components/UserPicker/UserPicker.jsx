@@ -145,19 +145,20 @@ class UserPicker extends Component {
             <ReactTooltip/>
           </button>
           
-
         ))}
         </div>
       );
     }
-    console.log(usersList);
-    return(
-      <button className="user-avatar" data-tip={t("assigned.user.delete")}  style={{ background: "#" + this.intToRGB(this.hashCode(usersList[0].value))}} key={usersList[0].value} value={usersList[0].value} onClick={this.deleteUser} >
-        {usersList[0].label.split(" ")[0][0]}
-        {usersList[0].label.split(" ").length > 1 && usersList[0].label.split(" ")[usersList[0].label.split(" ").length - 1][0]}
-        <ReactTooltip/>
-      </button>
-    );
+    else if(usersList[0]){
+      return(
+        <button className="user-avatar" data-tip={t("assigned.user.delete")}  style={{ background: "#" + this.intToRGB(this.hashCode(usersList[0].value))}} key={usersList[0].value} value={usersList[0].value} onClick={this.deleteUser} >
+          {usersList[0].label.split(" ")[0][0]}
+          {usersList[0].label.split(" ").length > 1 && usersList[0].label.split(" ")[usersList[0].label.split(" ").length - 1][0]}
+          <ReactTooltip/>
+        </button>
+      );
+    }
+    
     
   }
 
