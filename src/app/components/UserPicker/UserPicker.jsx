@@ -136,7 +136,7 @@ class UserPicker extends Component {
         <div>
         {usersList.map((item) =>(
 
-          <button className="user-avatar" data-tip={t("assigned.user.dalete")}  style={{ background: "#" + this.intToRGB(this.hashCode(item.value))}} key={item.value} value={item.value} onClick={this.deleteUser} >
+          <button className="user-avatar" data-tip={t("assigned.user.delete")}  style={{ background: "#" + this.intToRGB(this.hashCode(item.value))}} key={item.value} value={item.value} onClick={this.deleteUser} >
             {item.label.split(" ")[0][0]}
             {item.label.split(" ").length > 1 && item.label.split(" ")[item.label.split(" ").length - 1][0]}
             <ReactTooltip/>
@@ -147,6 +147,15 @@ class UserPicker extends Component {
         </div>
       );
     }
+    console.log(usersList);
+    return(
+      <button className="user-avatar" data-tip={t("assigned.user.delete")}  style={{ background: "#" + this.intToRGB(this.hashCode(usersList[0].value))}} key={usersList[0].value} value={usersList[0].value} onClick={this.deleteUser} >
+        {usersList[0].label.split(" ")[0][0]}
+        {usersList[0].label.split(" ").length > 1 && usersList[0].label.split(" ")[usersList[0].label.split(" ").length - 1][0]}
+        <ReactTooltip/>
+      </button>
+    );
+    
   }
 
   render() {
