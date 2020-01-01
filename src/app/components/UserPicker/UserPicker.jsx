@@ -91,18 +91,30 @@ class UserPicker extends Component {
   deleteUser = event => {
     const {dispatch,cardId} = this.props;
     const {assignedUser} = this.state;
-    for(let i=0;i<assignedUser.length;i++){
-      if(assignedUser[i] === event.target.value){
-        assignedUser.splice(i, 1);
+    console.log(assignedUser);
+    if(Array.isArray(assignedUser)){
+      for(let i=0;i<assignedUser.length;i++){
+        if(assignedUser[i] === event.target.value){
+          assignedUser.splice(i, 1);
+        }
       }
+      this.setState({
+        assignedUser
+      });
+      dispatch({
+        type: "UPDATE_ASSIGNED_USER",
+        payload: { cardId, assignedUserId: assignedUser }
+      });
     }
-    this.setState({
-      assignedUser
-    });
-    dispatch({
-      type: "UPDATE_ASSIGNED_USER",
-      payload: { cardId, assignedUserId: assignedUser }
-    });
+    else{
+      this.setState({
+        assignedUser:[]
+      });
+      dispatch({
+        type: "UPDATE_ASSIGNED_USER",
+        payload: { cardId, assignedUserId: [] }
+      });
+    }
   }
 
   intToRGB = (i) => {
