@@ -199,7 +199,7 @@ class UserPicker extends Component {
         />
         <div className="user-picker-buttons">
           <button onClick={this.handleSave} className="user-picker-save-button">
-            {t("Save")}
+            {t("Add")}
           </button>
           <button onClick={toggleAssign}>{t("Cancel")}</button>
         </div>
