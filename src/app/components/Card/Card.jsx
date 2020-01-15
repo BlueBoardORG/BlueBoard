@@ -6,7 +6,9 @@ import classnames from "classnames";
 import CardModal from "../CardModal/CardModal";
 import CardBadges from "../CardBadges/CardBadges";
 import { findCheckboxes } from "../utils";
+import { withTranslation } from "react-i18next";
 import formatMarkdown from "./formatMarkdown";
+import FaComment from "react-icons/lib/fa/comments-o";
 import "./Card.scss";
 
 class Card extends Component {
@@ -88,6 +90,7 @@ class Card extends Component {
     });
   };
 
+
   checkIfUserExist = () => {
     const { dispatch,card,newAssignedUser,needChange } = this.props;
     if(needChange){
@@ -95,6 +98,15 @@ class Card extends Component {
         type: "UPDATE_ASSIGNED_USER",
         payload: { cardId: card._id, assignedUserId: newAssignedUser }
       });
+    }
+  }
+
+  drawIcon = () => {
+    const {card, t} = this.props;
+    if((card.comments && card.comments.length > 0)){
+      return(
+        <span className="card-comments-icon" data-tip={t("Card.comments")}><FaComment/></span>
+      );
     }
   }
 
@@ -107,7 +119,8 @@ class Card extends Component {
       assignedUserName,
       assignedUserId,
       isAbleToEdit,
-      boardId
+      boardId,
+      t
     } = this.props;
     const { isModalOpen } = this.state;
     const checkboxes = findCheckboxes(card.text);
@@ -144,6 +157,7 @@ class Card extends Component {
                   ...provided.draggableProps.style
                 }}
               >
+                {this.drawIcon()}
                   <div
                     className="card-title-html"
                     dangerouslySetInnerHTML={{
@@ -217,4 +231,4 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps)(Card);
+export default connect(mapStateToProps)(withTranslation()(Card));
