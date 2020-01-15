@@ -23,10 +23,13 @@ class Card extends Component {
     isDraggingOver: PropTypes.bool.isRequired,
     index: PropTypes.number.isRequired,
     dispatch: PropTypes.func.isRequired,
-    assignedToMe: PropTypes.bool,
-    assignedUserName: PropTypes.string,
+    assignedUserName: PropTypes.array,
+    assignedUserId: PropTypes.array,
     isAbleToEdit: PropTypes.bool.isRequired,
-    boardId: PropTypes.string.isRequired
+    boardId: PropTypes.string.isRequired,
+    boardUsers: PropTypes.object,
+    newAssignedUser: PropTypes.array,
+    needChange: PropTypes.bool
   };
 
   constructor() {
@@ -87,6 +90,17 @@ class Card extends Component {
     });
   };
 
+
+  checkIfUserExist = () => {
+    const { dispatch,card,newAssignedUser,needChange } = this.props;
+    if(needChange){
+      dispatch({
+        type: "UPDATE_ASSIGNED_USER",
+        payload: { cardId: card._id, assignedUserId: newAssignedUser }
+      });
+    }
+  }
+
   drawIcon = () => {
     const {card, t} = this.props;
     if((card.comments && card.comments.length > 0)){
@@ -102,7 +116,6 @@ class Card extends Component {
       index,
       listId,
       isDraggingOver,
-      assignedToMe,
       assignedUserName,
       assignedUserId,
       isAbleToEdit,
@@ -111,6 +124,7 @@ class Card extends Component {
     } = this.props;
     const { isModalOpen } = this.state;
     const checkboxes = findCheckboxes(card.text);
+    this.checkIfUserExist();
     return (
       <>
         <Draggable
@@ -162,7 +176,6 @@ class Card extends Component {
                     checkboxes={checkboxes}
                     assignedUserName={assignedUserName}
                     assignedUserId={assignedUserId}
-                    assignedToMe={assignedToMe}
                     labels={card.labels}
                   />
                 )}
@@ -181,7 +194,6 @@ class Card extends Component {
             toggleCardEditor={this.toggleCardEditor}
             assignedUserName={assignedUserName}
             assignedUserId={assignedUserId}
-            assignedToMe={assignedToMe}
             boardId={boardId}
           />
       </>
@@ -191,13 +203,31 @@ class Card extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   const card = state.cardsById[ownProps.cardId];
-  const assignedUser = state.boardUsersData[card.assignedUserId] || {};
-
+  let  assignedUser = [];
+  const newAssignedUser = [];
+  let needChange = false;
+  if(Array.isArray(card.assignedUserId)){
+    for(let i = 0; i <= card.assignedUserId.length; i++){
+      if(state.boardUsersData[card.assignedUserId[i]]!== undefined ){
+        assignedUser.push(state.boardUsersData[card.assignedUserId[i]]);
+        newAssignedUser.push(state.boardUsersData[card.assignedUserId[i]]._id);
+      }
+      
+      else if(Object.keys(state.boardUsersData).length !== 0 && card.assignedUserId[i] ) {
+        needChange = true;
+      }
+    }
+  }
+  else if(state.boardUsersData[card.assignedUserId] !== undefined)  {
+    assignedUser = [state.boardUsersData[card.assignedUserId]];
+  } 
   return {
     card,
-    assignedUserName: assignedUser.name,
-    assignedUserId: assignedUser._id,
-    assignedToMe: assignedUser._id === state.user._id
+    assignedUserName:assignedUser,
+    assignedUserId:assignedUser,
+    boardUsers:state.boardUsersData,
+    newAssignedUser,
+    needChange
   };
 };
 

@@ -25,8 +25,7 @@ class CardModal extends Component {
     isOpen: PropTypes.bool.isRequired,
     toggleCardEditor: PropTypes.func.isRequired,
     dispatch: PropTypes.func.isRequired,
-    assignedToMe: PropTypes.bool,
-    assignedUserName: PropTypes.string,
+    assignedUserName: PropTypes.array,
     boardId: PropTypes.string.isRequired
   };
 
@@ -100,7 +99,6 @@ class CardModal extends Component {
       card,
       listId,
       isOpen,
-      assignedToMe,
       assignedUserName,
       assignedUserId,
       boardId
@@ -216,7 +214,6 @@ class CardModal extends Component {
                 checkboxes={checkboxes}
                 assignedUserName={assignedUserName}
                 assignedUserId={assignedUserId}
-                assignedToMe={assignedToMe}
                 labels={card.labels}
               />
             )}
