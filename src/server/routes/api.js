@@ -23,11 +23,11 @@ const api = db => {
     board = { ...board, changed_by: req.user._id };
     // Update the board only if the user's role in the board is admin/read-write
     boards
-      .replaceOne(
+      .updateOne(
         {
           _id: board._id
         },
-        board,
+        { $set: board },
         { upsert: true }
       )
       .then(result => {
