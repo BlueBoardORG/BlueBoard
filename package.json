@@ -54,6 +54,7 @@
     "react-head": "^2.1.0",
     "react-i18next": "^10.2.0",
     "react-icons": "^2.2.7",
+    "react-iframe": "^1.8.0",
     "react-modal": "^3.4.4",
     "react-onclickoutside": "^6.7.1",
     "react-redux": "^5.0.7",
