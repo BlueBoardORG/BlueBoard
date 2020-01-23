@@ -12,7 +12,7 @@ import ListAdder from "../ListAdder/ListAdder";
 import Header from "../Header/Header";
 import BoardHeader from "../BoardHeader/BoardHeader";
 import { loadBoardUsersData } from "../../actions/boardActions";
-import { CAN_EDIT_ROLES } from "../../../constants";
+import { CAN_EDIT_ROLES, ROCKETCHAT_URL } from "../../../constants";
 import "./Board.scss";
 import BoardMenu from "../BoardHeader/BoardMenu";
 
@@ -182,12 +182,29 @@ class Board extends Component {
     this.setState({iFrame: !iFrame});
   }
 
+   getAllowedGroupTitleFromText = title => {
+    if (this.cache && this.cache[title])
+        return this.cache[title];
+
+    const isAlphaNumeric = 'a-zA-Z0-9';
+    const isHebrewChars = 'א-ת';
+    const isAllowedSpecialChars = '_.-';
+    const regexString = `^${isAlphaNumeric}${isHebrewChars}${isAllowedSpecialChars}`;
+    const regexExppresion = new RegExp(`[${regexString}]`, 'g');
+    const allowedTitle = title.replace(regexExppresion, str => str.split('').map(() => '.').join(''));
+
+    this.cache = this.cache || {};
+    this.cache[title] = allowedTitle;
+
+    return this.cache[title];
+}
+
   render = () => {
 
     const { lists, boardTitle, boardId, boardColor, t, user, board, boardImageBackground, socketConnected } = this.props;
     const {iFrame} = this.state;
     const imageUrl = `url(${boardImageBackground})`;
-    const hiUrl = `https://hi.prod.services.idf/channel/${encodeURIComponent(`${boardTitle}-${boardId}`)}`;
+    const hiUrl = `${ROCKETCHAT_URL}/${encodeURIComponent(`${this.getAllowedGroupTitleFromText(boardTitle)}-${boardId}`)}`;
     const wrapperStyle = {
       backgroundImage: imageUrl,
       backgroundPosition: "center",
