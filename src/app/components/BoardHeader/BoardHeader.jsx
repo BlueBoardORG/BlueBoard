@@ -10,13 +10,13 @@ import Watch from "./Watch";
 
 import "./BoardHeader.scss";
 
-const BoardHeader = ({ isAbleToEdit,iFrameAction }) => (
+const BoardHeader = ({ isAbleToEdit,iFrameAction ,chatRoomId}) => (
   <div className="board-header">
     <BoardTitle isAbleToEdit={isAbleToEdit} />
     <div className="board-header-right">
     <div className="vertical-line" />
-    <img  style={{width: 40, height: 40}} onClick={iFrameAction} src={hiIcon} ></img>
-      {isAbleToEdit && <div className="vertical-line" />}
+    {(isAbleToEdit && chatRoomId) ? <img  style={{width: 40, height: 40}} onClick={iFrameAction} src={hiIcon} /> : null}
+      {(isAbleToEdit && chatRoomId) && <div className="vertical-line" />}
       {isAbleToEdit && <Watch />}
       {isAbleToEdit && <div className="vertical-line" />}
       {isAbleToEdit && <ColorPicker />}

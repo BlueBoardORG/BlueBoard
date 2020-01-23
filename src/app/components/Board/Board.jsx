@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
+import PropTypes, { nominalTypeHack } from "prop-types";
 import { connect } from "react-redux";
 import { Title } from "react-head";
 import Iframe from "react-iframe";
@@ -201,7 +201,7 @@ class Board extends Component {
 
   render = () => {
 
-    const { lists, boardTitle, boardId, boardColor, t, user, board, boardImageBackground, socketConnected } = this.props;
+    const { lists, boardTitle, boardId, boardColor, t, user, board, boardImageBackground, socketConnected ,chatRoomId} = this.props;
     const {iFrame} = this.state;
     const imageUrl = `url(${boardImageBackground})`;
     const hiUrl = `${ROCKETCHAT_URL}/${encodeURIComponent(`${this.getAllowedGroupTitleFromText(boardTitle)}-${boardId}`)}`;
@@ -242,14 +242,14 @@ class Board extends Component {
             <p style={{ textAlign: "center", alignContent: "center", float: "none", margin: "auto", paddingTop: "5vh" }}> {t("connection.wait.message")} </p>
           </Modal>
           
-          <BoardHeader isAbleToEdit={isAbleToEdit} iFrameAction={this.iFrameChange} />
+          <BoardHeader isAbleToEdit={isAbleToEdit} iFrameAction={this.iFrameChange} chatRoomId={chatRoomId}/>
           {/* eslint-disable jsx-a11y/no-static-element-interactions */}
           <div
             className="lists-wrapper"
             onMouseDown={this.handleMouseDown}
             onWheel={this.handleWheel}
           >
-           {iFrame ? <p>  <Iframe url= {hiUrl}
+           {iFrame ? <p style={{display: "contents"}}>  <Iframe url= {hiUrl}
            className="iframe"/>  </p> : null}
                     
 
@@ -291,6 +291,7 @@ const mapStateToProps = (state, ownProps) => {
   const { board } = ownProps;
   const { user, boardUsersData, socketConnected } = state;
   return {
+    chatRoomId: board.chatRoomId,
     cards: state.cardsById,
     lists: board.lists.map(listId => state.listsById[listId]),
     boardTitle: board.title,
