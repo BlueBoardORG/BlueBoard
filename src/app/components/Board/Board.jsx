@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
+import PropTypes, { nominalTypeHack } from "prop-types";
 import { connect } from "react-redux";
 import { Title } from "react-head";
+import Iframe from "react-iframe";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import classnames from "classnames";
 import { withTranslation } from "react-i18next";
@@ -11,9 +12,10 @@ import ListAdder from "../ListAdder/ListAdder";
 import Header from "../Header/Header";
 import BoardHeader from "../BoardHeader/BoardHeader";
 import { loadBoardUsersData } from "../../actions/boardActions";
-import { CAN_EDIT_ROLES } from "../../../constants";
+import { CAN_EDIT_ROLES, ROCKETCHAT_URL } from "../../../constants";
 import "./Board.scss";
 import BoardMenu from "../BoardHeader/BoardMenu";
+
 
 class Board extends Component {
   static propTypes = {
@@ -27,14 +29,15 @@ class Board extends Component {
     dispatch: PropTypes.func.isRequired,
     boardUsers: PropTypes.array,
     boardLabels: PropTypes.array.isRequired,
-    cards: PropTypes.object.isRequired
+    cards: PropTypes.object.isRequired,
   };
 
   constructor(props) {
     super(props);
     this.state = {
       startX: null,
-      startScrollX: null
+      startScrollX: null,
+      iFrame:false
     };
   }
 
@@ -174,11 +177,34 @@ class Board extends Component {
       });
     });
   }
+  iFrameChange = () =>{
+    const {iFrame} = this.state;
+    this.setState({iFrame: !iFrame});
+  }
+
+   getAllowedGroupTitleFromText = title => {
+    if (this.cache && this.cache[title])
+        return this.cache[title];
+
+    const isAlphaNumeric = 'a-zA-Z0-9';
+    const isHebrewChars = 'א-ת';
+    const isAllowedSpecialChars = '_.-';
+    const regexString = `^${isAlphaNumeric}${isHebrewChars}${isAllowedSpecialChars}`;
+    const regexExppresion = new RegExp(`[${regexString}]`, 'g');
+    const allowedTitle = title.replace(regexExppresion, str => str.split('').map(() => '.').join(''));
+
+    this.cache = this.cache || {};
+    this.cache[title] = allowedTitle;
+
+    return this.cache[title];
+}
 
   render = () => {
 
-    const { lists, boardTitle, boardId, boardColor, t, user, board, boardImageBackground, socketConnected } = this.props;
+    const { lists, boardTitle, boardId, boardColor, t, user, board, boardImageBackground, socketConnected ,chatRoomId} = this.props;
+    const {iFrame} = this.state;
     const imageUrl = `url(${boardImageBackground})`;
+    const hiUrl = `${ROCKETCHAT_URL}/${encodeURIComponent(`${this.getAllowedGroupTitleFromText(boardTitle)}-${boardId}`)}`;
     const wrapperStyle = {
       backgroundImage: imageUrl,
       backgroundPosition: "center",
@@ -187,7 +213,6 @@ class Board extends Component {
     };
     const userData = board.users.find(u => u.id === user._id) || {};
     const isAbleToEdit = CAN_EDIT_ROLES.includes(userData.role) && socketConnected;
-
     const customStyles = {
       content: {
         top: '50%',
@@ -216,13 +241,18 @@ class Board extends Component {
             <h1 style={{ textAlign: "center", alignContent: "center", float: "none", margin: "auto" }}> {t("connection.wait")} </h1>
             <p style={{ textAlign: "center", alignContent: "center", float: "none", margin: "auto", paddingTop: "5vh" }}> {t("connection.wait.message")} </p>
           </Modal>
-          <BoardHeader isAbleToEdit={isAbleToEdit} />
+          
+          <BoardHeader isAbleToEdit={isAbleToEdit} iFrameAction={this.iFrameChange} chatRoomId={chatRoomId}/>
           {/* eslint-disable jsx-a11y/no-static-element-interactions */}
           <div
             className="lists-wrapper"
             onMouseDown={this.handleMouseDown}
             onWheel={this.handleWheel}
           >
+           {iFrame ? <p style={{display: "contents"}}>  <Iframe url= {hiUrl}
+           className="iframe"/>  </p> : null}
+                    
+
             {/* eslint-enable jsx-a11y/no-static-element-interactions */}
             <DragDropContext onDragEnd={this.handleDragEnd}>
               <Droppable
@@ -230,6 +260,7 @@ class Board extends Component {
                 type="COLUMN"
                 direction="horizontal"
               >
+                
                 {provided => (
                   <div className="lists" id="lists" ref={provided.innerRef}>
                     {lists.map((list, index) => (
@@ -260,6 +291,7 @@ const mapStateToProps = (state, ownProps) => {
   const { board } = ownProps;
   const { user, boardUsersData, socketConnected } = state;
   return {
+    chatRoomId: board.chatRoomId,
     cards: state.cardsById,
     lists: board.lists.map(listId => state.listsById[listId]),
     boardTitle: board.title,

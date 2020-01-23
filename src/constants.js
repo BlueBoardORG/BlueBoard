@@ -32,3 +32,5 @@ export const PIWIK_COOKIE_DOMAIN = process.env.PIWIK_COOKIE_DOMAIN || 'localhost
 export const SHOULD_RUN_PIWIK = process.env.SHOULD_RUN_PIWIK || false;
 export const PIWIK_URL = process.env.PIWIK_URL || '//piwik/piwik/';
 export const PIWIK_SITE_ID = process.env.PIWIK_SITE_ID  || '100';
+
+export const ROCKETCHAT_URL = process.env.ROCKETCHAT_URL || 'https://open.rocket.chat';

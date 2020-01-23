@@ -27,6 +27,13 @@
   background: $pink;
 }
 
+.iframe {
+  width: 400px;
+  height: 100%;
+  display: initial;
+  position: relative;
+}
+
 .lists-wrapper {
   display: inline-flex;
   box-sizing: border-box;
