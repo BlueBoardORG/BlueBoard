@@ -249,7 +249,7 @@ class Board extends Component {
             onMouseDown={this.handleMouseDown}
             onWheel={this.handleWheel}
           >
-           {iFrame ? <p style={{display: "contents"}}>  <Iframe url= {hiUrl}
+           {iFrame ? <p style={window.CSS.suppports('display:contents') ? {display: "contents"} : {height: '98%'}}>  <Iframe url= {hiUrl}
            className="iframe"/>  </p> : null}
                     
 
