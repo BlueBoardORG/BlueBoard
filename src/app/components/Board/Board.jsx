@@ -179,6 +179,7 @@ class Board extends Component {
   }
   iFrameChange = () =>{
     const {iFrame} = this.state;
+    window._paq ? window._paq.push(["trackEvent", "TOGGLE_HI_CHAT", !iFrame]) : null;
     this.setState({iFrame: !iFrame});
   }
 
