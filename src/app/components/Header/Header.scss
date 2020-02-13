@@ -14,7 +14,7 @@ header {
   width: 100%;
   height: 50px;
   padding: 5px;
-  background: #8f8f8f;
+  background: rgba(0, 0, 0, .5);
   z-index: 2;
   transition: background 0.3s;
 }
@@ -38,7 +38,6 @@ header {
 }
 
 .header-search-bar {
-  width: 200px;
   height: 30px;
   margin-right: 10px;
 }
@@ -68,12 +67,15 @@ header {
   letter-spacing: 1.1px;
   margin-left: 20px;
 }
-.css-1ii3p2c:not([disabled]):not([data-disabled]):focus{
-  box-shadow:none !important;
+
+.css-1ii3p2c:not([disabled]):not([data-disabled]):focus {
+  box-shadow: none !important;
 }
-.no-box-shadow:not([disabled]):not([data-disabled]):focus{
-  box-shadow:none !important;
+
+.no-box-shadow:not([disabled]):not([data-disabled]):focus {
+  box-shadow: none !important;
 }
+
 .header-title img {
   height: 30px;
 }
@@ -119,6 +121,7 @@ header {
 
 // Some things have to be removed for mobile layouts to avoid overflowing
 @media (max-width: 700px) {
+
   .user-thumbnail,
   .guest-icon {
     display: none;

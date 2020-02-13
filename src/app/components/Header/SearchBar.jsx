@@ -20,7 +20,7 @@ class SearchBar extends React.Component {
         alignItems: "center",
         padding: 4,
         background: "#fbfbfb",
-        borderRadius: 9
+        borderRadius: 13
       },
       text: {
         display: "flex",
