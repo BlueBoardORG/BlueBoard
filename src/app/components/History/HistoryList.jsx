@@ -1,4 +1,10 @@
 import React, { Component, Fragment } from "react";
+import ListItem from '@material-ui/core/ListItem';
+import List from '@material-ui/core/List';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Avatar from '@material-ui/core/Avatar';
 import { withRouter } from "react-router-dom";
 import { withTranslation } from "react-i18next";
 import PropTypes from "prop-types";
@@ -94,24 +100,33 @@ class HistoryList extends Component {
     const { boardUsersData } = this.props;
     return (
       <Fragment>
-        <p id="title" >{t("History")}</p>
-        <div id="history-list-container" onScroll={this.trackScrolling}>
-          <div id="history-container" >
-            {history.map((historyItem, key) => (
-              <div id="history-item" key={key}>
-                <p>{(boardUsersData[historyItem.userId] || { name: "" }).name}</p>
-                <p>{t(historyItem.action)}</p>
-                {this.displayDate(historyItem.date)}
-              </div>
-            ))}
+        <List component="nav" aria-label="main mailbox folders" subheader={
+          <ListSubheader component="div" id="nested-list-subheader">
+            {t("History")}
+          </ListSubheader>
+        }>
+
+          <div id="history-list-container" onScroll={this.trackScrolling}>
+            <div id="history-container" >
+              {history.map((historyItem, key) => (
+                <ListItem button>
+                  <div id="history-item" key={key}>
+                    <p>{(boardUsersData[historyItem.userId] || { name: "" }).name}</p>
+                    <p>{t(historyItem.action)}</p>
+                    {this.displayDate(historyItem.date)}
+                  </div>
+
+                </ListItem>
+              ))}
+            </div>
+            {
+              this.state.isLoading ?
+                <Pane display="flex" alignItems="center" justifyContent="center" height={400}>
+                  <Spinner />
+                </Pane> : null
+            }
           </div>
-          {
-            this.state.isLoading ?
-              <Pane display="flex" alignItems="center" justifyContent="center" height={400}>
-                <Spinner />
-              </Pane> : null
-          }
-        </div>
+        </List>
       </Fragment>
     );
   }
