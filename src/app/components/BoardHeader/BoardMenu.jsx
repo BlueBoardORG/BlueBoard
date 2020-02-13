@@ -34,6 +34,7 @@ class BoardMenu extends Component {
             backgroundColor: "rgb(245, 246, 247)",
             width: "400px",
             padding: "0px 20px",
+            zIndex: "2",
             transition: "1s",
             bottom: "0%",
             position: "fixed",
