@@ -64,6 +64,7 @@ class BoardMenu extends Component {
                   className="hamburger-button"
                   style={{
                     position: "absolute",
+                    zIndex: "3",
                     right: "0%",
                     top: "1.5%",
                     color: "black"
@@ -81,6 +82,7 @@ class BoardMenu extends Component {
             className="hamburger-button"
             style={{
               position: "absolute",
+              zIndex: "3",
               left: "0%",
               top: "9.5%",
               color: "black"
