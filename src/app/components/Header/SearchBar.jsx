@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import SearchIcon from "../../../assets/images/search_icon.svg";
 import { withTranslation } from "react-i18next";
+import SearchIcon from '@material-ui/icons/Search';
 
 class SearchBar extends React.Component {
   componentDidMount() {
@@ -19,24 +19,28 @@ class SearchBar extends React.Component {
         display: "flex",
         alignItems: "center",
         padding: 4,
-        background: "#fbfbfb",
-        borderRadius: 13
+        background: "hsla(0,7%,92%,.3);",
+        borderRadius: 3,
+        height: 30,
+        color: "white"
       },
       text: {
         display: "flex",
         background: "transparent",
+        color: "white",
         border: "none",
+        fontSize: "18px",
         outline: "none"
       },
       icon: {
-        height: "25px"
+        height: "25px",
       }
     };
     const { t } = this.props;
     return (
       <div style={styles.container}>
         <input placeholder={t("SearchBar.placeholder")} style={styles.text} onChange={this._onChangeText} value={this.props.currFilter} />
-        <img style={styles.icon} src={SearchIcon} />
+        <SearchIcon color="white"></SearchIcon>
       </div>
     );
   }

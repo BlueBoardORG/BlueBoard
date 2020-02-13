@@ -38,8 +38,7 @@ header {
 }
 
 .header-search-bar {
-  height: 30px;
-  margin-right: 10px;
+  margin-right: 5px;
 }
 
 .header-notification {
@@ -100,18 +99,21 @@ header {
 }
 
 .signout-link {
-  padding: 3px 5px 1px 5px;
-  margin-right: 12px;
+  padding: 3px 8px;
+  padding-top: 3px;
+  margin-right: 10px;
   border-radius: 3px;
-  color: white;
-  background: $transparent-black;
+  color: #fff;
+  background: hsla(0, 0%, 100%, .3);
   text-decoration: none;
   border: none;
+  height: 27px;
+  padding-top: 8px;
 }
 
 .signout-link:focus,
 .signout-link:hover {
-  background: $less-transparent-black;
+  background: rgba(235, 232, 232, 0.3);
 }
 
 .signout-icon {
