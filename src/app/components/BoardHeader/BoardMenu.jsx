@@ -36,7 +36,7 @@ class BoardMenu extends Component {
             position: "fixed",
             borderTopRightRadius: "6px",
             left: "0px",
-            top: "9%"
+            top: "111px"
           }}
           ref="sideNav"
         >

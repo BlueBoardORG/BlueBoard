@@ -20,7 +20,7 @@ class SearchBar extends React.Component {
         alignItems: "center",
         padding: 4,
         background: "#fbfbfb",
-        borderRadius: 3
+        borderRadius: 9
       },
       text: {
         display: "flex",
@@ -32,10 +32,10 @@ class SearchBar extends React.Component {
         height: "25px"
       }
     };
-    const {t}=this.props;
+    const { t } = this.props;
     return (
       <div style={styles.container}>
-        <input placeholder={t("SearchBar.placeholder")} style={styles.text} onChange={this._onChangeText} value={this.props.currFilter}/>
+        <input placeholder={t("SearchBar.placeholder")} style={styles.text} onChange={this._onChangeText} value={this.props.currFilter} />
         <img style={styles.icon} src={SearchIcon} />
       </div>
     );
@@ -50,8 +50,6 @@ class SearchBar extends React.Component {
   };
 }
 
-const mapStateToProps = state => {
-  return { cardsById: state.cardsById, currFilter: state.currFilter};
-};
+const mapStateToProps = state => ({ cardsById: state.cardsById, currFilter: state.currFilter });
 
 export default connect(mapStateToProps)(withTranslation()(SearchBar));
