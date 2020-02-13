@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
 import PropTypes from "prop-types";
+import Divider from '@material-ui/core/Divider';
 import { connect } from "react-redux";
 import "./BoardMenu.scss";
 import FaAngleRight from "react-icons/lib/fa/angle-double-right";
@@ -17,13 +18,11 @@ class BoardMenu extends Component {
   openSideBar = () => {
     this.setState({ open: true });
     this.refs.sideNav.style.width = "400px";
-    this.refs.sideNav.style.padding = "0px 20px";
   };
 
   closeSideBar = () => {
     this.setState({ open: false });
     this.refs.sideNav.style.width = "0px";
-    this.refs.sideNav.style.padding = "0px";
   };
 
   render() {
@@ -33,7 +32,6 @@ class BoardMenu extends Component {
           style={{
             backgroundColor: "rgb(245, 246, 247)",
             width: "400px",
-            padding: "0px 20px",
             zIndex: "2",
             transition: "1s",
             bottom: "0%",
@@ -73,6 +71,7 @@ class BoardMenu extends Component {
                 />
               ) : null}
               <UsersList />
+              <Divider />
               <HistoryList />
             </div>
           </div>
