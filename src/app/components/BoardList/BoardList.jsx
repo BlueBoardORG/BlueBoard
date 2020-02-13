@@ -19,11 +19,11 @@ class BoardList extends Component {
 
   componentDidMount = () => {
     const { boards, dispatch } = this.props;
-    boards.forEach(board=>{
+    boards.forEach(board => {
       const boardImageBackground = board.backgroundImage;
-      if(!boardImageBackground){
-        const image = BOARD_BG_URLS[Math.floor(Math.random()*BOARD_BG_URLS.length)];
-        dispatch({ type: "CHANGE_BOARD_IMAGE", payload: { boardId:board._id, backgroundImage: image} });
+      if (!boardImageBackground) {
+        const image = BOARD_BG_URLS[Math.floor(Math.random() * BOARD_BG_URLS.length)];
+        dispatch({ type: "CHANGE_BOARD_IMAGE", payload: { boardId: board._id, backgroundImage: image } });
       }
     })
   }
@@ -31,75 +31,74 @@ class BoardList extends Component {
   getColor = color => {
     const colors = {
       "red": "rgba(80, 50, 50, 0.65)",
-      "pink": "rgba(70, 20, 50, 0.75)",
+      "pink": "#f9989f",
       "blue": "rgba(50, 60, 80, 0.75)",
       "green": "rgba(70, 100, 90, 0.65)"
     }
     return colors[color] || "rgba(255, 255, 255, 0.4)";
   }
-  defaultLabels= () =>{
-    return[{ id: shortid.generate(), title: "בטיפול", color: "violet" },
-    { id: shortid.generate(), title: "כללי", color: "Turquoise" },
-    { id: shortid.generate(), title: "מעקב", color: "yellowgreen" },
-    { id: shortid.generate(), title: "תקלה", color: "Gold" },
-    { id: shortid.generate(), title: "עזרה", color: "Orange" },
-    { id: shortid.generate(), title: "קריטי", color: "tomato" }]
-  }
+  defaultLabels = () => [
+      { id: shortid.generate(), title: "בטיפול", color: "violet" },
+      { id: shortid.generate(), title: "כללי", color: "Turquoise" },
+      { id: shortid.generate(), title: "מעקב", color: "yellowgreen" },
+      { id: shortid.generate(), title: "תקלה", color: "Gold" },
+      { id: shortid.generate(), title: "עזרה", color: "Orange" },
+      { id: shortid.generate(), title: "קריטי", color: "tomato" }]
 
-  checkFormat= (boards) => {
+  checkFormat = (boards) => {
     const { dispatch } = this.props;
     boards.forEach(board => {
-      if(board.labels === undefined){
+      if (board.labels === undefined) {
         const labels = this.defaultLabels();
         dispatch({
           type: "ADD_LABEL_TO_BOARD",
-          payload: { boardId:board._id, labelToAdd:labels }
+          payload: { boardId: board._id, labelToAdd: labels }
         });
-
       }
     });
   }
 
   render = () => {
-    const { boards, listsById, history, shouldAllowAddingBoard=true} = this.props;
+    const { boards, listsById, history, shouldAllowAddingBoard = true } = this.props;
     this.checkFormat(boards);
     return (
-        <div className="boards">
-            {boards.map(board => (
-            <Link
-                key={board._id}
-                className={classnames("board-link", board.color)}
-                style={{backgroundImage: `url(${board.backgroundImage})`, backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundSize: "cover"}}
-                to={`/b/${board._id}/${slugify(board.title, {
-                lower: true
-                })}`}
-            >
-                <div className="board-link-title" style={{backgroundColor: this.getColor(board.color), marginBottom: "5px"}}>
-                {board.title}
-                </div>
-                <div className="mini-board">
-                {board.lists.map(listId => (
-                    <div
-                    key={listId}
-                    className="mini-list"
-                    style={{
-                        height: `${Math.min(
-                        (listsById[listId].cards.length + 1) * 18,
-                        100
-                        )}%`,
-                        backgroundColor: this.getColor(board.color)
-                    }}
-                    />
-                ))}
-                </div>
-            </Link>
-            ))}
-            {this.props.socketConnected && shouldAllowAddingBoard ? (<BoardAdder history={history} />) : ""}
-        </div>
-    )};
+      <div className="boards">
+        {boards.map(board => (
+          <Link
+            key={board._id}
+            className={classnames("board-link", board.color)}
+            style={{ backgroundImage: `url(${board.backgroundImage})`, backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundSize: "cover" }}
+            to={`/b/${board._id}/${slugify(board.title, {
+              lower: true
+            })}`}
+          >
+            <div className="board-link-title" style={{ backgroundColor: this.getColor(board.color), marginBottom: "5px" }}>
+              {board.title}
+            </div>
+            <div className="mini-board">
+              {board.lists.map(listId => (
+                <div
+                  key={listId}
+                  className="mini-list"
+                  style={{
+                    height: `${Math.min(
+                      (listsById[listId].cards.length + 1) * 18,
+                      100
+                    )}%`,
+                    backgroundColor: this.getColor(board.color)
+                  }}
+                />
+              ))}
+            </div>
+          </Link>
+        ))}
+        {this.props.socketConnected && shouldAllowAddingBoard ? (<BoardAdder history={history} />) : ""}
+      </div>
+    )
+  };
 }
 
-const mapStateToProps = ({ listsById,user, socketConnected }) => ({
+const mapStateToProps = ({ listsById, user, socketConnected }) => ({
   listsById,
   user,
   socketConnected

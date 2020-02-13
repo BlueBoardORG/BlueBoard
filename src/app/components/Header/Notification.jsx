@@ -1,5 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
+import IconButton from '@material-ui/core/IconButton';
+
 import {
   Icon,
   Button,
@@ -167,7 +169,7 @@ class Notification extends React.Component {
                           {this.notificationMessage(notification)}
                         </Table.TextCell>
                         <Table.Cell>
-                          <Button
+                          <IconButton
                             onClick={() => this.deleteHandler(notification)}
                             isActive={false}
                             appearance="minimal"
@@ -178,7 +180,7 @@ class Notification extends React.Component {
                               icon="trash"
                               color="danger"
                             />
-                          </Button>
+                          </IconButton>
                         </Table.Cell>
                       </Table.Row>
                     );
@@ -188,7 +190,7 @@ class Notification extends React.Component {
             </Table>
           }
         >
-          <Button isActive={false} appearance="minimal" height={40}>
+          <IconButton isActive={false} appearance="minimal">
             {numOfUnSeenNotifs > 0 ? (
               <Pill color="red" isSolid>
                 {numOfUnSeenNotifs}
@@ -196,11 +198,11 @@ class Notification extends React.Component {
             ) : null}
             <Icon
               appearance="minimal"
-              height={40}
+              fontSize="20px"
               icon="notifications"
               color="#ffffff"
             />
-          </Button>
+          </IconButton>
         </Popover>
       </div>
     );
