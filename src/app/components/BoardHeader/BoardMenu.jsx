@@ -16,12 +16,14 @@ class BoardMenu extends Component {
 
   openSideBar = () => {
     this.setState({ open: true });
-    this.refs.sideNav.style.width = "339px";
+    this.refs.sideNav.style.width = "400px";
+    this.refs.sideNav.style.padding = "0px 20px";
   };
 
   closeSideBar = () => {
     this.setState({ open: false });
     this.refs.sideNav.style.width = "0px";
+    this.refs.sideNav.style.padding = "0px";
   };
 
   render() {
@@ -30,7 +32,8 @@ class BoardMenu extends Component {
         <div
           style={{
             backgroundColor: "rgb(245, 246, 247)",
-            width: "339px",
+            width: "400px",
+            padding: "0px 20px",
             transition: "1s",
             bottom: "0%",
             position: "fixed",
