@@ -1,7 +1,7 @@
 @import "../../variables.scss";
 
 .card-adder-textarea-wrapper {
-  margin: 6px 13px 0 13px;
+  margin: 0px 8px 10px 8px;
 }
 
 .card-adder-textarea {
@@ -16,27 +16,39 @@
   font-size: 16px;
   resize: none;
   overflow: hidden;
+  box-shadow: 1px 1px 1px -1px gray;
+}
+
+#add-icon {
+  margin: 0px 0px 0px 7px;
+}
+
+.MuiButtonBase-root {
 }
 
 .add-card-button {
-  align-self: center;
-  flex-shrink: 0;
-  width: 39px;
-  height: 39px;
-  margin-top: 6px;
-  padding-bottom: 3px;
-  border: none;
-  border-radius: 50%;
-  color: $white;
-  background: $less-transparent-black;
-  font-size: 28px;
-  transition: background 0.1s;
-  cursor: pointer;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+
+  margin: 0px 8px !important;
+  margin-bottom: 7px !important;
+  padding-right: 0px !important;
+  padding-bottom: 2px !important;
+  padding-top: 2px !important;
+
+  .MuiButton-label {
+    justify-content: flex-start;
+    color: gray;
+  }
 }
 
 .add-card-button:hover,
 .add-card-button:focus {
-  background: #4CAF50;
-  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-
+  .MuiButton-label {
+    color: rgb(75, 75, 75);
+  }
+  // background: #4caf50;
+  // box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+  //   0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }

@@ -48,8 +48,8 @@ class List extends Component {
                 <div className="cards-wrapper">
                   <Cards listId={list._id} isAbleToEdit={isAbleToEdit} boardId={boardId} />
                 </div>
+                {isAbleToEdit && <CardAdder listId={list._id} />}
               </div>
-              {isAbleToEdit && <CardAdder listId={list._id} />}
             </div>
             {provided.placeholder}
           </>
