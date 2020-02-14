@@ -2,8 +2,14 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Textarea from "react-textarea-autosize";
-import { Button, Wrapper, Menu, MenuItem } from "react-aria-menubutton";
-import FaTrash from "react-icons/lib/fa/trash";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Button from '@material-ui/core/Button';
 import "./ListHeader.scss";
 import { withTranslation } from "react-i18next";
 
@@ -15,15 +21,24 @@ class ListTitle extends Component {
     cards: PropTypes.arrayOf(PropTypes.string).isRequired,
     dragHandleProps: PropTypes.object,
     dispatch: PropTypes.func.isRequired,
-    isAbleToEdit: PropTypes.bool.isRequired
+    isAbleToEdit: PropTypes.bool.isRequired,
   };
 
   constructor(props) {
     super(props);
     this.state = {
       isOpen: false,
-      newTitle: props.listTitle
+      newTitle: props.listTitle,
+      isDeleteDialogOpen: false
     };
+  }
+
+  handleDeleteDialogOpen = () => {
+    this.setState({ isDeleteDialogOpen: true })
+  }
+
+  handleDeleteDialogClose = () => {
+    this.setState({ isDeleteDialogOpen: false })
   }
 
   handleChange = event => {
@@ -78,7 +93,7 @@ class ListTitle extends Component {
   };
 
   render() {
-    const { isOpen, newTitle } = this.state;
+    const { isOpen, newTitle, isDeleteDialogOpen } = this.state;
     const { dragHandleProps, listTitle, t, isAbleToEdit } = this.props;
     return (
       <div className="list-header">
@@ -97,34 +112,47 @@ class ListTitle extends Component {
             />
           </div>
         ) : (
-          <div
-            {...dragHandleProps}
-            role="button"
-            tabIndex={0}
-            onClick={this.openTitleEditor}
-            onKeyDown={event => {
-              this.handleButtonKeyDown(event);
-              dragHandleProps && dragHandleProps.onKeyDown(event);
-            }}
-            className="list-title-button"
-          >
-            {listTitle}
-          </div>
-        )}
+            <div
+              {...dragHandleProps}
+              role="button"
+              tabIndex={0}
+              onClick={this.openTitleEditor}
+              onKeyDown={event => {
+                this.handleButtonKeyDown(event);
+                dragHandleProps && dragHandleProps.onKeyDown(event);
+              }}
+              className="list-title-button"
+            >
+              {listTitle}
+            </div>
+          )}
         {isAbleToEdit && (
-          <Wrapper
-            className="delete-list-wrapper"
-            onSelection={this.deleteList}
-          >
-            <Button className="delete-list-button">
-              <FaTrash />
-            </Button>
-            <Menu className="delete-list-menu">
-              <div className="delete-list-header">{t("are_you_sure")}</div>
-              <MenuItem className="delete-list-confirm">{t("Delete")}</MenuItem>
-            </Menu>
-          </Wrapper>
-        )}
+          [
+            <IconButton onClick={this.handleDeleteDialogOpen} aria-label="delete">
+              <DeleteIcon />
+            </IconButton>,
+            <Dialog
+              open={isDeleteDialogOpen}
+              onClose={this.handleDeleteDialogClose}
+              aria-labelledby="delete-list"
+              aria-describedby="delete-list-dialog"
+            >
+              <DialogTitle id="alert-dialog-title">{t("LIST_REMOVAL")} {` "${listTitle}"`}</DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  {t("are_you_sure")}
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={this.handleDeleteDialogClose} color="primary">
+                  {t("Cancel")}
+                </Button>
+                <Button onClick={this.deleteList} color="secondary" autoFocus>
+                  {t("Delete")}
+                </Button>
+              </DialogActions>
+            </Dialog>
+          ])}
       </div>
     );
   }
