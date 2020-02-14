@@ -4,15 +4,16 @@ import PropTypes from "prop-types";
 import Modal from "react-modal";
 import shortid from "shortid";
 import FaPencil from "react-icons/lib/fa/pencil";
-import FaTrash from "react-icons/lib/fa/trash";
-import FaUserPlus from "react-icons/lib/fa/user-plus";
-import { FaCheckSquare } from "react-icons/lib/fa";
+import DeleteIcon from '@material-ui/icons/Delete';
+import CheckboxIcon from '@material-ui/icons/CheckBox';
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import PeopleIcon from '@material-ui/icons/People';
+import LabelIcon from '@material-ui/icons/Label';
+
 import { withTranslation } from "react-i18next";
-import MdAlarm from "react-icons/lib/md/access-alarm";
 import Calendar from "./Calendar";
 import ClickOutside from "../ClickOutside/ClickOutside";
 import UserPicker from "../UserPicker/UserPicker";
-import colorIcon from "../../../assets/images/color-icon.png";
 import "./CardOptions.scss";
 import LabelEditor from "./LabelEditor";
 
@@ -53,7 +54,7 @@ class CardOptions extends Component {
 
   addLabel = label => {
     const { dispatch, card } = this.props;
-    const cardLabels = card.labels || [];  
+    const cardLabels = card.labels || [];
     if (cardLabels.includes(label.id)) {
       dispatch({
         type: "DELETE_LABEL",
@@ -72,7 +73,7 @@ class CardOptions extends Component {
     if (!this.state.isEditToggle) {
       this.addLabel(label)
     }
-    else if( this.state.setLabel && this.state.setLabel.id===label.id){
+    else if (this.state.setLabel && this.state.setLabel.id === label.id) {
       this.setState({ setLabel: null });
       this.setState({ isEditOpen: false });
     }
@@ -107,15 +108,15 @@ class CardOptions extends Component {
 
   toggelEditMode = () => {
     this.setState({ isEditToggle: !this.state.isEditToggle });
-    if(this.state.isEditOpen){
+    if (this.state.isEditOpen) {
       this.setState({ isEditOpen: !this.state.isEditOpen });
-      this.setState({setLabel: null});
+      this.setState({ setLabel: null });
     }
   }
 
   toggelEdit = () => {
     this.setState({ isEditOpen: !this.state.isEditOpen });
-    this.setState({setLabel:null});
+    this.setState({ setLabel: null });
   }
 
 
@@ -155,7 +156,7 @@ class CardOptions extends Component {
       boardId
     } = this.props;
 
-    const { isEditOpen, isCalendarOpen, isCheckOpen, isAssignOpen,isEditToggle,setLabel } = this.state;
+    const { isEditOpen, isCalendarOpen, isCheckOpen, isAssignOpen, isEditToggle, setLabel } = this.state;
 
     const calendarStyle = {
       content: {
@@ -176,14 +177,12 @@ class CardOptions extends Component {
       <div
         className="options-list"
         style={{
-          alignItems: isCardNearRightBorder ? "flex-end" : "flex-start"
+          alignItems: isCardNearRightBorder ? "flex-start" : "flex-end"
         }}
       >
         <div>
           <button onClick={this.deleteCard} className="options-list-button btn-3">
-            <div className="modal-icon">
-              <FaTrash />
-            </div>
+            <DeleteIcon />
             &nbsp;{t("Delete")}
           </button>
         </div>
@@ -198,7 +197,7 @@ class CardOptions extends Component {
             aria-haspopup
             aria-expanded={isColorPickerOpen}
           >
-            <img src={colorIcon} alt="colorwheel" className="modal-icon" />
+            <LabelIcon />
             &nbsp;{t("Tags")}
           </button>
           {isColorPickerOpen && (
@@ -208,79 +207,75 @@ class CardOptions extends Component {
 
             >
               <div onKeyDown={this.handleKeyDown}>
-              <div
-                className="modal-color-picker"
-              >
-                <button
-                  className="color-picker-color"
-                  onClick={() => this.addLabelToBoard({ id: shortid.generate(), title: "תגית חדשה", color: "gray" })} >+</button>
-                <button
-                  className="color-picker-color"
-                  onClick={() => this.toggelEditMode()}
-                  style={isEditToggle?{
-                    shadow:"3px 3px 6px green",
-                    border: "2px green solid"
-                  }:null} ><FaPencil /></button>
+                <div
+                  className="modal-color-picker"
+                >
+                  <button
+                    className="color-picker-color"
+                    onClick={() => this.addLabelToBoard({ id: shortid.generate(), title: "תגית חדשה", color: "gray" })} >+</button>
+                  <button
+                    className="color-picker-color"
+                    onClick={() => this.toggelEditMode()}
+                    style={isEditToggle ? {
+                      shadow: "3px 3px 6px green",
+                      border: "2px green solid"
+                    } : null} ><FaPencil /></button>
 
-                {/* eslint-enable */}
-                {
-                  this.props.boardLabels.map((label, index) => {
-                    const labelName = label.title;
-                    const labelcolor = label.color;
-                    const labelId=label.id;
-                    const opacity =  (card.labels && card.labels.includes(labelId)) ? 0.5 : 1;
-                   
-                    return (
-                      <button
-                        key={index}
-                        style={(setLabel && setLabel.id===labelId)
-                          ?{
-                          background: labelcolor,
-                          fontSize: 10,
-                          border: "2px red solid",
-                          opacity: opacity
-                          }
-                          :{
-                            background: labelcolor,
-                            fontSize: 10,
-                            opacity: opacity
-                          } }
-                        className={isEditToggle ? "color-picker-color-animation" : "color-picker-color"}
-                        onClick={() => this.editModecheck(label)}
-                      >{labelName}</button>);
-                  })}
-                
-              </div>
-              <div>
-                  { isEditOpen
-                    ? <LabelEditor  action={this.toggelEdit}  cardId={card._id} boardId={boardId} label={setLabel} />
+                  {/* eslint-enable */}
+                  {
+                    this.props.boardLabels.map((label, index) => {
+                      const labelName = label.title;
+                      const labelcolor = label.color;
+                      const labelId = label.id;
+                      const opacity = (card.labels && card.labels.includes(labelId)) ? 0.5 : 1;
+
+                      return (
+                        <button
+                          key={index}
+                          style={(setLabel && setLabel.id === labelId)
+                            ? {
+                              background: labelcolor,
+                              fontSize: 10,
+                              border: "2px red solid",
+                              opacity
+                            }
+                            : {
+                              background: labelcolor,
+                              fontSize: 10,
+                              opacity
+                            }}
+                          className={isEditToggle ? "color-picker-color-animation" : "color-picker-color"}
+                          onClick={() => this.editModecheck(label)}
+                        >{labelName}</button>);
+                    })}
+
+                </div>
+                <div>
+                  {isEditOpen
+                    ? <LabelEditor action={this.toggelEdit} cardId={card._id} boardId={boardId} label={setLabel} />
                     : null
                   }
                 </div>
-            </div>
+              </div>
             </ClickOutside>
           )}
         </div>
         <div>
           <button onClick={this.toggleCalendar} className="options-list-button btn-3">
-            <div className="modal-icon">
-              <MdAlarm />
-            </div>
+            <CalendarTodayIcon />
             &nbsp;{t("Due-Date")}
           </button>
         </div>
         <div>
           <button onClick={this.toggleAssign} className="options-list-button btn-3">
-            <div className="modal-icon">
-              <FaUserPlus />
-            </div>
+            <PeopleIcon />
             &nbsp;{t("CardOptions.assign")}
           </button>
         </div>
         <div>
           <button onClick={this.toggleCheck} className="options-list-button btn-3">
             <div className="modal-icon">
-              <FaCheckSquare />
+              <CheckboxIcon />
             </div>&nbsp;{t("CardOptions.check_list")}
           </button>
         </div>
