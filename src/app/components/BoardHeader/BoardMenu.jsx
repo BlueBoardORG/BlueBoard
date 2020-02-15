@@ -1,14 +1,16 @@
 import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
-import PropTypes from "prop-types";
 import Divider from '@material-ui/core/Divider';
 import { connect } from "react-redux";
+import IconButton from '@material-ui/core/IconButton';
+import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
+import Button from '@material-ui/core/Button';
 import "./BoardMenu.scss";
-import FaAngleRight from "react-icons/lib/fa/angle-double-right";
-import FaAngleLeft from "react-icons/lib/fa/angle-double-left";
 import UsersList from "../Users/UsersList";
-import { timingSafeEqual } from "crypto";
 import HistoryList from "../History/HistoryList";
+
+const sideNavWidth = "400px";
 
 class BoardMenu extends Component {
   state = {
@@ -17,7 +19,7 @@ class BoardMenu extends Component {
 
   openSideBar = () => {
     this.setState({ open: true });
-    this.refs.sideNav.style.width = "400px";
+    this.refs.sideNav.style.width = sideNavWidth;
   };
 
   closeSideBar = () => {
@@ -31,14 +33,14 @@ class BoardMenu extends Component {
         <div
           style={{
             backgroundColor: "rgb(245, 246, 247)",
-            width: "400px",
+            width: sideNavWidth,
+            height: "calc(100vh - 50px)",
             zIndex: "2",
-            transition: "1s",
+            transition: "0.5s",
             bottom: "0%",
             position: "fixed",
-            borderTopRightRadius: "6px",
             left: "0px",
-            top: "111px"
+            top: "50px"
           }}
           ref="sideNav"
         >
@@ -56,19 +58,19 @@ class BoardMenu extends Component {
                 width: "100%"
               }}
             />
-            <div>
+            <div style={{ height: "80vh" }}>
               {this.state.open ? (
-                <FaAngleLeft
-                  className="hamburger-button"
+                <IconButton
+                  onClick={this.closeSideBar}
                   style={{
                     position: "absolute",
                     zIndex: "3",
-                    right: "0%",
-                    top: "1.5%",
-                    color: "black"
+                    right: "0px",
+                    top: "10px",
                   }}
-                  onClick={this.closeSideBar}
-                />
+                >
+                  <KeyboardArrowLeftIcon />
+                </IconButton>
               ) : null}
               <UsersList />
               <Divider />
@@ -77,16 +79,21 @@ class BoardMenu extends Component {
           </div>
         </div>
         {!this.state.open ? (
-          <FaAngleRight
-            className="hamburger-button"
+          <Button
+            onClick={this.openSideBar}
+            color="primary"
             style={{
               position: "absolute",
               zIndex: "3",
-              left: "0%",
-              top: "9.5%",
-              color: "black"
+              left: "0px",
+              top: "164px",
+              height: "45px",
+              backgroundColor: "#36363694",
+              borderBottomLeftRadius: "0px",
+              borderTopLeftRadius: "0px",
+              color: "#ffffffe6"
             }}
-            onClick={this.openSideBar}
+            endIcon={<KeyboardArrowRightIcon />}
           />
         ) : null}
       </React.Fragment>

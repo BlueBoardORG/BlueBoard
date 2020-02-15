@@ -1,30 +1,30 @@
 #history-list-container {
-    height: 58vh;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    &::-webkit-scrollbar {
-        width: 10px;
-        height: 10px;
-        background: #ddd;
+  height: calc(100vh - 276px);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    background: #ddd;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background: #aaa;
+  }
+  #history-container {
+    #history-item {
+      padding: 0px 5px;
+      display: flex;
+      p {
+        flex: 1 1 0;
+        padding-left: 10px;
+      }
     }
-    
-    &::-webkit-scrollbar-thumb {
-        border-radius: 3px;
-        background: #aaa;
-    }
-    #history-container {
-        #history-item {
-            padding: 0px 5px;
-            display: flex;
-            p {
-                flex: 1 1 0;
-                padding-left: 10px;
-            }
-        }
-    }
+  }
 }
 #title {
-    font-weight: 600;
-    padding: 20px;
+  font-weight: 600;
+  padding: 20px;
 }
