@@ -65,9 +65,6 @@ class BoardArchiver extends Component {
           data-place="bottom"
         >
           <ArchiveIcon />
-          {/* <div className="board-header-right-text">
-            &nbsp;{t("archiveBoard")}
-          </div> */}
         </Button>
         <ReactTooltip />
 
