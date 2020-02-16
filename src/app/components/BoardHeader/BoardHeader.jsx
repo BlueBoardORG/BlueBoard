@@ -19,8 +19,8 @@ const BoardHeader = ({ isAbleToEdit,iFrameAction ,chatRoomId}) => (
       {(isAbleToEdit && chatRoomId) && <div className="vertical-line" />}
       {isAbleToEdit && <Watch />}
       {isAbleToEdit && <div className="vertical-line" />}
-      {isAbleToEdit && <ColorPicker />}
-      {isAbleToEdit && <div className="vertical-line" />}
+      {/* {isAbleToEdit && <ColorPicker />}
+      {isAbleToEdit && <div className="vertical-line" />} */}
       {isAbleToEdit && <ImagePicker />}
       {isAbleToEdit && <div className="vertical-line" />}
       {isAbleToEdit && <BoardArchiver />}

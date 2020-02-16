@@ -7,12 +7,16 @@
   border-radius: 3px;
   color: $black-text;
   background: $white;
-  box-shadow: 1px 1px 1px -1px gray;
+  box-shadow: 2px 2px 2px rgba(128, 128, 128, 0.192);
   font-size: 16px;
   overflow-wrap: break-word;
   transition: box-shadow 0.05s;
   user-select: none;
   cursor: pointer !important;
+}
+
+.card-title:hover {
+  background-color: #f1f2f5;
 }
 
 .card-title:focus {
