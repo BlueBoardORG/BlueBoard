@@ -70,7 +70,7 @@ class BoardLeave extends Component {
         <Dialog
           open={this.state.isDialogOpen}
           onClose={this.handleDialogClose}
-          aria-labelledby="delete-list"
+          aria-labelledby="delete-list" 
           aria-describedby="delete-list-dialog"
         >
           <DialogTitle id="alert-dialog-title">{t("BoardLeave.Leave")}</DialogTitle>

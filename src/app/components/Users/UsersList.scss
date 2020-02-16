@@ -23,25 +23,27 @@
   margin-bottom: 10px;
 }
 
+#users-tree {
+  &.MuiPaper-root {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  &.MuiExpansionPanelDetails-root {
+    padding: 8px 16px !important;
+  }
+}
+
 .MuiExpansionPanelSummary-root {
   padding: 0 16px 0 24px !important;
-}
-
-.MuiPaper-root {
-  background: transparent !important;
-  box-shadow: none !important;
-  border: none !important;
-}
-
-.MuiExpansionPanelDetails-root {
-  padding: 8px 16px !important;
 }
 
 .MuiTypography-body1 {
   color: rgba(0, 0, 0, 0.54);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
   font-size: 17px !important;
-  font-weight: 500 !important; 
+  font-weight: 500 !important;
 }
 
 .MuiListSubheader-root {
@@ -54,16 +56,15 @@
   padding-right: 5px;
   max-height: 15vh;
   overflow-y: auto;
+
   &::-webkit-scrollbar {
     width: 10px;
     height: 10px;
     background: #ddd;
   }
-  
+
   &::-webkit-scrollbar-thumb {
     border-radius: 3px;
     background: #aaa;
   }
 }
-
-

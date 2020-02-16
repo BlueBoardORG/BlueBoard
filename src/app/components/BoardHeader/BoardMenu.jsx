@@ -52,17 +52,6 @@ class BoardMenu extends Component {
             <h3 style={{ textAlign: "center", color: "black", marginBottom: "35px", letterSpacing: "1.1px", fontWeight: "500", fontSize: "22px" }}>
               {this.props.t("Menu")}
             </h3>
-            <hr
-              style={{
-                backgroundColor: "rgba(9,45,66,.13)",
-                border: 0,
-                color: "black",
-                height: "1px",
-                margin: "16px 0",
-                padding: 0,
-                width: "100%"
-              }}
-            />
             <div style={{ height: "80vh" }}>
               {this.state.open ? (
                 <IconButton
@@ -70,8 +59,8 @@ class BoardMenu extends Component {
                   style={{
                     position: "absolute",
                     zIndex: "3",
-                    right: "10px",
-                    top: "10px",
+                    left: "8px",
+                    top: "8px",
                   }}
                 >
                   <KeyboardArrowLeftIcon />

@@ -128,7 +128,7 @@ class ListTitle extends Component {
           )}
         {isAbleToEdit && (
           [
-            <IconButton onClick={this.handleDeleteDialogOpen} aria-label="delete">
+            <IconButton style={{marginTop: "2px", marginLeft:"2px"}} onClick={this.handleDeleteDialogOpen} aria-label="delete">
               <DeleteIcon />
             </IconButton>,
             <Dialog

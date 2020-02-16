@@ -112,7 +112,7 @@ class HistoryList extends Component {
               {history.map((historyItem, key) => (
                 <ListItem key={key} button>
                   <div id="history-item">
-                    <div className="user">
+                    <div className="user" data-tip={boardUsersData[historyItem.userId] ? (boardUsersData[historyItem.userId]).name : null}>
                       {boardUsersData[historyItem.userId] ? ((boardUsersData[historyItem.userId]).name.split(" ")[0][0]) : null}
                       {boardUsersData[historyItem.userId] ? ((boardUsersData[historyItem.userId]).name.split(" ")[1][0]) : null}
                     </div>

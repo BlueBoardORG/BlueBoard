@@ -1,5 +1,5 @@
 #history-list-container {
-  height: calc(100vh - 276px);
+  height: calc(100vh - 200px);
   display: flex;
   flex-direction: column;
   overflow-y: auto;
@@ -50,6 +50,8 @@ h4 {
 .user {
   height: 50px;
   width: 50px;
+  min-height: 50px;
+  min-width: 50px;
   background-color: aqua;
   border-radius: 50%;
   display: inline-block;

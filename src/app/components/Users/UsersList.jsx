@@ -64,8 +64,7 @@ class UsersList extends Component {
     };
 
     return (
-      // <Fragment>
-      <ExpansionPanel>
+      <ExpansionPanel id="users-tree">
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
@@ -104,36 +103,6 @@ class UsersList extends Component {
           </Typography>
         </ExpansionPanelDetails>
       </ExpansionPanel>
-
-      //   <h4>{t("UsersList.title")}</h4>
-      //   <div className="user-list-wrapper">
-      //     <div className="name-holder">
-      //       {this._usersNames()}
-      //       {this.isCurrentUserAdmin() && (
-      //         <div>
-      //           <span
-      //             onClick={this.toggleModal}
-      //             data-tip={t("UsersList.add_user_tip")}
-      //             className="dot add-user"
-      //           >
-      //             +
-      //         </span>
-      //           <ReactTooltip />
-      //         </div>
-      //       )}
-      //     </div>
-
-      //     <Modal
-      //       isOpen={isModalOpen}
-      //       onRequestClose={this.toggleModal}
-      //       overlayClassName="modal-underlay"
-      //       className="user-add-modal"
-      //       style={modalStyle}
-      //     >
-      //       <UserAdder toggleModal={this.toggleModal} />
-      //     </Modal>
-      //   </div>
-      // </Fragment>
     );
   }
 }

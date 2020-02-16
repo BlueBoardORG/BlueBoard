@@ -4,12 +4,24 @@ import { withTranslation } from "react-i18next";
 import ReactTooltip from "react-tooltip";
 import { Button, Wrapper, Menu, MenuItem } from "react-aria-menubutton";
 import { loadBoardUsersData } from "../../actions/boardActions";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import { ADMIN_ROLE } from "../../../constants";
 import "./UsersList.scss";
 
 const COLORS = ["red", "orange", "green", "blue", "purple", "black"];
 
 class UserAvatar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isDialogOpen: false,
+    }
+  }
+
   handleSelection = action => {
     const { t } = this.props;
     if (action === t("UserAvatar.menu.kick")) {
@@ -17,6 +29,14 @@ class UserAvatar extends Component {
     }
     return;
   };
+
+  handleDialogClose = () => {
+    this.setState({ isDialogOpen: false });
+  }
+
+  handleDialogOpen = () => {
+    this.setState({ isDialogOpen: true });
+  }
 
   deleteUser = () => {
     const { dispatch, user, currentBoardId, boardUsers } = this.props;
@@ -38,17 +58,17 @@ class UserAvatar extends Component {
   hashCode = (str) => { // java String#hashCode
     var hash = 0;
     for (var i = 0; i < str.length; i++) {
-       hash = str.charCodeAt(i) + ((hash << 5) - hash);
+      hash = str.charCodeAt(i) + ((hash << 5) - hash);
     }
     return hash;
-  } 
+  }
 
   intToRGB = (i) => {
-      var c = (i & 0x00FFFFFF)
-          .toString(16)
-          .toUpperCase();
+    var c = (i & 0x00FFFFFF)
+      .toString(16)
+      .toUpperCase();
 
-      return "00000".substring(0, 6 - c.length) + c;
+    return "00000".substring(0, 6 - c.length) + c;
   }
 
   render() {
@@ -90,6 +110,25 @@ class UserAvatar extends Component {
             {isCurrentUserAdmin && currentUser._id !== user._id && deleteButton}
           </Menu>
         </Wrapper>
+        {/* <Dialog
+          open={this.state.isDialogOpen}
+          onClose={this.handleDialogClose}
+        >
+          <DialogTitle>{t("UserAvatar.menu.title")}</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              {t("are_you_sure")}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleDialogClose} color="primary">
+              {t("Cancel")}
+            </Button>
+            <Button onClick={this.handleSelection} color="secondary" autoFocus>
+              {t("BoardLeave.short")}
+            </Button>
+          </DialogActions>
+        </Dialog> */}
       </div>
     );
   }

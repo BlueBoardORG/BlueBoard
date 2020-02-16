@@ -217,8 +217,6 @@ class CardOptions extends Component {
                     className="color-picker-color"
                     onClick={() => this.toggelEditMode()}
                     style={isEditToggle ? {
-                      shadow: "3px 3px 6px green",
-                      border: "2px green solid"
                     } : null} ><FaPencil /></button>
 
                   {/* eslint-enable */}
