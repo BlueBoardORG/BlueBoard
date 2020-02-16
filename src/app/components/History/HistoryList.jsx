@@ -109,8 +109,8 @@ class HistoryList extends Component {
           <div id="history-list-container" onScroll={this.trackScrolling}>
             <div id="history-container" >
               {history.map((historyItem, key) => (
-                <ListItem button>
-                  <div id="history-item" key={key}>
+                <ListItem key={key} button>
+                  <div id="history-item">
                     <p>{(boardUsersData[historyItem.userId] || { name: "" }).name}</p>
                     <p>{t(historyItem.action)}</p>
                     {this.displayDate(historyItem.date)}
