@@ -105,7 +105,7 @@
   "BoardNotFound.homepage": "חזור לדף הבית",
   "BoardHeaders.colorPicker": "בחר צבע לסרגל",
   "BoardHeaders.imagePicker": "בחר תמונת רקע ללוח",
-  "BoardHeaders.boardArchiver": "הארכיון הוא אישי ולא ישפיע על משתמשים נוספים",
+  "BoardHeaders.boardArchiver": "הכנס לוח לארכיון עוברך",
   "BoardHeaders.BoardDeleter": "הלוח ימחק עבור כל משתמשי הלוח",
   "BoardHeaders.BoardLeave": "הלוח ימחק עבורך בלבד!",
   "BoardHeaders.watch": "בחר את כמות ההתראות שלוח זה ייצר עבורך"
