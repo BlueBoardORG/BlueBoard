@@ -30,6 +30,13 @@ class Notification extends React.Component {
     });
   }
 
+  //   .bg-clr_ec4c47 {
+  //     background-color: #ec4c47;
+  //     position: absolute;
+  //     top: 0px;
+  //     right: 0px;
+  // }
+
   fetchNotificationsFromDB() {
     fetch("/api/notifications/getByUserId", {
       method: "POST",
@@ -124,6 +131,11 @@ class Notification extends React.Component {
       },
       icon: {
         height: "25px"
+      },
+      note: {
+        position: "absolute",
+        top: "0px",
+        right: "0px"
       }
     };
 
@@ -191,7 +203,7 @@ class Notification extends React.Component {
         >
           <IconButton style={{ background: "hsla(0, 0%, 100%, .3)" }} isActive={false} appearance="minimal">
             {numOfUnSeenNotifs > 0 ? (
-              <Pill color="red" isSolid>
+              <Pill color="red" style={styles.note} isSolid>
                 {numOfUnSeenNotifs}
               </Pill>
             ) : null}
