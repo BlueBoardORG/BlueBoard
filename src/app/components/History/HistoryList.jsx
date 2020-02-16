@@ -14,6 +14,7 @@ import "./HistoryList.scss";
 import socket from '../../socketIOHandler';
 import UserAvatar from "../Users/UserAvatar";
 import { HISTORY_ITEMS_PER_FETCH } from "../../../constants";
+import { getColorFromString } from '../../helpers/colorFromString';
 
 class HistoryList extends Component {
   static propTypes = {};
@@ -112,7 +113,7 @@ class HistoryList extends Component {
               {history.map((historyItem, key) => (
                 <ListItem key={key} button>
                   <div id="history-item">
-                    <div className="user" data-tip={boardUsersData[historyItem.userId] ? (boardUsersData[historyItem.userId]).name : null}>
+                    <div className="user" data-tip={boardUsersData[historyItem.userId] ? (boardUsersData[historyItem.userId]).name : null} style={{ backgroundColor: getColorFromString(boardUsersData[historyItem.userId] || "")}}>
                       {boardUsersData[historyItem.userId] ? ((boardUsersData[historyItem.userId]).name.split(" ")[0][0]) : null}
                       {boardUsersData[historyItem.userId] ? ((boardUsersData[historyItem.userId]).name.split(" ")[1][0]) : null}
                     </div>
