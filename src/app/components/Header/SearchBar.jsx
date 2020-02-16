@@ -29,7 +29,7 @@ class SearchBar extends React.Component {
         background: "transparent",
         color: "white",
         border: "none",
-        fontSize: "18px",
+        fontSize: "20px",
         outline: "none"
       },
       icon: {
@@ -39,8 +39,8 @@ class SearchBar extends React.Component {
     const { t } = this.props;
     return (
       <div style={styles.container}>
-        <input placeholder={t("SearchBar.placeholder")} style={styles.text} onChange={this._onChangeText} value={this.props.currFilter} />
-        <SearchIcon color="white"></SearchIcon>
+        <input placeholder={t("SearchBar.placeholder")} onChange={this._onChangeText} style={styles.text} value={this.props.currFilter} />
+        <SearchIcon color="white" />
       </div>
     );
   }

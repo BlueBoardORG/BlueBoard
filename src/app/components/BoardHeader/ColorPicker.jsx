@@ -6,9 +6,9 @@ import ReactTooltip from "react-tooltip";
 import { Button, Wrapper, Menu, MenuItem } from "react-aria-menubutton";
 import classnames from "classnames";
 import FaCheck from "react-icons/lib/fa/check";
-import colorIcon from "../../../assets/images/color-icon.png";
 import "./ColorPicker.scss";
 import { withTranslation } from "react-i18next";
+import ColorLensIcon from '@material-ui/icons/ColorLens';
 
 class ColorPicker extends Component {
   static propTypes = {
@@ -38,10 +38,10 @@ class ColorPicker extends Component {
           data-tip={t("BoardHeaders.colorPicker")} 
           data-place="bottom"
         >
-          <img src={colorIcon} alt="colorwheel" className="modal-icon" />
-          <div className="board-header-right-text">
+          <ColorLensIcon />
+          {/* <div className="board-header-right-text">
             &nbsp;{t('Color')} &nbsp;&#9662;
-          </div>
+          </div> */}
         </Button>
         <ReactTooltip/>
         <Menu className="color-picker-menu">

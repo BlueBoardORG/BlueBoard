@@ -10,6 +10,7 @@ import { withTranslation } from "react-i18next";
 import imageIcon from "../../../assets/images/image-icon.png";
 import "./ColorPicker.scss";
 import { BOARD_BG_URLS } from "../../../constants";
+import ImageIcon from '@material-ui/icons/Image';
 
 class ImagePicker extends Component {
   static propTypes = {
@@ -38,10 +39,10 @@ class ImagePicker extends Component {
           data-tip={t("BoardHeaders.imagePicker")} 
           data-place="bottom"
         >
-          <img src={imageIcon} alt="colorwheel" className="modal-icon" style={{width: "16px"}}/>
-          <div className="board-header-right-text">
+          <ImageIcon />
+          {/* <div className="board-header-right-text">
             &nbsp;{t('Image')} &nbsp;&#9662;
-          </div>
+          </div> */}
         </Button>
         <ReactTooltip/>
         <Menu className="color-picker-menu">

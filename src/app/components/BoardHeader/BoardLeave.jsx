@@ -7,6 +7,7 @@ import ReactTooltip from "react-tooltip";
 import { Button, Wrapper, Menu, MenuItem } from "react-aria-menubutton";
 import { withTranslation } from "react-i18next";
 import FaSignOut from "react-icons/lib/fa/sign-out";
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import "./BoardLeave.scss";
 
 class BoardLeave extends Component {
@@ -46,12 +47,10 @@ class BoardLeave extends Component {
           data-place="bottom"
           data-multiline={true}
         >
-          <div className="modal-icon">
-            <FaSignOut />
-          </div>
-          <div className="board-header-right-text">
+          <ExitToAppIcon />
+          {/* <div className="board-header-right-text">
             &nbsp;{t("BoardLeave.Leave")}
-          </div>
+          </div> */}
         </Button>
         <ReactTooltip />
         <Menu className="board-leave-menu">

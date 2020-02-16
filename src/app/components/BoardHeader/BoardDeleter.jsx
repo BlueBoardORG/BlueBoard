@@ -7,6 +7,7 @@ import { Button, Wrapper, Menu, MenuItem } from "react-aria-menubutton";
 import { withTranslation } from "react-i18next";
 import FaTrash from "react-icons/lib/fa/trash";
 import "./BoardDeleter.scss";
+import DeleteIcon from '@material-ui/icons/Delete';
 
 class BoardDeleter extends Component {
   static propTypes = {
@@ -36,12 +37,10 @@ class BoardDeleter extends Component {
           data-tip={t("BoardHeaders.BoardDeleter")} 
           data-place="bottom"
         >
-          <div className="modal-icon">
-            <FaTrash />
-          </div>
-          <div className="board-header-right-text">
+          <DeleteIcon />
+          {/* <div className="board-header-right-text">
             &nbsp;{t("BoardDeleter.delete")}
-          </div>
+          </div> */}
         </Button>
         <ReactTooltip/>
         <Menu className="board-deleter-menu">

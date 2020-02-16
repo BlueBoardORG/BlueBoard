@@ -11,6 +11,7 @@ import {
   Table,
 } from "evergreen-ui";
 import "./Watch.scss";
+import VisibilityIcon from '@material-ui/icons/Visibility';
 
 
 const convertTitleToMode = (modeTitle) => {
@@ -122,14 +123,9 @@ class Watch extends Component {
             </Pane>
           }
         >
-          <Button isActive={false} appearance="minimal" height={40} data-tip={t("BoardHeaders.watch")} data-place="bottom">
-            <Icon
-              appearance="minimal"
-              height={40}
-              icon="eye-open"
-              color="#ffffff"
-            />
-            <div className="watch-header">{t("Watch.watch")}</div>
+          <Button isActive={false} appearance="minimal" data-tip={t("BoardHeaders.watch")} data-place="bottom">
+            <VisibilityIcon style={{ color: "#ffffff" }} />
+            {/* <div className="watch-header">{t("Watch.watch")}</div> */}
           </Button>
         </Popover>
       </div>

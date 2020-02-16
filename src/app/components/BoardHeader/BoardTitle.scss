@@ -19,7 +19,10 @@
 .board-title-text {
   margin: 0;
   color: $white;
-  font-size: 20px;
+  font-size: 22px;
+  letter-spacing: 1.1px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 500;
   overflow: hidden;
   text-overflow: ellipsis;
   overflow-wrap: break-word;
@@ -35,4 +38,8 @@
   font-size: 20px;
   font-weight: 700;
   font-family: inherit;
+}
+
+.board-title-input:focus {
+  outline: none;
 }

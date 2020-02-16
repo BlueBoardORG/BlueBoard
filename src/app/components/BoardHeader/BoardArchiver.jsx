@@ -43,11 +43,11 @@ class BoardArchiver extends Component {
           data-place="bottom"
         >
           <div className="modal-icon">
-            <FaArchive />
+            <FaArchive/>
           </div>
-          <div className="board-header-right-text">
+          {/* <div className="board-header-right-text">
             &nbsp;{t("archiveBoard")}
-          </div>
+          </div> */}
         </Button>
         <ReactTooltip/>
         <Menu className="board-deleter-menu">
