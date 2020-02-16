@@ -7,6 +7,7 @@ import BoardLeave from "./BoardLeave";
 import BoardArchiver from "./BoardArchiver";
 import hiIcon from "../../../assets/images/Hi.png";
 import Watch from "./Watch";
+import BoardMenu from "./BoardMenu";
 
 import "./BoardHeader.scss";
 
@@ -28,6 +29,8 @@ const BoardHeader = ({ isAbleToEdit,iFrameAction ,chatRoomId}) => (
       {isAbleToEdit && <BoardDeleter />}
       {isAbleToEdit && <div className="vertical-line" />}
       <BoardLeave />
+      <div className="vertical-line" />
+      <BoardMenu />
     </div>
   </div>
 );

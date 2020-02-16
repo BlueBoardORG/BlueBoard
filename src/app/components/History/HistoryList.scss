@@ -3,6 +3,7 @@
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+
   &::-webkit-scrollbar {
     width: 10px;
     height: 10px;
@@ -13,18 +14,50 @@
     border-radius: 3px;
     background: #aaa;
   }
+
   #history-container {
     #history-item {
       padding: 0px 5px;
       display: flex;
+
       p {
         flex: 1 1 0;
-        padding-left: 10px;
+        margin-top: -10px;
+        color: rgb(172, 172, 172);
       }
     }
   }
 }
-#title {
-  font-weight: 600;
-  padding: 20px;
+
+h4 {
+  padding-top: 0px;
+  color: rgb(110, 110, 110);
+  font-weight: 500;
+}
+
+#text-container {
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  margin-top: -13px;
+  padding-right: 10px;
+  letter-spacing: 0.5px;
+  font-weight: 200;
+  text-align: right;
+}
+
+.user {
+  height: 50px;
+  width: 50px;
+  background-color: aqua;
+  border-radius: 50%;
+  display: inline-block;
+  margin-top: 7px;
+  line-height: 50px;
+  color: #fff;
+  text-align: center;
+  font-weight: 700;
+  margin-left: 10px;
+  cursor: pointer;
 }

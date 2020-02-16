@@ -1,13 +1,18 @@
 import PropTypes from "prop-types";
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
 import Modal from "react-modal";
 import { connect } from "react-redux";
-import ReactTooltip from "react-tooltip";
 import { ADMIN_ROLE } from "../../../constants";
 import UserAdder from "./UserAdder";
 import UserAvatar from "./UserAvatar";
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import "./UsersList.scss";
+import AddIcon from '@material-ui/icons/Add';
 
 class UsersList extends Component {
   static propTypes = {
@@ -59,36 +64,76 @@ class UsersList extends Component {
     };
 
     return (
-      <Fragment>
-        <h4>{t("UsersList.title")}</h4>
-        <div className="user-list-wrapper">
-          <div className="name-holder">
-            {this._usersNames()}
-            {this.isCurrentUserAdmin() && (
-              <div>
-                <span
-                  onClick={this.toggleModal}
-                  data-tip={t("UsersList.add_user_tip")}
-                  className="dot add-user"
-                >
-                  +
-              </span>
-                <ReactTooltip />
+      // <Fragment>
+      <ExpansionPanel>
+        <ExpansionPanelSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography>{t("UsersList.title")}</Typography>
+        </ExpansionPanelSummary>
+        <ExpansionPanelDetails>
+          <Typography>
+            <div className="user-list-wrapper" style={{ background: "transpernt" }}>
+              <div className="name-holder">
+                {this._usersNames()}
+                {this.isCurrentUserAdmin() && (
+                  <div>
+                    <span
+                      onClick={this.toggleModal}
+                      data-tip={t("UsersList.add_user_tip")}
+                      className="dot add-user"
+                    >
+                      <AddIcon />
+                    </span>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
 
-          <Modal
-            isOpen={isModalOpen}
-            onRequestClose={this.toggleModal}
-            overlayClassName="modal-underlay"
-            className="user-add-modal"
-            style={modalStyle}
-          >
-            <UserAdder toggleModal={this.toggleModal} />
-          </Modal>
-        </div>
-      </Fragment>
+              <Modal
+                isOpen={isModalOpen}
+                onRequestClose={this.toggleModal}
+                overlayClassName="modal-underlay"
+                className="user-add-modal"
+                style={modalStyle}
+              >
+                <UserAdder toggleModal={this.toggleModal} />
+              </Modal>
+            </div>
+          </Typography>
+        </ExpansionPanelDetails>
+      </ExpansionPanel>
+
+      //   <h4>{t("UsersList.title")}</h4>
+      //   <div className="user-list-wrapper">
+      //     <div className="name-holder">
+      //       {this._usersNames()}
+      //       {this.isCurrentUserAdmin() && (
+      //         <div>
+      //           <span
+      //             onClick={this.toggleModal}
+      //             data-tip={t("UsersList.add_user_tip")}
+      //             className="dot add-user"
+      //           >
+      //             +
+      //         </span>
+      //           <ReactTooltip />
+      //         </div>
+      //       )}
+      //     </div>
+
+      //     <Modal
+      //       isOpen={isModalOpen}
+      //       onRequestClose={this.toggleModal}
+      //       overlayClassName="modal-underlay"
+      //       className="user-add-modal"
+      //       style={modalStyle}
+      //     >
+      //       <UserAdder toggleModal={this.toggleModal} />
+      //     </Modal>
+      //   </div>
+      // </Fragment>
     );
   }
 }

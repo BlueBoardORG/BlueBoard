@@ -9,12 +9,14 @@ import Button from '@material-ui/core/Button';
 import "./BoardMenu.scss";
 import UsersList from "../Users/UsersList";
 import HistoryList from "../History/HistoryList";
+import MenuIcon from '@material-ui/icons/Menu';
 
-const sideNavWidth = "400px";
+
+const sideNavWidth = "350px";
 
 class BoardMenu extends Component {
   state = {
-    open: true
+    open: false
   };
 
   openSideBar = () => {
@@ -28,12 +30,14 @@ class BoardMenu extends Component {
   };
 
   render() {
+    const { t } = this.props;
     return (
       <React.Fragment>
         <div
           style={{
             backgroundColor: "rgb(245, 246, 247)",
-            width: sideNavWidth,
+            color: "black",
+            width: "0px",
             height: "calc(100vh - 50px)",
             zIndex: "2",
             transition: "0.5s",
@@ -45,13 +49,14 @@ class BoardMenu extends Component {
           ref="sideNav"
         >
           <div>
-            <h3 style={{ textAlign: "center", color: "black" }}>
+            <h3 style={{ textAlign: "center", color: "black", marginBottom: "35px", letterSpacing: "1.1px", fontWeight: "500", fontSize: "22px" }}>
               {this.props.t("Menu")}
             </h3>
             <hr
               style={{
                 backgroundColor: "rgba(9,45,66,.13)",
                 border: 0,
+                color: "black",
                 height: "1px",
                 margin: "16px 0",
                 padding: 0,
@@ -65,37 +70,22 @@ class BoardMenu extends Component {
                   style={{
                     position: "absolute",
                     zIndex: "3",
-                    right: "0px",
+                    right: "10px",
                     top: "10px",
                   }}
                 >
                   <KeyboardArrowLeftIcon />
                 </IconButton>
               ) : null}
-              <UsersList />
+              {this.state.open ? (<UsersList />) : null}
               <Divider />
               <HistoryList />
             </div>
           </div>
         </div>
-        {!this.state.open ? (
-          <Button
-            onClick={this.openSideBar}
-            color="primary"
-            style={{
-              position: "absolute",
-              zIndex: "3",
-              left: "0px",
-              top: "164px",
-              height: "45px",
-              backgroundColor: "#36363694",
-              borderBottomLeftRadius: "0px",
-              borderTopLeftRadius: "0px",
-              color: "#ffffffe6"
-            }}
-            endIcon={<KeyboardArrowRightIcon />}
-          />
-        ) : null}
+        <Button onClick={this.openSideBar} data-tip={t("BoardHeaders.BoardMenu")}>
+          <MenuIcon style={{ color: "#ffffff" }} />
+        </Button>
       </React.Fragment>
     );
   }

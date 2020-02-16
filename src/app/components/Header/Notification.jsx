@@ -134,8 +134,8 @@ class Notification extends React.Component {
       },
       note: {
         position: "absolute",
-        top: "0px",
-        right: "0px"
+        top: "1px",
+        right: "1px"
       }
     };
 
@@ -201,7 +201,7 @@ class Notification extends React.Component {
             </Table>
           }
         >
-          <IconButton style={{ background: "hsla(0, 0%, 100%, .3)" }} isActive={false} appearance="minimal">
+          <IconButton isActive={false} appearance="minimal">
             {numOfUnSeenNotifs > 0 ? (
               <Pill color="red" style={styles.note} isSolid>
                 {numOfUnSeenNotifs}

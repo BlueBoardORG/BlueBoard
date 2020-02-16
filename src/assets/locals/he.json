@@ -75,7 +75,7 @@
   "DELETE_CARD": "מחק כרטיס",
   "UPDATE_ASSIGNED_USER": "שינה את האחראי על הכרטיס",
   "ARCHIVE_BOARD": "ארכב את הלוח לארכיון אישי",
-  "UsersList.title": "משתמשים:",
+  "UsersList.title": "משתמשים",
   "UsersList.add_user_tip": "הוסף משתמש",
   "UserAdder.search_place_holder": "חפש משתמש...",
   "Board.add_new_card": "הוסף כרטיס חדש",
@@ -107,6 +107,7 @@
   "BoardHeaders.imagePicker": "בחר תמונת רקע ללוח",
   "BoardHeaders.boardArchiver": "הארכיון הוא אישי ולא ישפיע על משתמשים נוספים",
   "BoardHeaders.BoardDeleter": "הלוח ימחק עבור כל משתמשי הלוח",
+  "BoardHeaders.BoardMenu": "פתח תפריט",
   "BoardHeaders.BoardLeave": "הלוח ימחק עבורך בלבד!",
   "BoardHeaders.watch": "בחר את כמות ההתראות שלוח זה ייצר עבורך"
 }

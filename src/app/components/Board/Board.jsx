@@ -279,7 +279,7 @@ class Board extends Component {
                 )}
               </Droppable>
             </DragDropContext>
-            <BoardMenu />
+            {/* <BoardMenu /> */}
           </div>
           <div className="board-underlay" style={wrapperStyle} />
         </div>

@@ -12,6 +12,7 @@ import { connect } from "react-redux";
 import { Spinner, Pane } from 'evergreen-ui';
 import "./HistoryList.scss";
 import socket from '../../socketIOHandler';
+import UserAvatar from "../Users/UserAvatar";
 import { HISTORY_ITEMS_PER_FETCH } from "../../../constants";
 
 class HistoryList extends Component {
@@ -88,7 +89,7 @@ class HistoryList extends Component {
     const time = `${lessThanTen(date.getHours())}:${lessThanTen(date.getMinutes())}`;
 
     return (
-      <div style={{ textAlign: 'center', width: 'min-content' }}>
+      <div>
         <p>{`${date.toLocaleDateString('en-GB')}\r\n${time}`}</p>
       </div>
     );
@@ -111,11 +112,15 @@ class HistoryList extends Component {
               {history.map((historyItem, key) => (
                 <ListItem key={key} button>
                   <div id="history-item">
-                    <p>{(boardUsersData[historyItem.userId] || { name: "" }).name}</p>
-                    <p>{t(historyItem.action)}</p>
-                    {this.displayDate(historyItem.date)}
+                    <div className="user">
+                      {boardUsersData[historyItem.userId] ? ((boardUsersData[historyItem.userId]).name.split(" ")[0][0]) : null}
+                      {boardUsersData[historyItem.userId] ? ((boardUsersData[historyItem.userId]).name.split(" ")[1][0]) : null}
+                    </div>
+                    <div id="text-container">
+                      <h4>{t(historyItem.action)}</h4>
+                      {this.displayDate(historyItem.date)}
+                    </div>
                   </div>
-
                 </ListItem>
               ))}
             </div>
