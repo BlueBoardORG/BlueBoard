@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { withTranslation } from "react-i18next";
 import SearchIcon from '@material-ui/icons/Search';
+import "./SearchBar.scss";
 
 class SearchBar extends React.Component {
   componentDidMount() {
@@ -39,7 +40,7 @@ class SearchBar extends React.Component {
     const { t } = this.props;
     return (
       <div style={styles.container}>
-        <input placeholder={t("SearchBar.placeholder")} onChange={this._onChangeText} style={styles.text} value={this.props.currFilter} />
+        <input class="serchbar" placeholder={t("SearchBar.placeholder")} onChange={this._onChangeText} style={styles.text} value={this.props.currFilter} />
         <SearchIcon color="white" />
       </div>
     );

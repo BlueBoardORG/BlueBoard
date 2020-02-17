@@ -83,7 +83,6 @@ $add-board-focus-bg: #ccc;
 .board-link {
   @include board-button;
   display: inline-flex;
-  filter: brightness(70%);
   flex-direction: column;
   color: white;
   overflow-wrap: break-word;
@@ -128,11 +127,14 @@ $add-board-focus-bg: #ccc;
 
 .board-link-title {
   padding-bottom: 9px;
-  color: white;
-  font-size: 22px;
-  padding-top: 5px;
+  color: rgb(77, 77, 77);
+  font-size: 19px;
+  background: rgb(235, 236, 240);
+  margin-right: 5px;
+  font-weight: 500;
+  margin-left: 5px;
+  padding-top: 2px;
   border-radius: 3px;
-  filter: none !important;
 }
 
 .mini-board {
@@ -145,7 +147,6 @@ $add-board-focus-bg: #ccc;
   box-sizing: border-box;
   width: 24px;
   height: 100%;
-  filter: none !important;
   margin-right: 6px;
   border-radius: 3px;
   background: rgba(255, 255, 255, 0.25);
