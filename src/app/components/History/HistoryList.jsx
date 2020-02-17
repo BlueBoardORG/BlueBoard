@@ -91,7 +91,7 @@ class HistoryList extends Component {
 
     return (
       <div>
-        <p>{`${date.toLocaleDateString('en-GB')}\r\n${time}`}</p>
+        {`${date.toLocaleDateString('en-GB')}\r\n${time}`}
       </div>
     );
   }

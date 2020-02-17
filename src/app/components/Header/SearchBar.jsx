@@ -40,8 +40,8 @@ class SearchBar extends React.Component {
     const { t } = this.props;
     return (
       <div style={styles.container}>
-        <input class="serchbar" placeholder={t("SearchBar.placeholder")} onChange={this._onChangeText} style={styles.text} value={this.props.currFilter} />
-        <SearchIcon color="white" />
+        <input className="serchbar" placeholder={t("SearchBar.placeholder")} onChange={this._onChangeText} style={styles.text} value={this.props.currFilter} />
+        <SearchIcon style={{ color: "white" }} />
       </div>
     );
   }
