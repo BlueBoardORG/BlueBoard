@@ -1,7 +1,7 @@
 {
   "Sign-out": "התנתק",
   "Sign-in": "התחבר",
-  "Add-new-board": "צור לוח חדש...",
+  "Add-new-board": "צור לוח חדש",
   "Choose-User": "בחר משתמש להוספה:",
   "Choose-Option": "-- בחר משתמש ---",
   "Save": "שמור",
@@ -38,7 +38,7 @@
   "BoardDeleter.delete": "מחק לוח",
   "project_name": "AmanBoard 2.0",
   "Home": "עמוד הבית",
-  "Home.myboards": "לוחות שלי",
+  "Home.myboards": "הלוחות שלי",
   "Home.sharedboards": "לוחות ששותפו איתי",
   "ListAdder.add_new_list": "הוסף רשימה חדשה...",
   "Notifications.UPDATE_ASSIGNED_USER": "נבחרת כאחראי במשימה בלוח:",

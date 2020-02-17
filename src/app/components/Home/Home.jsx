@@ -42,7 +42,7 @@ class Home extends Component {
           {t("Home")} | {t("project_name")}
         </Title>
         <Header />
-        <div className="home">
+        <div className="home-page">
           <div className="main-content">
             <h1>{t("Home.myboards")}</h1>
             <BoardList boards={myBoards} history={{history}} />

@@ -37,13 +37,14 @@ class BoardList extends Component {
     }
     return colors[color] || "rgba(255, 255, 255, 0.4)";
   }
+
   defaultLabels = () => [
-      { id: shortid.generate(), title: "בטיפול", color: "violet" },
-      { id: shortid.generate(), title: "כללי", color: "Turquoise" },
-      { id: shortid.generate(), title: "מעקב", color: "yellowgreen" },
-      { id: shortid.generate(), title: "תקלה", color: "Gold" },
-      { id: shortid.generate(), title: "עזרה", color: "Orange" },
-      { id: shortid.generate(), title: "קריטי", color: "tomato" }]
+    { id: shortid.generate(), title: "בטיפול", color: "violet" },
+    { id: shortid.generate(), title: "כללי", color: "Turquoise" },
+    { id: shortid.generate(), title: "מעקב", color: "yellowgreen" },
+    { id: shortid.generate(), title: "תקלה", color: "Gold" },
+    { id: shortid.generate(), title: "עזרה", color: "Orange" },
+    { id: shortid.generate(), title: "קריטי", color: "tomato" }]
 
   checkFormat = (boards) => {
     const { dispatch } = this.props;
@@ -67,12 +68,12 @@ class BoardList extends Component {
           <Link
             key={board._id}
             className={classnames("board-link", board.color)}
-            style={{ backgroundImage: `url(${board.backgroundImage})`, backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundSize: "cover" }}
+            style={{ backgroundImage: `url(${board.backgroundImage})`, backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundSize: "cover"}}
             to={`/b/${board._id}/${slugify(board.title, {
               lower: true
             })}`}
           >
-            <div className="board-link-title" style={{ backgroundColor: this.getColor(board.color), marginBottom: "5px" }}>
+            <div className="board-link-title" style={{ marginBottom: "5px", paddingRight:"5px" }}>
               {board.title}
             </div>
             <div className="mini-board">
@@ -85,7 +86,7 @@ class BoardList extends Component {
                       (listsById[listId].cards.length + 1) * 18,
                       100
                     )}%`,
-                    backgroundColor: this.getColor(board.color)
+                    backgroundColor: "#ebecf0"
                   }}
                 />
               ))}

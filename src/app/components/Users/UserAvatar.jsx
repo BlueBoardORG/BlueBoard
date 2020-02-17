@@ -10,6 +10,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { ADMIN_ROLE } from "../../../constants";
+import MaterialButton from '@material-ui/core/Button';
 import "./UsersList.scss";
 import { getColorFromString } from '../../helpers/colorFromString';
 
@@ -78,12 +79,6 @@ class UserAvatar extends Component {
     const words = user.name.split(" ");
     const color = getColorFromString(user.name || "")
 
-    const deleteButton = (
-      <div>
-        <div className="board-leave-header">{t("UserAvatar.menu.title")}</div>
-        <MenuItem className="board-leave-confirm">{t("UserAvatar.menu.kick")}</MenuItem>
-      </div>
-    );
     let avatarToolTip = user.name;
     const userRole = (
       boardUsers.find(currUser => currUser.id === user._id) || {}
@@ -97,7 +92,7 @@ class UserAvatar extends Component {
           className="board-leave-wrapper"
           onSelection={this.handleSelection}
         >
-          <Button>
+          <Button onClick={this.handleDialogOpen}>
             <span className="dot" style={{ backgroundColor: color }} data-tip={avatarToolTip}>
               {words[0][0]}
               {words.length > 1 && words[words.length - 1][0]}
@@ -105,13 +100,9 @@ class UserAvatar extends Component {
           </Button>
 
           <ReactTooltip />
-
-          <Menu className="board-leave-menu">
-            {isCurrentUserAdmin && currentUser._id !== user._id && deleteButton}
-          </Menu>
         </Wrapper>
-        {/* <Dialog
-          open={this.state.isDialogOpen}
+        <Dialog
+          open={isCurrentUserAdmin && this.state.isDialogOpen && currentUser._id !== user._id}
           onClose={this.handleDialogClose}
         >
           <DialogTitle>{t("UserAvatar.menu.title")}</DialogTitle>
@@ -121,14 +112,14 @@ class UserAvatar extends Component {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleDialogClose} color="primary">
+            <MaterialButton onClick={this.handleDialogClose} color="primary">
               {t("Cancel")}
-            </Button>
-            <Button onClick={this.handleSelection} color="secondary" autoFocus>
-              {t("BoardLeave.short")}
-            </Button>
+            </MaterialButton>
+            <MaterialButton onClick={this.deleteUser} color="secondary" autoFocus>
+              {t("UserAvatar.menu.kick")}
+            </MaterialButton>
           </DialogActions>
-        </Dialog> */}
+        </Dialog>
       </div>
     );
   }

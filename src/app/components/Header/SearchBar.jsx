@@ -19,21 +19,21 @@ class SearchBar extends React.Component {
         display: "flex",
         alignItems: "center",
         padding: 4,
-        background: "hsla(0,7%,92%,.3);",
+        background: "hsla(0,7%,92%,.3)",
         borderRadius: 3,
         height: 30,
         color: "white"
       },
       text: {
         display: "flex",
-        background: "transparent",
         color: "white",
+        background: "transparent",
         border: "none",
         fontSize: "20px",
         outline: "none"
       },
       icon: {
-        height: "25px",
+        height: "25px"
       }
     };
     const { t } = this.props;

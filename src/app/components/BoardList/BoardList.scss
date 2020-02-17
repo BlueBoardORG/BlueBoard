@@ -46,6 +46,7 @@ $add-board-focus-bg: #ccc;
     width: 2 * $board-width + 4 * $board-margin;
   }
 }
+
 @media (max-width: 2 * $board-width + 4 * $board-margin + 2 * $main-margin) {
   .main-content {
     width: $board-width + 2 * $board-margin;
@@ -82,6 +83,7 @@ $add-board-focus-bg: #ccc;
 .board-link {
   @include board-button;
   display: inline-flex;
+  filter: brightness(70%);
   flex-direction: column;
   color: white;
   overflow-wrap: break-word;
@@ -91,12 +93,15 @@ $add-board-focus-bg: #ccc;
   &.green {
     background: $green;
   }
+
   &.blue {
     background: $blue;
   }
+
   &.red {
     background: $red;
   }
+
   &.pink {
     background: $pink;
   }
@@ -107,19 +112,27 @@ $add-board-focus-bg: #ccc;
   &.green {
     background: $dark-green;
   }
+
   &.blue {
     background: $dark-blue;
   }
+
   &.pink {
     background: $dark-pink;
   }
+
   &.red {
     background: $dark-red;
   }
 }
 
 .board-link-title {
-  padding-bottom: 5px;
+  padding-bottom: 9px;
+  color: white;
+  font-size: 22px;
+  padding-top: 5px;
+  border-radius: 3px;
+  filter: none !important;
 }
 
 .mini-board {
@@ -132,6 +145,7 @@ $add-board-focus-bg: #ccc;
   box-sizing: border-box;
   width: 24px;
   height: 100%;
+  filter: none !important;
   margin-right: 6px;
   border-radius: 3px;
   background: rgba(255, 255, 255, 0.25);
