@@ -38,6 +38,7 @@ class List extends Component {
                 })}
               >
                 <ListHeader
+                  className="list-header"
                   dragHandleProps={provided.dragHandleProps}
                   listTitle={list.title}
                   listId={list._id}

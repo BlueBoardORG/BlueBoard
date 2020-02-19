@@ -13,7 +13,7 @@ import Button from '@material-ui/core/Button';
 import "./ListHeader.scss";
 import { withTranslation } from "react-i18next";
 
-class ListTitle extends Component {
+class ListHeader extends Component {
   static propTypes = {
     listTitle: PropTypes.string.isRequired,
     listId: PropTypes.string.isRequired,
@@ -127,8 +127,8 @@ class ListTitle extends Component {
             </div>
           )}
         {isAbleToEdit && (
-          [
-            <IconButton style={{marginTop: "2px", marginLeft:"2px"}} onClick={this.handleDeleteDialogOpen} aria-label="delete">
+          <div>
+            <IconButton className="open-dialog-button" style={{ marginTop: "2px", marginLeft: "2px" }} onClick={this.handleDeleteDialogOpen} aria-label="delete">
               <DeleteIcon />
             </IconButton>,
             <Dialog
@@ -152,10 +152,11 @@ class ListTitle extends Component {
                 </Button>
               </DialogActions>
             </Dialog>
-          ])}
+          </div>
+        )}
       </div>
     );
   }
 }
 
-export default connect()(withTranslation()(ListTitle));
+export default connect()(withTranslation()(ListHeader));
