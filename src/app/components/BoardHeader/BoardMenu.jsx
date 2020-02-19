@@ -19,6 +19,7 @@ class BoardMenu extends Component {
     open: false
   };
 
+
   openSideBar = () => {
     this.setState({ open: true });
     this.refs.sideNav.style.width = sideNavWidth;
@@ -29,7 +30,12 @@ class BoardMenu extends Component {
     this.refs.sideNav.style.width = "0px";
   };
 
+  menuOpen = (isMenuOpen) => {
+    this.props.setMenuOpen(isMenuOpen);
+  }
+
   render() {
+    { this.menuOpen(this.state.open) }
     const { t } = this.props;
     return (
       <React.Fragment>
