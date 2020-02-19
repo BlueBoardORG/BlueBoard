@@ -76,6 +76,7 @@
   "DELETE_CARD": "מחק כרטיס",
   "UPDATE_ASSIGNED_USER": "שינה את האחראי על הכרטיס",
   "ARCHIVE_BOARD": "ארכב את הלוח לארכיון אישי",
+  "UNARCHIVE_BOARD": "הוציא מהאכריון האישי שלו את הלוח",
   "UsersList.title": "משתמשים",
   "UsersList.add_user_tip": "הוסף משתמש",
   "UserAdder.search_place_holder": "חפש משתמש...",
