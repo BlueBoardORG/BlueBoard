@@ -1,6 +1,6 @@
 @import "../../variables.scss";
-$board-width: 260px;
-$board-height: 140px;
+$board-width: 200px;
+$board-height: 110px;
 $board-margin: 5px;
 $main-margin: 40px;
 $add-board-bg: #ddd;
@@ -33,7 +33,7 @@ $add-board-focus-bg: #ccc;
   height: calc(100% - 50px);
   padding-top: 50px;
   width: 100%;
-  background: #eee;
+  background: #f4f4f4;
   overflow: hidden;
 }
 

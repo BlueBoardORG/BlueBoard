@@ -1,6 +1,6 @@
 @import "../../variables.scss";
-$board-width: 260px;
-$board-height: 140px;
+$board-width: 200px;
+$board-height: 110px;
 $board-margin: 5px;
 $main-margin: 40px;
 $add-board-bg: #ddd;
@@ -14,7 +14,7 @@ $add-board-focus-bg: #ccc;
   padding: 10px;
   border-radius: 6px;
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 600;
   transition: background 0.1s;
   cursor: pointer;
 }

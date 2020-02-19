@@ -86,7 +86,7 @@ class BoardList extends Component {
                       (listsById[listId].cards.length + 1) * 18,
                       100
                     )}%`,
-                    backgroundColor: "#ebecf0"
+                    backgroundColor: "rgba(235, 236, 240, 0.781)"
                   }}
                 />
               ))}
