@@ -26,7 +26,7 @@ class Notification extends React.Component {
     };
     socket.on("notification", newNotification => {
       this.addNewNotification(newNotification);
-      //add state for changing logo to updates
+      // add state for changing logo to updates
     });
   }
 
@@ -55,7 +55,7 @@ class Notification extends React.Component {
   }
 
   addNewNotification(newNotification) {
-    let currentNotifications = this.state.notifications;
+    const currentNotifications = this.state.notifications;
     this.setState({
       notifications: [newNotification, ...currentNotifications]
     });
@@ -88,8 +88,6 @@ class Notification extends React.Component {
     });
   }
 
-
-
   notificationMessage(notification) {
     const { t } = this.props;
     return `${notification.from} ${t(notification.action)}`;
@@ -108,7 +106,7 @@ class Notification extends React.Component {
     }).then(response => {
       if (response) {
         if (response.status === 200) {
-          //success
+          // success
         }
       }
     });
@@ -139,7 +137,7 @@ class Notification extends React.Component {
       }
     };
 
-    let numOfUnSeenNotifs = this.state.notifications.filter(item => !item.wasSeen).length;
+    const numOfUnSeenNotifs = this.state.notifications.filter(item => !item.wasSeen).length;
 
     return (
       <div style={styles.container}>
@@ -182,7 +180,6 @@ class Notification extends React.Component {
                         <Table.Cell>
                           <IconButton
                             onClick={() => this.deleteHandler(notification)}
-                            isActive={false}
                             appearance="minimal"
                           >
                             <Icon
@@ -201,7 +198,7 @@ class Notification extends React.Component {
             </Table>
           }
         >
-          <IconButton isActive={false} appearance="minimal">
+          <IconButton appearance="minimal">
             {numOfUnSeenNotifs > 0 ? (
               <Pill color="red" style={styles.note} isSolid>
                 {numOfUnSeenNotifs}
