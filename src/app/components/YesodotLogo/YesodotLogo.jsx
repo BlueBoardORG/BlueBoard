@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './YesodotLogo.style.css'
 
 export function YesodotLogo() {
     return (<div id="logo-container">
-        <svg id="yesodot-logo">
+        <svg id="yesodot-logo" viewBox="0 0 300 150">
             <g className="cls-1">
                 <g width="100%" data-name="Layer 2">
                     <g width="100%" data-name="Layer 1">
