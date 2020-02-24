@@ -37,13 +37,21 @@
   background: rgba(255, 255, 255, 0.9);
 }
 
-.color-picker-item {
+#image-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+
+.image-picker-item {
   display: flex;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  height: 40px;
-  margin: 3px;
+  height: 105px !important;
+  width: 190px !important;
+  margin: 10px !important;
   cursor: pointer;
 
   &.blue {
@@ -70,4 +78,8 @@
       background: $dark-pink;
     }
   }
+}
+
+#background-picker-dialog {
+  width: 500px;
 }
