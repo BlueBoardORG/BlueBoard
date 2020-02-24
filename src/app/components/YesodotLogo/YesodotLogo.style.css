@@ -1,0 +1,52 @@
+#yesodot-logo {
+    position: absolute;
+    bottom: 0px;
+    left: 10px;
+}
+
+.cls-2 {
+    fill: #30333d;
+    stroke-width: 0;
+    stroke: #30333d;
+}
+
+.cls-3 {
+    fill: #30333d;
+    stroke-width: 0;
+    stroke: #30333d;
+    fill-opacity: 0.7;
+    mix-blend-mode: multiply;
+}
+
+.cls-4 {
+    fill: #2fb67c;
+    stroke: #2fb67c;
+    stroke-width: 0.2;
+    mix-blend-mode: multiply;
+}
+
+.logo-container {
+    height: 64px;
+    width: 300px;
+    position: 'fixed';
+    bottom: 9px;
+    opacity: 1%;
+    right: 80px;
+    transition: opacity 1s ease-in-out;
+    pointer-events: fill;
+    z-index: -1;
+}
+
+.yesodot {
+    transform: translate(29%, -48%);
+}
+
+.tag_right {
+    fill-opacity: 1;
+    transform: translate(57%, 0%);
+}
+
+.tag_left {
+    fill-opacity: 1;
+    transform: translate(0%, 0%);
+}
