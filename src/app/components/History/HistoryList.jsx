@@ -100,6 +100,7 @@ class HistoryList extends Component {
     const { history } = this.state;
     const { t } = this.props;
     const { boardUsersData } = this.props;
+  
     return (
       <Fragment>
         <List component="nav" aria-label="main mailbox folders" subheader={
@@ -113,9 +114,9 @@ class HistoryList extends Component {
               {history.map((historyItem, key) => (
                 <ListItem key={key} button>
                   <div id="history-item">
-                    <div className="user" data-tip={boardUsersData[historyItem.userId] ? (boardUsersData[historyItem.userId]).name : null} style={{ backgroundColor: getColorFromString(boardUsersData[historyItem.userId] || "")}}>
+                    <div className="user" data-tip={boardUsersData[historyItem.userId] ? (boardUsersData[historyItem.userId]).name : null} style={{ backgroundColor: getColorFromString(boardUsersData[historyItem.userId] || "") }}>
                       {boardUsersData[historyItem.userId] ? ((boardUsersData[historyItem.userId]).name.split(" ")[0][0]) : null}
-                      {boardUsersData[historyItem.userId] ? ((boardUsersData[historyItem.userId]).name.split(" ")[1][0]) : null}
+                      {boardUsersData[historyItem.userId] ? ((boardUsersData[historyItem.userId]).name.split(" ")[(boardUsersData[historyItem.userId]).name.split(" ").length - 1][0]) : null}
                     </div>
                     <div id="text-container">
                       <h4>{t(historyItem.action)}</h4>
