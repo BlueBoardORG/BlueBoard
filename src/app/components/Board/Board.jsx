@@ -37,7 +37,7 @@ class Board extends Component {
     this.state = {
       startX: null,
       startScrollX: null,
-      iFrame:false
+      iFrame: false
     };
   }
 
@@ -177,15 +177,15 @@ class Board extends Component {
       });
     });
   }
-  iFrameChange = () =>{
-    const {iFrame} = this.state;
+  iFrameChange = () => {
+    const { iFrame } = this.state;
     window._paq ? window._paq.push(["trackEvent", "TOGGLE_HI_CHAT", !iFrame]) : null;
-    this.setState({iFrame: !iFrame});
+    this.setState({ iFrame: !iFrame });
   }
 
-   getAllowedGroupTitleFromText = title => {
+  getAllowedGroupTitleFromText = title => {
     if (this.cache && this.cache[title])
-        return this.cache[title];
+      return this.cache[title];
 
     const isAlphaNumeric = 'a-zA-Z0-9';
     const isHebrewChars = 'א-ת';
@@ -198,12 +198,12 @@ class Board extends Component {
     this.cache[title] = allowedTitle;
 
     return this.cache[title];
-}
+  }
 
   render = () => {
 
-    const { lists, boardTitle, boardId, boardColor, t, user, board, boardImageBackground, socketConnected ,chatRoomId} = this.props;
-    const {iFrame} = this.state;
+    const { lists, boardTitle, boardId, boardColor, t, user, board, boardImageBackground, socketConnected, chatRoomId } = this.props;
+    const { iFrame } = this.state;
     const imageUrl = `url(${boardImageBackground})`;
     const hiUrl = `${ROCKETCHAT_URL}/${encodeURIComponent(`${this.getAllowedGroupTitleFromText(boardTitle)}-${boardId}`)}`;
     const wrapperStyle = {
@@ -242,17 +242,17 @@ class Board extends Component {
             <h1 style={{ textAlign: "center", alignContent: "center", float: "none", margin: "auto" }}> {t("connection.wait")} </h1>
             <p style={{ textAlign: "center", alignContent: "center", float: "none", margin: "auto", paddingTop: "5vh" }}> {t("connection.wait.message")} </p>
           </Modal>
-          
-          <BoardHeader isAbleToEdit={isAbleToEdit} iFrameAction={this.iFrameChange} chatRoomId={chatRoomId}/>
+
+          <BoardHeader isAbleToEdit={isAbleToEdit} iFrameAction={this.iFrameChange} chatRoomId={chatRoomId} />
           {/* eslint-disable jsx-a11y/no-static-element-interactions */}
           <div
             className="lists-wrapper"
             onMouseDown={this.handleMouseDown}
             onWheel={this.handleWheel}
           >
-           {iFrame ? <p style={window.CSS.suppports('display:contents') ? {display: "contents"} : {height: '98%'}}>  <Iframe url= {hiUrl}
-           className="iframe"/>  </p> : null}
-                    
+            {iFrame ? <p style={window.CSS.supports('display:contents') ? { display: "contents" } : { height: '98%' }}>  <Iframe url={hiUrl}
+              className="iframe" />  </p> : null}
+
 
             {/* eslint-enable jsx-a11y/no-static-element-interactions */}
             <DragDropContext onDragEnd={this.handleDragEnd}>
@@ -261,7 +261,7 @@ class Board extends Component {
                 type="COLUMN"
                 direction="horizontal"
               >
-                
+
                 {provided => (
                   <div className="lists" id="lists" ref={provided.innerRef}>
                     {lists.map((list, index) => (
