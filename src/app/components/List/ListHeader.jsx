@@ -130,7 +130,7 @@ class ListHeader extends Component {
           <div>
             <IconButton className="open-dialog-button" style={{ marginTop: "2px", marginLeft: "2px" }} onClick={this.handleDeleteDialogOpen} aria-label="delete">
               <DeleteIcon />
-            </IconButton>,
+            </IconButton>
             <Dialog
               open={isDeleteDialogOpen}
               onClose={this.handleDeleteDialogClose}
