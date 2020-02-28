@@ -44,7 +44,7 @@
 .lists-wrapper {
   display: inline-flex;
   box-sizing: border-box;
-  height: 90vh;
+  height: calc(100vh - 50px);
   padding: 85px 5px 8px 5px;
   display: flex;
   flex-wrap: wrap;
