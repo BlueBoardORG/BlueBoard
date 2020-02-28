@@ -79,7 +79,6 @@ $add-board-focus-bg: #ccc;
   background: #aaa;
 }
 
-
 .board-link {
   @include board-button;
   display: inline-flex;
@@ -127,9 +126,9 @@ $add-board-focus-bg: #ccc;
 
 .board-link-title {
   padding-bottom: 9px;
-  color: rgb(77, 77, 77);
+  color: #ffffff;
+  text-shadow: 1px 1px 2px black;
   font-size: 19px;
-  background: rgba(235, 236, 240, 0.781);
   margin-right: 5px;
   font-weight: 500;
   letter-spacing: 1px;
