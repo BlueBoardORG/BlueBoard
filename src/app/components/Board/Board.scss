@@ -35,10 +35,12 @@
 }
 
 .iframe {
-  width: 400px;
-  height: 100%;
+  width: 500px;
+  min-width: 500px;
+  height: calc(100% - 2px);
   display: initial;
   position: relative;
+  margin-top: 28px;
 }
 
 .lists-wrapper {
@@ -47,7 +49,7 @@
   height: calc(100vh - 50px);
   padding: 85px 5px 8px 5px;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   width: 100%;
 }
 
