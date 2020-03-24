@@ -43,7 +43,7 @@ class CardModal extends Component {
   }
 
   componentWillReceiveProps = nextProps => {
-    this.setState({ newText: nextProps.card.text });
+    // this.setState({ newText: nextProps.card.text });
   };
 
   handleKeyDown = event => {
