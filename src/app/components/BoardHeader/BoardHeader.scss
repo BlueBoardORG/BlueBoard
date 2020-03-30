@@ -2,7 +2,23 @@
 
 .board-header {
   position: fixed;
-  top: 40px;
+  top: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  transition: 0.5s;
+  height: 40px;
+  width: 100%;
+  padding: 8px 10px 5px 10px;
+  color: $white;
+  z-index: 1;
+}
+
+.open-menu-board-header {
+  padding-left: 275px !important;
+  position: fixed;
+  top: 50px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -11,8 +27,10 @@
   width: 100%;
   padding: 8px 10px 5px 10px;
   color: $white;
+  transition: 0.5s;
   z-index: 1;
 }
+
 
 .board-header-right {
   display: flex;

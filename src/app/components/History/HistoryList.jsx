@@ -1,4 +1,10 @@
 import React, { Component, Fragment } from "react";
+import ListItem from '@material-ui/core/ListItem';
+import List from '@material-ui/core/List';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Avatar from '@material-ui/core/Avatar';
 import { withRouter } from "react-router-dom";
 import { withTranslation } from "react-i18next";
 import PropTypes from "prop-types";
@@ -6,7 +12,9 @@ import { connect } from "react-redux";
 import { Spinner, Pane } from 'evergreen-ui';
 import "./HistoryList.scss";
 import socket from '../../socketIOHandler';
+import UserAvatar from "../Users/UserAvatar";
 import { HISTORY_ITEMS_PER_FETCH } from "../../../constants";
+import { getColorFromString } from '../../helpers/colorFromString';
 
 class HistoryList extends Component {
   static propTypes = {};
@@ -82,8 +90,8 @@ class HistoryList extends Component {
     const time = `${lessThanTen(date.getHours())}:${lessThanTen(date.getMinutes())}`;
 
     return (
-      <div style={{ textAlign: 'center', width: 'min-content' }}>
-        <p>{`${date.toLocaleDateString('en-GB')}\r\n${time}`}</p>
+      <div>
+        {`${date.toLocaleDateString('en-GB')}\r\n${time}`}
       </div>
     );
   }
@@ -92,26 +100,40 @@ class HistoryList extends Component {
     const { history } = this.state;
     const { t } = this.props;
     const { boardUsersData } = this.props;
+  
     return (
       <Fragment>
-        <p id="title" >{t("History")}</p>
-        <div id="history-list-container" onScroll={this.trackScrolling}>
-          <div id="history-container" >
-            {history.map((historyItem, key) => (
-              <div id="history-item" key={key}>
-                <p>{(boardUsersData[historyItem.userId] || { name: "" }).name}</p>
-                <p>{t(historyItem.action)}</p>
-                {this.displayDate(historyItem.date)}
-              </div>
-            ))}
+        <List component="nav" aria-label="main mailbox folders" subheader={
+          <ListSubheader component="div" id="nested-list-subheader">
+            {t("History")}
+          </ListSubheader>
+        }>
+
+          <div id="history-list-container" onScroll={this.trackScrolling}>
+            <div id="history-container" >
+              {history.map((historyItem, key) => (
+                <ListItem key={key} button>
+                  <div id="history-item">
+                    <div className="user" data-tip={boardUsersData[historyItem.userId] ? (boardUsersData[historyItem.userId]).name : null} style={{ backgroundColor: getColorFromString(boardUsersData[historyItem.userId] || "") }}>
+                      {boardUsersData[historyItem.userId] ? ((boardUsersData[historyItem.userId]).name.split(" ")[0][0]) : null}
+                      {boardUsersData[historyItem.userId] ? ((boardUsersData[historyItem.userId]).name.split(" ")[(boardUsersData[historyItem.userId]).name.split(" ").length - 1][0]) : null}
+                    </div>
+                    <div id="text-container">
+                      <h4>{t(historyItem.action)}</h4>
+                      {this.displayDate(historyItem.date)}
+                    </div>
+                  </div>
+                </ListItem>
+              ))}
+            </div>
+            {
+              this.state.isLoading ?
+                <Pane display="flex" alignItems="center" justifyContent="center" height={400}>
+                  <Spinner />
+                </Pane> : null
+            }
           </div>
-          {
-            this.state.isLoading ?
-              <Pane display="flex" alignItems="center" justifyContent="center" height={400}>
-                <Spinner />
-              </Pane> : null
-          }
-        </div>
+        </List>
       </Fragment>
     );
   }

@@ -14,7 +14,7 @@
   padding: 10px;
   border: none;
   border-top-left-radius: inherit;
-  color: $white;
+  color: $black-text;
   font-weight: 700;
   overflow-wrap: break-word;
   cursor: pointer !important;
@@ -52,8 +52,8 @@
   margin: 4px;
   padding: 10px;
   border-radius: $list-radius;
-  color: $white;
-  font-size: 16px;
+  color: $black-text;
+  font-size: 20px;
   cursor: pointer;
 }
 
@@ -68,33 +68,45 @@
 
 .delete-list-menu {
   position: absolute;
-  top: 100%;
-  left: -60px;
-  right: -60px;
+  top: 30px;
+  right: 22px;
+  font-family: Segoe UI,Tahoma,Geneva,Verdana,sans-serif;
+  letter-spacing: 1.1px;
+  display: -webkit-box;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
   flex-direction: column;
   margin-top: 4px;
   padding: 5px;
-  border-radius: 3px;
-  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.6);
-  color: $black-text;
-  background: $white;
-  font-weight: 700;
+  padding-top: 10px;
+  border-radius: 8px;
+  width: 250px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.6);
+  color: #222;
+  background: #fbfbfb;
   text-align: center;
   z-index: 1;
 }
 
 .delete-list-confirm {
-  margin-top: 5px;
-  padding: 8px 30px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  width: 90px;
+  height: 25px;
+  padding-top: 5px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
   border-radius: 6px;
-  color: white;
-  background: red;
-  text-align: center;
+  letter-spacing: 1.2px;
   cursor: pointer;
+  color: #fff;
+  background: #e84118;
+  text-align: center;
 }
 
 .delete-list-confirm:hover,
 .delete-list-confirm:focus {
-  background: darkred;
+  background: #c23616;
 }

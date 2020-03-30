@@ -1,6 +1,6 @@
 @import "../../variables.scss";
-$board-width: 260px;
-$board-height: 140px;
+$board-width: 200px;
+$board-height: 110px;
 $board-margin: 5px;
 $main-margin: 40px;
 $add-board-bg: #ddd;
@@ -46,6 +46,7 @@ $add-board-focus-bg: #ccc;
     width: 2 * $board-width + 4 * $board-margin;
   }
 }
+
 @media (max-width: 2 * $board-width + 4 * $board-margin + 2 * $main-margin) {
   .main-content {
     width: $board-width + 2 * $board-margin;
@@ -78,7 +79,6 @@ $add-board-focus-bg: #ccc;
   background: #aaa;
 }
 
-
 .board-link {
   @include board-button;
   display: inline-flex;
@@ -91,12 +91,15 @@ $add-board-focus-bg: #ccc;
   &.green {
     background: $green;
   }
+
   &.blue {
     background: $blue;
   }
+
   &.red {
     background: $red;
   }
+
   &.pink {
     background: $pink;
   }
@@ -107,19 +110,31 @@ $add-board-focus-bg: #ccc;
   &.green {
     background: $dark-green;
   }
+
   &.blue {
     background: $dark-blue;
   }
+
   &.pink {
     background: $dark-pink;
   }
+
   &.red {
     background: $dark-red;
   }
 }
 
 .board-link-title {
-  padding-bottom: 5px;
+  padding-bottom: 9px;
+  color: #ffffff;
+  text-shadow: 1px 1px 2px black;
+  font-size: 19px;
+  margin-right: 5px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  margin-left: 5px;
+  padding-top: 2px;
+  border-radius: 3px;
 }
 
 .mini-board {

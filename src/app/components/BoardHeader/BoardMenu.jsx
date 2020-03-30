@@ -1,22 +1,28 @@
 import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
-import PropTypes from "prop-types";
+import Divider from '@material-ui/core/Divider';
 import { connect } from "react-redux";
+import IconButton from '@material-ui/core/IconButton';
+import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
+import Button from '@material-ui/core/Button';
 import "./BoardMenu.scss";
-import FaAngleRight from "react-icons/lib/fa/angle-double-right";
-import FaAngleLeft from "react-icons/lib/fa/angle-double-left";
 import UsersList from "../Users/UsersList";
-import { timingSafeEqual } from "crypto";
 import HistoryList from "../History/HistoryList";
+import MenuIcon from '@material-ui/icons/Menu';
+
+
+const sideNavWidth = "350px";
 
 class BoardMenu extends Component {
   state = {
-    open: true
+    open: false
   };
+
 
   openSideBar = () => {
     this.setState({ open: true });
-    this.refs.sideNav.style.width = "339px";
+    this.refs.sideNav.style.width = sideNavWidth;
   };
 
   closeSideBar = () => {
@@ -24,66 +30,57 @@ class BoardMenu extends Component {
     this.refs.sideNav.style.width = "0px";
   };
 
+  menuOpen = (isMenuOpen) => {
+    this.props.setMenuOpen(isMenuOpen);
+  }
+
   render() {
+    { this.menuOpen(this.state.open) }
+    const { t } = this.props;
     return (
       <React.Fragment>
         <div
           style={{
             backgroundColor: "rgb(245, 246, 247)",
-            width: "339px",
-            transition: "1s",
+            color: "black",
+            width: "0px",
+            height: "calc(100vh - 50px)",
+            zIndex: "2",
+            transition: "0.5s",
             bottom: "0%",
             position: "fixed",
-            borderTopRightRadius: "6px",
             left: "0px",
-            top: "9%"
+            top: "50px"
           }}
           ref="sideNav"
         >
           <div>
-            <h3 style={{ textAlign: "center", color: "black" }}>
+            <h3 style={{ textAlign: "center", color: "black", marginBottom: "35px", letterSpacing: "1.1px", fontWeight: "500", fontSize: "22px" }}>
               {this.props.t("Menu")}
             </h3>
-            <hr
-              style={{
-                backgroundColor: "rgba(9,45,66,.13)",
-                border: 0,
-                height: "1px",
-                margin: "16px 0",
-                padding: 0,
-                width: "100%"
-              }}
-            />
-            <div>
+            <div style={{ height: "80vh" }}>
               {this.state.open ? (
-                <FaAngleLeft
-                  className="hamburger-button"
+                <IconButton
+                  onClick={this.closeSideBar}
                   style={{
                     position: "absolute",
-                    right: "0%",
-                    top: "1.5%",
-                    color: "black"
+                    zIndex: "3",
+                    left: "8px",
+                    top: "8px",
                   }}
-                  onClick={this.closeSideBar}
-                />
+                >
+                  <KeyboardArrowLeftIcon />
+                </IconButton>
               ) : null}
-              <UsersList />
+              {this.state.open ? (<UsersList />) : null}
+              <Divider />
               <HistoryList />
             </div>
           </div>
         </div>
-        {!this.state.open ? (
-          <FaAngleRight
-            className="hamburger-button"
-            style={{
-              position: "absolute",
-              left: "0%",
-              top: "9.5%",
-              color: "black"
-            }}
-            onClick={this.openSideBar}
-          />
-        ) : null}
+        <Button onClick={this.openSideBar} data-tip={t("BoardHeaders.BoardMenu")}>
+          <MenuIcon style={{ color: "#ffffff" }} />
+        </Button>
       </React.Fragment>
     );
   }

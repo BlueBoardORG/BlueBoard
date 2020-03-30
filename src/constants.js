@@ -14,6 +14,8 @@ import image13 from "./assets/images/macaron.jpg";
 import image14 from "./assets/images/newYork.jpg";
 import image15 from "./assets/images/sea.jpg";
 import image16 from "./assets/images/sheep.jpg";
+import image17 from "./assets/images/backgroundImage.jpg";
+import image18 from "./assets/images/backgroundImage2.jpg"
 
 export const ADMIN_ROLE = "admin";
 export const HISTORY_ITEMS_PER_FETCH = process.HISTORY_ITEMS_PER_FETCH || 10;
@@ -26,7 +28,7 @@ export const CAN_EDIT_ROLES = [ADMIN_ROLE, READ_WRITE_ROLE];
 
 export const PUBLIC_USER_PROPERTIES = ["_id", "name", "display", "watch"];
 
-export const BOARD_BG_URLS = [image1, image2, image3, image4, image5, image6, image7, image8, image9, image10, image11, image12, image13, image14, image15, image16];
+export const BOARD_BG_URLS = [image1, image2, image3, image4, image5, image6, image7, image8, image9, image10, image11, image12, image13, image14, image15, image16, image17, image18];
 
 export const PIWIK_COOKIE_DOMAIN = process.env.PIWIK_COOKIE_DOMAIN || 'localhost';
 export const SHOULD_RUN_PIWIK = process.env.SHOULD_RUN_PIWIK || false;

@@ -4,9 +4,14 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import Modal from "react-modal";
 import ReactTooltip from "react-tooltip";
-import { Button, Wrapper, Menu, MenuItem } from "react-aria-menubutton";
 import { withTranslation } from "react-i18next";
-import FaSignOut from "react-icons/lib/fa/sign-out";
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import ExitToApp from '@material-ui/icons/ExitToApp';
 import "./BoardLeave.scss";
 
 class BoardLeave extends Component {
@@ -17,6 +22,25 @@ class BoardLeave extends Component {
     history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
     dispatch: PropTypes.func.isRequired
   };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      isDialogOpen: false,
+    }
+  }
+
+  componentWillMount() {
+    Modal.setAppElement('body');
+  }
+
+  handleDialogClose = () => {
+    this.setState({ isDialogOpen: false });
+  }
+
+  handleDialogOpen = () => {
+    this.setState({ isDialogOpen: true });
+  }
 
   handleSelection = () => {
     const { dispatch, match, user } = this.props;
@@ -29,38 +53,42 @@ class BoardLeave extends Component {
     document.location.href = "/";
   };
 
-  componentWillMount() {
-    Modal.setAppElement('body');
-  }
-
   render = () => {
     const { t } = this.props;
     return (
-      <Wrapper
-        className="board-leave-wrapper"
-        onSelection={this.handleSelection}
-      >
+      <div>
         <Button
-          className="board-leave-button"
+          onClick={this.handleDialogOpen}
+          className="board-deleter-button"
           data-tip={t("BoardHeaders.BoardLeave")}
           data-place="bottom"
-          data-multiline={true}
         >
-          <div className="modal-icon">
-            <FaSignOut />
-          </div>
-          <div className="board-header-right-text">
-            &nbsp;{t("BoardLeave.Leave")}
-          </div>
+          <ExitToApp />
         </Button>
         <ReactTooltip />
-        <Menu className="board-leave-menu">
-          <div className="board-leave-header">{t("are_you_sure")}</div>
-          <MenuItem className="board-leave-confirm">
-            {t("BoardLeave.Leave")}
-          </MenuItem>
-        </Menu>
-      </Wrapper>
+
+        <Dialog
+          open={this.state.isDialogOpen}
+          onClose={this.handleDialogClose}
+          aria-labelledby="delete-list" 
+          aria-describedby="delete-list-dialog"
+        >
+          <DialogTitle id="alert-dialog-title">{t("BoardLeave.Leave")}</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              {t("are_you_sure")}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleDialogClose} color="primary">
+              {t("Cancel")}
+            </Button>
+            <Button onClick={this.handleSelection} color="secondary" autoFocus>
+              {t("BoardLeave.short")}
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
     );
   };
 }

@@ -67,7 +67,7 @@ class BoardAdder extends Component {
     const { t, i18n } = this.props;
     return isOpen ? (
       <ClickOutside handleClickOutside={this.toggleOpen}>
-        <form onSubmit={this.handleSubmit} className="board-adder">
+        <form onSubmit={this.handleSubmit} className="board-adder-form">
           <input
             autoFocus
             className="submit-board-input"

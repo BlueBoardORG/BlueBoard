@@ -1,0 +1,22 @@
+// .searchbar-container {
+//     display: flex;
+//     align-items: center;
+//     padding: 4;
+//     background: hsla(0, 7%, 92%, .3);
+//     border-radius: 3px;
+//     height: 30px;
+//     color: white;
+// }
+
+// .text {
+//     display: flex;
+//     color: white;
+//     background: transparent;
+//     border: none;
+//     font-size: 20px;
+//     outline: none;
+// }
+
+.serchbar::placeholder {
+    color: rgb(221, 221, 221);
+}

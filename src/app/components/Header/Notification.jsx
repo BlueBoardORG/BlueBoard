@@ -1,5 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
+import IconButton from '@material-ui/core/IconButton';
+
 import {
   Icon,
   Button,
@@ -24,9 +26,16 @@ class Notification extends React.Component {
     };
     socket.on("notification", newNotification => {
       this.addNewNotification(newNotification);
-      //add state for changing logo to updates
+      // add state for changing logo to updates
     });
   }
+
+  //   .bg-clr_ec4c47 {
+  //     background-color: #ec4c47;
+  //     position: absolute;
+  //     top: 0px;
+  //     right: 0px;
+  // }
 
   fetchNotificationsFromDB() {
     fetch("/api/notifications/getByUserId", {
@@ -46,7 +55,7 @@ class Notification extends React.Component {
   }
 
   addNewNotification(newNotification) {
-    let currentNotifications = this.state.notifications;
+    const currentNotifications = this.state.notifications;
     this.setState({
       notifications: [newNotification, ...currentNotifications]
     });
@@ -79,8 +88,6 @@ class Notification extends React.Component {
     });
   }
 
-
-
   notificationMessage(notification) {
     const { t } = this.props;
     return `${notification.from} ${t(notification.action)}`;
@@ -99,7 +106,7 @@ class Notification extends React.Component {
     }).then(response => {
       if (response) {
         if (response.status === 200) {
-          //success
+          // success
         }
       }
     });
@@ -117,16 +124,20 @@ class Notification extends React.Component {
       },
       text: {
         display: "flex",
-        background: "transparent",
         border: "none",
         outline: "none"
       },
       icon: {
         height: "25px"
+      },
+      note: {
+        position: "absolute",
+        top: "1px",
+        right: "1px"
       }
     };
 
-    let numOfUnSeenNotifs = this.state.notifications.filter(item => !item.wasSeen).length;
+    const numOfUnSeenNotifs = this.state.notifications.filter(item => !item.wasSeen).length;
 
     return (
       <div style={styles.container}>
@@ -167,9 +178,8 @@ class Notification extends React.Component {
                           {this.notificationMessage(notification)}
                         </Table.TextCell>
                         <Table.Cell>
-                          <Button
+                          <IconButton
                             onClick={() => this.deleteHandler(notification)}
-                            isActive={false}
                             appearance="minimal"
                           >
                             <Icon
@@ -178,7 +188,7 @@ class Notification extends React.Component {
                               icon="trash"
                               color="danger"
                             />
-                          </Button>
+                          </IconButton>
                         </Table.Cell>
                       </Table.Row>
                     );
@@ -188,19 +198,19 @@ class Notification extends React.Component {
             </Table>
           }
         >
-          <Button isActive={false} appearance="minimal" height={40}>
+          <IconButton appearance="minimal">
             {numOfUnSeenNotifs > 0 ? (
-              <Pill color="red" isSolid>
+              <Pill color="red" style={styles.note} isSolid>
                 {numOfUnSeenNotifs}
               </Pill>
             ) : null}
             <Icon
               appearance="minimal"
-              height={40}
+              fontSize="20px"
               icon="notifications"
               color="#ffffff"
             />
-          </Button>
+          </IconButton>
         </Popover>
       </div>
     );

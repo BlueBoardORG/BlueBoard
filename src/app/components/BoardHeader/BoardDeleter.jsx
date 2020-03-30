@@ -3,10 +3,15 @@ import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import ReactTooltip from "react-tooltip";
-import { Button, Wrapper, Menu, MenuItem } from "react-aria-menubutton";
 import { withTranslation } from "react-i18next";
-import FaTrash from "react-icons/lib/fa/trash";
 import "./BoardDeleter.scss";
+import DeleteIcon from '@material-ui/icons/Delete';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 class BoardDeleter extends Component {
   static propTypes = {
@@ -16,6 +21,21 @@ class BoardDeleter extends Component {
     history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
     dispatch: PropTypes.func.isRequired
   };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      isDialogOpen: false,
+    }
+  }
+
+  handleDialogClose = () => {
+    this.setState({ isDialogOpen: false });
+  }
+
+  handleDialogOpen = () => {
+    this.setState({ isDialogOpen: true });
+  }
 
   handleSelection = () => {
     const { dispatch, match, history } = this.props;
@@ -27,28 +47,39 @@ class BoardDeleter extends Component {
   render = () => {
     const { t } = this.props;
     return (
-      <Wrapper
-        className="board-deleter-wrapper"
-        onSelection={this.handleSelection}
-      >
-        <Button 
+      <div>
+        <Button
+          onClick={this.handleDialogOpen}
           className="board-deleter-button"
-          data-tip={t("BoardHeaders.BoardDeleter")} 
+          data-tip={t("BoardHeaders.BoardDeleter")}
           data-place="bottom"
         >
-          <div className="modal-icon">
-            <FaTrash />
-          </div>
-          <div className="board-header-right-text">
-            &nbsp;{t("BoardDeleter.delete")}
-          </div>
+          <DeleteIcon />
         </Button>
-        <ReactTooltip/>
-        <Menu className="board-deleter-menu">
-          <div className="board-deleter-header">{t("are_you_sure")}</div>
-          <MenuItem className="board-deleter-confirm">{t("Delete")}</MenuItem>
-        </Menu>
-      </Wrapper>
+        <ReactTooltip />
+
+        <Dialog
+          open={this.state.isDialogOpen}
+          onClose={this.handleDialogClose}
+          aria-labelledby="delete-list"
+          aria-describedby="delete-list-dialog"
+        >
+          <DialogTitle id="alert-dialog-title">{t("DELETE_BOARD")}</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              {t("are_you_sure")}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleDialogClose} color="primary">
+              {t("Cancel")}
+            </Button>
+            <Button onClick={this.handleSelection} color="secondary" autoFocus>
+              {t("Delete")}
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
     );
   };
 }

@@ -3,6 +3,7 @@
 html {
   height: 100%;
   width: 100%;
+
   &::-webkit-scrollbar {
     width: 10px;
     height: 10px;
@@ -15,18 +16,22 @@ html {
   }
 }
 
+* {
+  outline: none !important;
+}
+
 body {
   height: 100%;
   width: 100%;
   margin: 0;
-  font-family: "Helvetica Neue", "Segoe UI", "Trebuchet MS", Geneva, Tahoma,
-    sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1;
 }
 
 #app {
   height: 100%;
   min-width: 100%;
+  background-color: #ffffff9d;
 }
 
 button,

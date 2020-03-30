@@ -43,7 +43,9 @@ class CardModal extends Component {
   }
 
   componentWillReceiveProps = nextProps => {
-    this.setState({ newText: nextProps.card.text });
+    if (!this.props.isOpen) {
+      this.setState({ newText: nextProps.card.text });
+    }
   };
 
   handleKeyDown = event => {
@@ -168,7 +170,7 @@ class CardModal extends Component {
         overlayClassName="modal-underlay"
         className="modal"
         style={isThinDisplay ? mobileStyle : style}
-        includeDefaultStyles={false} 
+        includeDefaultStyles={false}
         onClick={this.handleRequestClose}
       >
         <CardOptions
@@ -207,16 +209,16 @@ class CardModal extends Component {
               checkboxes.total > 0 ||
               assignedUserName ||
               card.labels) && (
-              <CardBadges
-                cardId={card._id}
-                boardId={boardId}
-                date={card.date}
-                checkboxes={checkboxes}
-                assignedUserName={assignedUserName}
-                assignedUserId={assignedUserId}
-                labels={card.labels}
-              />
-            )}
+                <CardBadges
+                  cardId={card._id}
+                  boardId={boardId}
+                  date={card.date}
+                  checkboxes={checkboxes}
+                  assignedUserName={assignedUserName}
+                  assignedUserId={assignedUserId}
+                  labels={card.labels}
+                />
+              )}
           </div>
           <div id="toggle-comments-button">
             <button

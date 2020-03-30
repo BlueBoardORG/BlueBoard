@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Textarea from "react-textarea-autosize";
+import Button from '@material-ui/core/Button';
+import Icon from '@material-ui/core/Icon';
+import AddIcon from '@material-ui/icons/Add';
 import shortid from "shortid";
 import ClickOutside from "../ClickOutside/ClickOutside";
 import { withTranslation } from "react-i18next";
@@ -77,10 +80,11 @@ class CardAdder extends Component {
         </form>
       </ClickOutside>
     ) : (
-      <button onClick={this.toggleCardComposer} className="add-card-button">
-        +
-      </button>
-    );
+        <Button onClick={this.toggleCardComposer} className="add-card-button" startIcon={<AddIcon id="add-icon" />}>הוסף כרטיס חדש</Button>
+        //   <button className="add-card-button">
+        //     +
+        // </button>
+      );
   }
 }
 

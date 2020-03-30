@@ -38,6 +38,7 @@ class List extends Component {
                 })}
               >
                 <ListHeader
+                  className="list-header"
                   dragHandleProps={provided.dragHandleProps}
                   listTitle={list.title}
                   listId={list._id}
@@ -48,8 +49,8 @@ class List extends Component {
                 <div className="cards-wrapper">
                   <Cards listId={list._id} isAbleToEdit={isAbleToEdit} boardId={boardId} />
                 </div>
+                {isAbleToEdit && <CardAdder listId={list._id} />}
               </div>
-              {isAbleToEdit && <CardAdder listId={list._id} />}
             </div>
             {provided.placeholder}
           </>

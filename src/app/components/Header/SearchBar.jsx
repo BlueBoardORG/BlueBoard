@@ -1,7 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-import SearchIcon from "../../../assets/images/search_icon.svg";
 import { withTranslation } from "react-i18next";
+import SearchIcon from '@material-ui/icons/Search';
+import "./SearchBar.scss";
 
 class SearchBar extends React.Component {
   componentDidMount() {
@@ -19,24 +20,28 @@ class SearchBar extends React.Component {
         display: "flex",
         alignItems: "center",
         padding: 4,
-        background: "#fbfbfb",
-        borderRadius: 3
+        background: "hsla(0,7%,92%,.3)",
+        borderRadius: 3,
+        height: 30,
+        color: "white"
       },
       text: {
         display: "flex",
+        color: "white",
         background: "transparent",
         border: "none",
+        fontSize: "20px",
         outline: "none"
       },
       icon: {
         height: "25px"
       }
     };
-    const {t}=this.props;
+    const { t } = this.props;
     return (
       <div style={styles.container}>
-        <input placeholder={t("SearchBar.placeholder")} style={styles.text} onChange={this._onChangeText} value={this.props.currFilter}/>
-        <img style={styles.icon} src={SearchIcon} />
+        <input className="serchbar" placeholder={t("SearchBar.placeholder")} onChange={this._onChangeText} style={styles.text} value={this.props.currFilter} />
+        <SearchIcon style={{ color: "white" }} />
       </div>
     );
   }
@@ -50,8 +55,6 @@ class SearchBar extends React.Component {
   };
 }
 
-const mapStateToProps = state => {
-  return { cardsById: state.cardsById, currFilter: state.currFilter};
-};
+const mapStateToProps = state => ({ cardsById: state.cardsById, currFilter: state.currFilter });
 
 export default connect(mapStateToProps)(withTranslation()(SearchBar));
